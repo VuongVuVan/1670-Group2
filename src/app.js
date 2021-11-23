@@ -8,7 +8,14 @@ app.set('views', path.join(__dirname, 'views'));
 const hbs = require('hbs');
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
+// Connect to db
+const db = require("./config/db");
+db.connect();
 
+// Use a router for a particular root URL
+const categoriesRouter = require("./routes/categories");
+app.use("/categories", categoriesRouter);
+ 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log('Sever is running at port ' + port);

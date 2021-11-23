@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    <div class="container">
+        <a href="/categories/create" class="btn btn-primary mt-5">Add Category</a>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.description}}</td>
+                    <td>
+                        <a class="btn btn-link" href="/categories/edit/?id={{this._id}}">Edit</a>
+                        <a class="btn btn-link" href="/categories/delete/?id={{this._id}}">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{> bottom}}
+</body>
+</html>
