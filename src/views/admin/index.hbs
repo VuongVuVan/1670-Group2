@@ -2,27 +2,7 @@
 <html lang="en">
 {{> head}}
 <body>
-    <header class="common_interface-header" id="common_interface-header">
-        <div class="common_interface-header-l_area">
-            <a href=""><img class="" src="images/header/logo.png" alt=""></a>
-            <span style="font-size: 35px; cursor: pointer;" onclick="toggle()">&#9776;</span>
-        </div>
-        <div class="common_interface_header_r-area">
-            <i style="font-size: 38px;" class="bi bi-person-circle"></i>
-        </div>
-    </header>
-    
-    <aside id="common_interface-l_sidebar" class="common_interface-l_sidebar">
-        <a href="javascript:void(0)" class="l_sidebar-closebtn" onclick="toggle()">&times;</a>
-        <div class="l_sidebar-main_menu">
-            <h2>SideMenu</h2>
-            <a href="#"><i class="fas fa-user-circle"></i>Home</a>
-            <a href="#"><i class="fa fa-users"></i>About</a>
-            <a href="#"><i class="fa fa-book"></i>Portfolio</a>
-            <a href="#"><i class="fa fa-file-o"></i>Services</a>
-            <a href="#"><i class="fa fa-phone"></i>Contact</a>
-        </div>
-    </aside>
+    {{> admin_layout}}
 
     <main id="common_content-area" class="common_content-area">
         <div class="image-slider">
@@ -50,23 +30,13 @@
             </div>
         </div>
     </main>
-
-    <script>
-        function toggle() {
-            document.getElementById("common_interface-l_sidebar").classList.toggle("toggle_active1");
-            document.getElementById("common_interface-header").classList.toggle("toggle_active2");
-            document.getElementById("common_content-area").classList.toggle("toggle_active2");
-        }
-    </script>
-
+    
     <script type="text/javascript">
-        var counter = 1;
+        var counter = 2;
         setInterval(function() {
             document.getElementById("radio" + counter).checked = true;
             counter++;
-            if(counter > 4) {
-                counter = 1;
-            }
+            if(counter > 4) counter = 1;
         }, 5000);
     </script>
 

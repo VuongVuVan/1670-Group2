@@ -6,7 +6,7 @@ class AdminController {
     }
 
     create(req, res) {
-        res.render("admin/slider");
+        res.render("admin/create");
     }
 }
 
