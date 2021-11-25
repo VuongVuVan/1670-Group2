@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    <header class="common_interface-header" id="common_interface-header">
+        <div class="common_interface-header-l_area">
+            <a href=""><img class="" src="images/header/logo.png" alt=""></a>
+            <span style="font-size: 35px; cursor: pointer;" onclick="toggle()">&#9776;</span>
+        </div>
+        <div class="common_interface_header_r-area">
+            <i style="font-size: 38px;" class="bi bi-person-circle"></i>
+        </div>
+    </header>
+    
+    <aside id="common_interface-l_sidebar" class="common_interface-l_sidebar">
+        <a href="javascript:void(0)" class="l_sidebar-closebtn" onclick="toggle()">&times;</a>
+        <div class="l_sidebar-main_menu">
+            <h2>SideMenu</h2>
+            <a href="#"><i class="fas fa-user-circle"></i>Home</a>
+            <a href="#"><i class="fa fa-users"></i>About</a>
+            <a href="#"><i class="fa fa-book"></i>Portfolio</a>
+            <a href="#"><i class="fa fa-file-o"></i>Services</a>
+            <a href="#"><i class="fa fa-phone"></i>Contact</a>
+        </div>
+    </aside>
+
+    <main id="common_content-area" class="common_content-area">
+        <div class="image-slider">
+            <div class="slides">
+                <input type="radio" name="radio-btn" id="radio1" checked>
+                <input type="radio" name="radio-btn" id="radio2">
+                <input type="radio" name="radio-btn" id="radio3">
+                <input type="radio" name="radio-btn" id="radio4">
+                <div class="slide first"><img src="/images/admin/background_image4.jpg" alt=""></div>
+                <div class="slide"><img src="/images/admin/background_image1.jpg" alt=""></div>
+                <div class="slide"><img src="/images/admin/background_image3.jpg" alt=""></div>
+                <div class="slide"><img src="/images/admin/background_image2.jpg" alt=""></div>
+                <div class="navigation-auto">
+                    <div class="auto-btn1"></div>
+                    <div class="auto-btn2"></div>
+                    <div class="auto-btn3"></div>
+                    <div class="auto-btn4"></div>
+                </div>
+            </div>
+            <div class="navigation-manual">
+                <label for="radio1" class="manual-btn"></label>
+                <label for="radio2" class="manual-btn"></label>
+                <label for="radio3" class="manual-btn"></label>
+                <label for="radio4" class="manual-btn"></label>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggle() {
+            document.getElementById("common_interface-l_sidebar").classList.toggle("toggle_active1");
+            document.getElementById("common_interface-header").classList.toggle("toggle_active2");
+            document.getElementById("common_content-area").classList.toggle("toggle_active2");
+        }
+    </script>
+
+    <script type="text/javascript">
+        var counter = 1;
+        setInterval(function() {
+            document.getElementById("radio" + counter).checked = true;
+            counter++;
+            if(counter > 4) {
+                counter = 1;
+            }
+        }, 5000);
+    </script>
+
+{{> bottom}}
+</body>
+</html>

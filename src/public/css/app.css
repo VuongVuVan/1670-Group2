@@ -1,0 +1,323 @@
+/* Login page */
+.login-main {
+    width: 100%;
+    height: 800px;
+    background-image: url(/images/login_page/background_image.png);
+    background-repeat: repeat;
+    position: relative;
+}
+
+.login-main::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background-color: rgb(221, 221, 221);
+}
+
+.login-parent_block {
+    max-width: 520px;
+    margin: auto;
+    height: 550px;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0 6px 6px 6px rgb(204, 204, 204);
+}
+
+.login-parent_block-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-parent_block-logo {
+    width: 65%;
+}
+
+.login-parent_block-title {
+    margin: 20px 0 5px 0;
+    color: rgb(92, 92, 209);
+    font-weight: 700;
+}
+
+.login-child_block {
+    width: 96%;
+    margin: auto;
+    border: 1px solid rgb(173, 173, 173);
+    background-color: rgb(255, 255, 255);
+    border-bottom-left-radius: 1%;
+    border-bottom-right-radius: 1%;
+}
+
+.login-child_block-title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 400px;
+}
+
+.login-form-input {
+    height: 50px;
+    background-color: rgb(229, 229, 229);
+    border: none;
+    outline: none;
+    width: 60%;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.login-form-forgot_password-link {
+    color: rgb(44, 44, 44);
+    display: block;
+    font-size: 1.2rem;
+    width: 60%;
+}
+
+.login-button {
+    height: 40px;
+    width: 120px;
+    outline: none;
+    background-color: rgb(205, 205, 205);
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: 4px;
+    border-radius: 50px;
+    color: black;
+    font-weight: 600;
+    transition: 0.1s;
+}
+
+.login-button:hover {
+    font-size: 160%;
+}
+
+.login-form-create_account {
+    font-size: 1rem;
+    color: rgb(44, 44, 44);
+    width: 80%;
+    text-align: center;
+}
+
+.login-form-create_account-link {
+    color: inherit;
+}
+
+/* common header */
+
+.common_interface-header {
+    background-color: #23E3C9;
+    padding: 7.6px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: margin-left .5s;
+}
+
+.common_interface-header-l_area {
+    display: flex;
+    align-items: center;
+}
+
+.common_interface-header-l_area img {
+    width: 170px;
+}
+
+.common_interface-header-l_area a {
+    margin-right: 50px;
+}
+
+.common_interface_header_r-area {
+    display: flex;
+    align-items: center;
+}
+
+/*common left sidebar */
+
+.common_interface-l_sidebar {
+    height: 100%;
+    width: 0;
+    background-color: #478cff;
+    padding-top: 60px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: .5s;
+}
+
+.l_sidebar-main_menu {
+    margin-top: 15px;
+}
+
+.l_sidebar-main_menu h2 {
+    text-align: center;
+    letter-spacing: 7px;
+    color: #fff;
+    background: black;
+    padding: 20px 0;
+}
+
+.common_interface-l_sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+    font-size: 15px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.common_interface-l_sidebar a i {
+    padding-right: 15px;
+}
+
+.l_sidebar-main_menu a:hover {
+    color: #fff;
+    background: #111;
+}
+
+.common_interface-l_sidebar .l_sidebar-closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* common left sidebar toggle */
+
+.toggle_active1 {
+    width: 260px;
+}
+
+.toggle_active2 {
+    margin-left: 260px;
+}
+
+/* common interface image slider */
+.common_content-area {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #23E3C9;
+    transition: margin-left .5s;
+}
+
+.image-slider {
+    width: 800px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 80px;
+}
+
+.slides {
+    width: 500%;
+    height: 500px;
+    display: flex;
+}
+
+.slides input {
+    display: none; 
+} 
+
+.slide {
+    width: 20%;
+    transition: 2s;
+}
+
+.slide img {
+    width: 800px;
+    height: 500px;
+}
+
+/* css for manual slide navigation */
+.navigation-manual {
+    position: absolute;
+    width: 800px;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+}
+
+.manual-btn {
+    border: 2px solid #40D3DC;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.manual-btn:not(:last-child) {
+    margin-right: 40px;
+}
+
+.manual-btn:hover {
+    background-color: #40D3DC;
+}
+
+#radio1:checked ~ .first {
+    margin-left: 0;
+}
+
+#radio2:checked ~ .first {
+    margin-left: -20%;
+}
+
+#radio3:checked ~ .first {
+    margin-left: -40%;
+}
+
+#radio4:checked ~ .first {
+    margin-left: -60%;
+} 
+
+/* css for automatic navigation */
+.navigation-auto {
+    position: absolute;
+    display: flex;
+    width: 800px;
+    justify-content: center;
+    margin-top: 460px;
+}
+
+.navigation-auto div {
+    border: 2px solid #40D3DC;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.navigation-auto div:not(:last-child) {
+    margin-right: 40px;
+}
+
+#radio1:checked ~ .navigation-auto .auto-btn1 {
+    background-color: #40D3DC;
+}
+
+#radio2:checked ~ .navigation-auto .auto-btn2 {
+    background-color: #40D3DC;
+}
+
+#radio3:checked ~ .navigation-auto .auto-btn3 {
+    background-color: #40D3DC;
+}
+
+#radio4:checked ~ .navigation-auto .auto-btn4 {
+    background-color: #40D3DC;
+}

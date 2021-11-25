@@ -2,7 +2,24 @@
 <html lang="en">
 {{> head}}
 <body>
-    
+    <main class="login-main">
+        <div class="login-parent_block">
+            <div class="login-parent_block-container">
+                <a style="display: flex; justify-content: center;" href="/"><img class="login-parent_block-logo" src="images/login_page/logo.jpg" alt=""></a>
+                <h1 class="login-parent_block-title">Academic Portal</h1>
+            </div>
+            <div class="login-child_block">
+                <h4 class="login-child_block-title">Log Into Your Account</h4>
+                <form action="/login" method="POST" class="login-form">
+                    <input type="email" name="email" id="" placeholder="Email" required minlength="10" class="login-form-input">
+                    <input type="password" name="password" id="" placeholder="Password" required minlength="8" class="login-form-input">
+                    <div style="width: 60%;"><a href="#" class="login-form-forgot_password-link">Forgot Password?</a></div>
+                    <input type="submit" value="Log In" class="login-button">
+                    <div class="login-form-create_account">© Powered by <a href="/signup" class="login-form-create_account-link">FPT Education</a></div>
+                </form>
+            </div>
+        </div>
+    </main>
 {{> bottom}}
 </body>
 </html>
