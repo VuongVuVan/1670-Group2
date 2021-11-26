@@ -18,7 +18,6 @@ db.connect();
 const categoriesRouter = require("./routes/categories");
 app.use("/categories", categoriesRouter);
 
-// Use a router for a particular root URL
 const coursesRouter = require("./routes/courses");
 app.use("/courses", coursesRouter);
 
@@ -30,6 +29,5 @@ app.use("/", siteRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    console.log(__dirname);
     console.log('Sever is running at port ' + port);
 });
