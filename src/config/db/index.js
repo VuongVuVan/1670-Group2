@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const connect = async () => {
+const connect = async() => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/group2", {
+        await mongoose.connect("mongodb://localhost:27017/ASM1670", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -12,4 +12,4 @@ const connect = async () => {
     }
 }
 
-module.exports = {connect};
+module.exports = { connect };

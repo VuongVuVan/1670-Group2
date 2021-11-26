@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    <div class="container">
+        <div class="mt-5">
+            <h3>Add Course</h3>
+        </div>
+        <form method="POST" action="/courses/store" class="mt-4"> 
+            <div class="form-group">
+                <label for="courseCategory">Course Category</label>
+                <input type="text" class="form-control" id="courseCategory" name="coursecategory">
+            </div>
+            <div class="form-group">
+                <label for="categoryName">Category Name</label>
+                <input type="text" class="form-control" id="categoryName" name="name">
+            </div>
+            <div class="form-group">
+                <label for="courseDescription">Course Description</label>
+                <textarea class="form-control" id="courseDescription" name="description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{{> bottom}} 
+</body>
+</html>

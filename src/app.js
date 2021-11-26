@@ -15,7 +15,11 @@ db.connect();
 // Use a router for a particular root URL
 const categoriesRouter = require("./routes/categories");
 app.use("/categories", categoriesRouter);
- 
+
+// Use a router for a particular root URL
+const coursesRouter = require("./routes/courses");
+app.use("/courses", coursesRouter);
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log('Sever is running at port ' + port);
