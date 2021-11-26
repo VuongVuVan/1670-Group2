@@ -5,9 +5,89 @@
     {{> adminLayout}}
     
     <main class="content-detail" id="common_content-area">
-        <h1>Hello World</h1>
+        <button type="button" class="btn btn-primary js-action-info">New Account</button>
+        <table class="table table-hover table-bordered caption-top">
+            <caption>List of accounts</caption>
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>@fpt.edu.vn</td>
+                    <td>Vu Van Vuong</td>
+                    <td>
+                        <a href="#">Edit</a>
+                        <a href="#">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </main>
 
+    <div class="modal-action_form js-modal-action_form">
+        <div class="modal-action_form-container js-modal-action_form-container">
+            <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
+            <header class="modal-action_form-header">
+                <i style="margin-right: 20px;" class="bi bi-person-plus"></i>
+                New Account
+            </header>
+
+            <form class="modal-action_form-body" method="POST" action="/admin/create">
+                <div>
+                    <label for="email" class="">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Your email..." required>
+                </div>
+                <div>
+                    <label for="fullName" class="">Full name</label>
+                    <input type="text" name="fullName" id="fullName" placeholder="Your full name..." required>
+                </div>
+                <div>
+                    <label for="password" class="">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Your password..." required>
+                </div>
+                <div>
+                    <label for="address" class="">Address</label>
+                    <input type="text" name="address" id="address" placeholder="Your address..." required>
+                </div>
+                <div>   
+                    <label for="doB" class="">Date of birth</label>
+                    <input type="text" name="doB" id="doB" placeholder="Your date of birth..." required>
+                </div>
+                <input type="submit" class="btn-action" value="Add">
+            </form>
+
+            <footer class="modal-action_form-footer">
+                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const actionInfo = document.querySelector(".js-action-info");
+        const modalActionForm = document.querySelector(".js-modal-action_form");
+        const modalClose = document.querySelector(".js-modal-action_form-close");
+        const modalContainer = document.querySelector(".js-modal-action_form-container");
+        function showActionForm() {
+            modalActionForm.classList.add("open");
+        }
+        function hideActionForm() {
+            modalActionForm.classList.remove("open");
+        }
+        actionInfo.addEventListener("click", showActionForm);
+        modalClose.addEventListener("click", hideActionForm);
+        modalActionForm.addEventListener("click", hideActionForm);
+        modalContainer.addEventListener("click", event => event.stopPropagation());
+    </script>
+    
 {{> bottom}}
 </body>
 </html>
