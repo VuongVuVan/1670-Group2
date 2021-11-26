@@ -121,6 +121,10 @@
     justify-content: space-between;
     align-items: center;
     transition: margin-left .5s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .common_interface-header-l_area {
@@ -139,6 +143,90 @@
 .common_interface_header_r-area {
     display: flex;
     align-items: center;
+}
+
+.header_r-area-info {
+    display: flex;
+    width: 300px;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.header_r-area-info img {
+    width: 56px; 
+    height: 56px;
+    border-radius: 100px;
+}
+
+.header_r-area-info label {
+    width: 82%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 2px 20px 2px 10px;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 600;
+    user-select: none;
+}
+
+.header_r-area-info input {
+    display: none;
+}
+
+#info-checkbox:checked + ul {
+    display: block;
+}
+
+.header_r-area-info ul {
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 66px;
+    width: 100%;
+    border-radius: 5px;
+    display: none;
+    user-select: none;
+}
+
+.header_r-area-info ul::before {
+    content: "";
+    transform: rotate(45deg);
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: -8px;
+    right: 20px;
+    z-index: -1;
+    background-color: white;
+}
+
+.header_r-area-info ul li {
+    list-style: none;
+    cursor: pointer;
+    line-height: 40px;
+    padding: 8px 20px;
+}
+
+.header_r-area-info ul li:not(:last-child) {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.header_r-area-info ul li a {
+    text-decoration: none;
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.header_r-area-info ul li a:hover {
+    color: black;
+    transition: 0.2s;
 }
 
 /*common left sidebar */
@@ -166,6 +254,7 @@
     color: #fff;
     background: black;
     padding: 20px 0;
+    margin-bottom: 25px;
 }
 
 .common_interface-l_sidebar a {
@@ -174,7 +263,7 @@
     color: #fff;
     display: block;
     transition: 0.3s;
-    font-size: 15px;
+    font-size: 17px;
     margin-bottom: 20px;
     text-transform: uppercase;
     font-weight: bold;
@@ -200,29 +289,42 @@
 /* common left sidebar toggle */
 
 .toggle_active1 {
-    width: 260px;
+    width: 280px;
 }
 
 .toggle_active2 {
-    margin-left: 260px;
+    margin-left: 280px;
 }
 
 /* common interface image slider */
 .common_content-area {
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #23E3C9;
-    transition: margin-left .5s;
+    /* height: 100vh; */
 }
+
+/* setup for common layouts */
+/* transtition */
+#common_content-area {
+    transition: margin-left .5s;
+    margin-top: 70px;
+}
+/* background to view content */
+.content-detail {
+    /* background-color: rgb(250, 250, 250); */
+    /* background-color: red; */
+    padding: 20px;
+}
+/* ending block */
 
 .image-slider {
     width: 800px;
     height: 500px;
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 80px;
+    margin: 90px;
 }
 
 .slides {

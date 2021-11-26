@@ -8,6 +8,10 @@ class AdminController {
     create(req, res) {
         res.render("admin/create");
     }
+
+    test(req, res) {
+        res.render("admin/test");
+    }
 }
 
 module.exports = new AdminController();
