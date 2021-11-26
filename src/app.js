@@ -28,7 +28,6 @@ app.use("/admin", adminRouter);
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
 
-
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(__dirname);
