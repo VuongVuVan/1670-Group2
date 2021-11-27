@@ -71,23 +71,6 @@
         </div>
     </div>
 
-    <script>
-        const actionInfo = document.querySelector(".js-action-info");
-        const modalActionForm = document.querySelector(".js-modal-action_form");
-        const modalClose = document.querySelector(".js-modal-action_form-close");
-        const modalContainer = document.querySelector(".js-modal-action_form-container");
-        function showActionForm() {
-            modalActionForm.classList.add("open");
-        }
-        function hideActionForm() {
-            modalActionForm.classList.remove("open");
-        }
-        actionInfo.addEventListener("click", showActionForm);
-        modalClose.addEventListener("click", hideActionForm);
-        modalActionForm.addEventListener("click", hideActionForm);
-        modalContainer.addEventListener("click", event => event.stopPropagation());
-    </script>
-    
 {{> bottom}}
 </body>
 </html>
