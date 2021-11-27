@@ -27,6 +27,9 @@ app.use("/admin", adminRouter);
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
 
+const traineeRouter = require("./routes/trainee");
+app.use("/trainee", traineeRouter);
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log('Sever is running at port ' + port);
