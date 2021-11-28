@@ -15,7 +15,7 @@
     const addBtn = document.querySelector(".js-add-info");
     const modalAddingForm = document.querySelector(".js-modal-adding_form");
     const closeBtns = document.querySelectorAll(".js-modal-action_form-close");
-    const modalContainer = document.querySelector(".js-modal-action_form-container");
+    const modalContainers = document.querySelectorAll(".js-modal-action_form-container");
     // block of code for editing
     const editBtns = document.querySelectorAll(".js-edit-info");
     const modalEditingForm = document.querySelector(".js-modal-editing_form");
@@ -45,6 +45,9 @@
     
     modalEditingForm.addEventListener("click", hideActionForm);
     modalAddingForm.addEventListener("click", hideActionForm);
-    modalContainer.addEventListener("click", event => event.stopPropagation());
+
+    for(const m of modalContainers) {
+        m.addEventListener("click", event => event.stopPropagation());    
+    }
 
 </script>
