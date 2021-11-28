@@ -41,6 +41,15 @@ class CategoryController {
             else next(err);
         });
     }
+
+    search(req, res, next) {
+        Category.find({name: {$regex: req.query.q, $options: 'i'}}, (err, categories) => {
+            if (!err) {
+                res.render("categories", { data: categories });
+            }
+            else next(err);
+        });
+    }
 }
 
 module.exports = new CategoryController();

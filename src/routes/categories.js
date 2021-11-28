@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const categoryController = require("../controllers/CategoryController");
 
+router.get("/search", categoryController.search);
 router.get("/delete", categoryController.delete);
 router.get("/edit", categoryController.edit);
 router.post("/update", categoryController.update);

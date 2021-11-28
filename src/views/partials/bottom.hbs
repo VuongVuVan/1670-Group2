@@ -6,23 +6,45 @@
     function toggle() {
         document.getElementById("common_interface-l_sidebar").classList.toggle("toggle_active1");
         document.getElementById("common_interface-header").classList.toggle("toggle_active2");
-        //document.getElementById("common_content-area").classList.toggle("toggle_active2");
+        document.getElementById("common_content-area").classList.toggle("toggle_active2");
     }
 </script>
 
 <script>
-    const actionInfo = document.querySelector(".js-action-info");
-    const modalActionForm = document.querySelector(".js-modal-action_form");
-    const modalClose = document.querySelector(".js-modal-action_form-close");
+    // block of code for adding
+    const addBtn = document.querySelector(".js-add-info");
+    const modalAddingForm = document.querySelector(".js-modal-adding_form");
+    const closeBtns = document.querySelectorAll(".js-modal-action_form-close");
     const modalContainer = document.querySelector(".js-modal-action_form-container");
-    function showActionForm() {
-        modalActionForm.classList.add("open");
+    // block of code for editing
+    const editBtns = document.querySelectorAll(".js-edit-info");
+    const modalEditingForm = document.querySelector(".js-modal-editing_form");
+
+    function showAddingForm() {
+        modalAddingForm.classList.add("open");
     }
+
     function hideActionForm() {
-        modalActionForm.classList.remove("open");
+        modalAddingForm.classList.remove("open");
+        modalEditingForm.classList.remove("open");
     }
-    actionInfo.addEventListener("click", showActionForm);
-    modalClose.addEventListener("click", hideActionForm);
-    modalActionForm.addEventListener("click", hideActionForm);
+    
+    function showEditingForm() {
+        modalEditingForm.classList.add("open");
+    }
+
+    for(const editBtn of editBtns) {
+        editBtn.addEventListener("click", showEditingForm);
+    }
+
+    for(const closeBtn of closeBtns) {
+        closeBtn.addEventListener("click", hideActionForm);
+    }
+
+    addBtn.addEventListener("click", showAddingForm);
+    
+    modalEditingForm.addEventListener("click", hideActionForm);
+    modalAddingForm.addEventListener("click", hideActionForm);
     modalContainer.addEventListener("click", event => event.stopPropagation());
+
 </script>

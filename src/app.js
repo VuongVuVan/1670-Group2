@@ -12,7 +12,7 @@ hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 // Connect to db
 const db = require("./config/db");
-// db.connect();
+db.connect();
 
 // Use a router for a particular root URL
 const categoriesRouter = require("./routes/categories");
