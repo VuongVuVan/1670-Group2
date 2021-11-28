@@ -15,8 +15,8 @@ const db = require("./config/db");
 db.connect();
 
 // Use a router for a particular root URL
-const categoriesRouter = require("./routes/categories");
-app.use("/categories", categoriesRouter);
+const demoRouter = require("./routes/demo");
+app.use("/demo", demoRouter);
 
 const coursesRouter = require("./routes/courses");
 app.use("/courses", coursesRouter);
