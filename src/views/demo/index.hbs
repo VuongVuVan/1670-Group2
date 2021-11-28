@@ -3,9 +3,9 @@
 {{> head}}
 <body>
     <div class="container">
-        <a href="/categories/create" class="btn btn-primary mt-5">Add Category</a>
+        <a href="/demo/create" class="btn btn-primary mt-5">Add Category</a>
         
-        <form action="/categories/search" method="GET">
+        <form action="/demo/search" method="GET">
             <input type="search" name="q" id="">
             <input type="submit" value="Search">
         </form>
@@ -26,8 +26,8 @@
                     <td>{{this.name}}</td>
                     <td>{{this.description}}</td>
                     <td>
-                        <a class="btn btn-link" href="/categories/edit/?id={{this._id}}">Edit</a>
-                        <a class="btn btn-link" href="/categories/delete/?id={{this._id}}">Delete</a>
+                        <a class="btn btn-link" href="/demo/edit/?id={{this._id}}">Edit</a>
+                        <a class="btn btn-link" href="/demo/delete/?id={{this._id}}">Delete</a>
                     </td>
                 </tr>
                 {{/each}}

@@ -16,7 +16,7 @@
     bottom: 0;
     left: 0;
     z-index: -1;
-    background-color: rgb(221, 221, 221);
+    /* background-color: rgb(221, 221, 221); */
 }
 
 .login-parent_block {
@@ -67,19 +67,20 @@
 
 .login-form-input {
     height: 50px;
-    background-color: rgb(229, 229, 229);
+    /* background-color: rgb(229, 229, 229); */
     border: none;
     outline: none;
     width: 60%;
     font-size: 1.2rem;
     padding: 5px 10px;
-    border-radius: 10px;
+    border-radius: 2px;
+    border-bottom: 5px solid #23E3C9;
 }
 
 .login-form-forgot_password-link {
     color: rgb(44, 44, 44);
     display: block;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     width: 60%;
 }
 
@@ -87,18 +88,19 @@
     height: 40px;
     width: 120px;
     outline: none;
-    background-color: rgb(205, 205, 205);
+    background-color: #23E3C9;
     font-size: 1.5rem;
     cursor: pointer;
     border: 4px;
     border-radius: 50px;
-    color: black;
+    color: white;
     font-weight: 600;
-    transition: 0.1s;
+    transition: .1s;
+    font-weight: 700;
 }
 
 .login-button:hover {
-    font-size: 160%;
+    opacity: 0.8;
 }
 
 .login-form-create_account {
