@@ -40,5 +40,13 @@ class CourseController {
             else next(err);
         })
     }
+
+    search(req, res, next) {
+        Course.find({ name: { $regex: req.query.qq, $options: 'i' } }, (err, courses) => {
+            if (!err) {
+                res.render("courses", { data: courses });
+            } else next(err);
+        });
+    }
 }
 module.exports = new CourseController();

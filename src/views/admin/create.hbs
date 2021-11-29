@@ -19,33 +19,32 @@
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="col">#</th>
-                    <th scope="col">Image</th>
                     <th scope="col">Email</th>
                     <th scope="col">Name</th>
                     <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
                 </tr>
             </thead>
             <tbody>
+                {{#each accounts}}
                 <tr>
                     <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>@fpt.edu.vn</td>
-                    <td>Vu Van Vuong</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.name}}</td>
                     <td style="text-align: center;">
-                        {{!-- <a href=""></a> --}}
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-success js-edit-info">
+                            <a href="/admin/accounts/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
                                 <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
-                            </button>
-                            <button type="button" class="btn btn-danger">
+                            </a>
+                            <a href="/account/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
                                 <i class="bi bi-x-lg"></i><span class=" fs-6" style="margin-left: 5px;">Delete</span>
-                            </button>
-                            <button type="button" class="btn btn-warning">
+                            </a>
+                            <a href="/account/delete?id={{this._id}}" class="btn btn-warning" style="border-bottom-left-radius: unset; border-top-left-radius: unset;">
                                 <i class="bi bi-gear"></i><span class=" fs-6" style="margin-left: 5px;">Set default password</span>
-                            </button>
+                            </a>
                         </div>
                     </td>
                 </tr>
+                {{/each}}
             </tbody>
         </table>
     </main>
@@ -58,26 +57,26 @@
                 New Account
             </header>
 
-            <form class="modal-action_form-body" method="POST" action="/admin/create">
+            <form class="modal-action_form-body" method="POST" action="/admin/accounts/create">
                 <div>
-                    <label for="addEmail" class="">Email</label>
-                    <input type="email" name="addEmail" id="addEmail" placeholder="Your email..." required>
+                    <label for="email" class="">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Your email..." required>
                 </div>
                 <div>
-                    <label for="addFullName" class="">Full name</label>
-                    <input type="text" name="addFullName" id="addFullName" placeholder="Your full name..." required>
+                    <label for="fullName" class="">Full name</label>
+                    <input type="text" name="name" id="name" placeholder="Your full name..." required>
                 </div>
                 <div>
-                    <label for="addPassword" class="">Password</label>
-                    <input type="password" name="addPassword" id="addPassword" placeholder="Your password..." required>
+                    <label for="password" class="">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Your password..." required>
                 </div>
                 <div>
-                    <label for="addAddress" class="">Address</label>
-                    <input type="text" name="addAddress" id="addAddress" placeholder="Your address..." required>
+                    <label for="address" class="">Address</label>
+                    <input type="text" name="address" id="address" placeholder="Your address..." required>
                 </div>
                 <div>   
-                    <label for="addDoB" class="">Date of birth</label>
-                    <input type="date" name="addDoB" id="addDoB" placeholder="Your date of birth..." required>
+                    <label for="dob" class="">Date of birth</label>
+                    <input type="date" name="dob" id="dob" placeholder="Your date of birth..." required>
                 </div>
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
             </form>
@@ -89,7 +88,7 @@
     </div>
 
     {{!-- block of code for editing --}}
-    <div class="modal-action_form js-modal-editing_form">
+    {{!-- <div class="modal-action_form js-modal-editing_form">
         <div class="modal-action_form-container js-modal-action_form-container">
             <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
             <header class="modal-action_form-header">
@@ -100,11 +99,11 @@
             <form class="modal-action_form-body" method="POST" action="/admin/create">
                 <div>
                     <label for="editEmail" class="">Email</label>
-                    <input type="email" name="email" id="editEmail" placeholder="Your email..." required>
+                    <input type="email" value="{{account.email}}" name="email" id="editEmail" placeholder="Your email..." required>
                 </div>
                 <div>
                     <label for="editFullName" class="">Full name</label>
-                    <input type="text" name="fullName" id="editFullName" placeholder="Your full name..." required>
+                    <input type="text" value="{{account.name}}" name="fullName" id="editFullName" placeholder="Your full name..." required>
                 </div>
                 <div>
                     <label for="editPassword" class="">Password</label>
@@ -125,7 +124,7 @@
                 <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
             </footer>
         </div>
-    </div>
+    </div> --}}
 
 {{> bottom}}
 </body>
