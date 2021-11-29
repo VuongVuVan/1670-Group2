@@ -1,4 +1,4 @@
-const Trainee = require("../models/Admin");
+const Trainee = require("../models/Trainee");
 
 class TraineeController {
     index(req, res) {
