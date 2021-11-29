@@ -10,15 +10,19 @@
         </a>
         <form class="row g-3 mt-4" method="POST" action="">
             <div class="text-left">
-                <img style="width: 200px; height: 200px;" src="/images/header/logo.png" class="img-thumbnail" alt="...">
+                <img style="width: 200px; height: 200px; margin-right: 20px;" src="/images/admin/background_image1.jpg" class="img-thumbnail" alt="">
+                <div style="display: inline-block; position: relative;">
+                    <img style="width: 200px; height: 200px;" src="" class="img-thumbnail" id="chosenImage" alt="">
+                    <i style="position: absolute;" class="bi bi-x-lg"></i>
+                </div>
             </div>
             <div class="input-group mt-4 mb-3">
-                <label class="input-group-text" for="inputGroupFile01">Upload</label>
-                <input type="file" class="form-control" id="inputGroupFile01">
+                <label class="input-group-text" for="btn-upload-img">Upload</label>
+                <input type="file" class="form-control" id="btn-upload-img" accept="">
             </div>
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4">
+                <input type="email" class="form-control" id="inputEmail4" value="@fpt.edu.vn">
             </div>
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Password</label>
@@ -38,9 +42,10 @@
             </div>
             <div class="col-md-4">
                 <label for="inputState" class="form-label">State</label>
-                <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
+                <select name="" id="inputState" class="form-select">
+                    <option value="{{id}}">IT</option>
+                    <option value="{{id}}">Business</option>
+                    <option value="{{id}}">ABC</option>
                 </select>
             </div>
             <div class="col-12 mt-5">
@@ -51,6 +56,23 @@
         </form>
     </main>
     
+    <script>
+        const img = document.querySelector("#chosenImage");
+        const uploadBtn = document.querySelector("#btn-upload-img");
+
+        uploadBtn.addEventListener("change", function() {
+            const file = this.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    const result = reader.result;
+                    img.src = result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
 {{> bottom}}
 </body>
 </html>
