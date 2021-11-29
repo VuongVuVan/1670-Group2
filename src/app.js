@@ -33,6 +33,7 @@ app.use("/staff", staffRouter);
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
 
+//Trainee
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
 
