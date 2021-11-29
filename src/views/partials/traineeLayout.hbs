@@ -1,0 +1,38 @@
+<header class="common_interface-header" id="common_interface-header">
+    <div class="common_interface-header-l_area">
+        <a href="/trainee"><img class="" src="/images/header/logo.png" alt=""></a>
+        <span style="font-size: 35px; cursor: pointer;" onclick="toggle()">&#9776;</span>
+    </div>
+    <div class="common_interface_header_r-area">
+        <div class="header_r-area-info">
+            <img src="" alt="">
+            <label for="info-checkbox">@fpt.edu.vn
+                <span class="fas fa-caret-down"></span>
+            </label>
+            <input type="checkbox" name="" id="info-checkbox">
+            <ul>
+                <li><a href="/trainee/profile">Your profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<aside id="common_interface-l_sidebar" class="common_interface-l_sidebar">
+    <a href="javascript:void(0)" class="l_sidebar-closebtn" onclick="toggle()">&times;</a>
+    <div class="l_sidebar-main_menu">
+        <h2>Menu</h2>
+        <a href="/trainee"><i class="bi bi-house-door"></i></i>Home</a>
+        <a href="#"><i class="bi bi-briefcase"></i>My course</a>
+        <a href="#"><i class="fa fa-file-o"></i>Your Profile</a>
+        <a href="#"><i class="bi bi-box-arrow-right"></i></i>Logout</a>
+    </div>
+</aside>
+
+<script>
+    function toggle() {
+        document.getElementById("common_interface-l_sidebar").classList.toggle("toggle_active1");
+        document.getElementById("common_interface-header").classList.toggle("toggle_active2");
+        //document.getElementById("common_content-area").classList.toggle("toggle_active2");
+    }
+</script>
