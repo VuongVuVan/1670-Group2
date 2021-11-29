@@ -18,11 +18,17 @@ db.connect();
 const demoRouter = require("./routes/demo");
 app.use("/demo", demoRouter);
 
+const categoriesRouter = require("./routes/categories");
+app.use("/categories", categoriesRouter);
+
 const coursesRouter = require("./routes/courses");
 app.use("/courses", coursesRouter);
 
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
+
+const staffRouter = require("./routes/staff");
+app.use("/staff", staffRouter);
 
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
