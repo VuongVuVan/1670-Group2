@@ -127,6 +127,7 @@
     top: 0;
     left: 0;
     right: 0;
+    z-index: 1;
 }
 
 .common_interface-header-l_area {
@@ -568,4 +569,27 @@
     align-items: center;
 }
 
-/* edit */
+/* edit page */
+/* upload image */
+.chosen_image-container {
+    display: inline-block; 
+    position: relative;
+}
+
+#cancel-btn {
+    position: absolute;
+    right: 10px;
+    top: 4px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #9658fe;
+    display: none;
+}
+
+.chosen_image-container.active:hover #cancel-btn {
+    display: block;
+}
+
+#cancel-btn:hover {
+    color: #e74c3c;
+}

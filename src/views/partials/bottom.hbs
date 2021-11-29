@@ -39,7 +39,7 @@
     }*/
 
     //for(const closeBtn of closeBtns) {
-        closeBtn.addEventListener("click", hideActionForm);
+    closeBtn.addEventListener("click", hideActionForm);
     //}
 
     addBtn.addEventListener("click", showAddingForm);
@@ -48,6 +48,30 @@
     modalAddingForm.addEventListener("click", hideActionForm);
 
     //for(const modalContainer of modalContainers) {
-        modalContainer.addEventListener("click", event => event.stopPropagation());    
+    modalContainer.addEventListener("click", event => event.stopPropagation());    
     //}
+</script>
+
+<script>
+    const chosenImgContainer = document.querySelector(".chosen_image-container");
+    const img = document.querySelector("#chosenImage");
+    const uploadBtn = document.querySelector("#btn-upload-img");
+    const cancelBtn = document.querySelector("#cancel-btn");
+
+    uploadBtn.addEventListener("change", function() {
+        const file = this.files[0];
+        if(file) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const result = reader.result;
+                img.src = result;
+                chosenImgContainer.classList.add("active");
+            }
+            cancelBtn.addEventListener("click", function() {
+                img.src = "";
+                chosenImgContainer.classList.remove("active");
+            });
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
