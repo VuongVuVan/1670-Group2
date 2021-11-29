@@ -30,6 +30,9 @@ app.use("/", siteRouter);
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
 
+const trainerRouter = require("./routes/trainer");
+app.use("/trainer", trainerRouter);
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log('Sever is running at port ' + port);
