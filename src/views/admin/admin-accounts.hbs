@@ -19,19 +19,29 @@
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="col">#</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Email</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Address</th>
                     <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
                 </tr>
             </thead>
             <tbody>
-                {{#each accounts}}
+                {{#each admins}}
                 <tr>
                     <th scope="row">1</th>
-                    <td>{{this.email}}</td>
-                    <td>{{this.name}}</td>
+                    <th scope="col">
+                        <img src="{{this.image}}" alt="">
+                    </th>
+                    <th scope="col">{{this.email}}</th>
+                    <th scope="col">{{this.name}}</th>
+                    <th scope="col">{{this.age}}</th>
+                    <th scope="col">{{this.dob}}</th>
+                    <th scope="col">{{this.address}}</th>
                     <td style="text-align: center;">
-                        <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
+                        <div class="btn-group" style="z-index: 0; height: 40px;" role="group" aria-label="Basic mixed styles example">
                             <a href="/admin/accounts/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
                                 <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
                             </a>
@@ -57,14 +67,14 @@
                 New Account
             </header>
 
-            <form class="modal-action_form-body" method="POST" action="/admin/accounts/create">
+            <form class="modal-action_form-body" method="POST" action="/admin/admin-accounts/store" enctype="multipart/form-data">
                 <div>
                     <label for="email" class="">Email</label>
                     <input type="email" name="email" id="email" placeholder="Your email..." required>
                 </div>
                 <div>
-                    <label for="fullName" class="">Full name</label>
-                    <input type="text" name="name" id="fullName" placeholder="Your full name..." required>
+                    <label for="name" class="">Full name</label>
+                    <input type="text" name="name" id="name" placeholder="Your full name..." required>
                 </div>
                 <div>
                     <label for="password" class="">Password</label>
@@ -77,6 +87,10 @@
                 <div>   
                     <label for="dob" class="">Date of birth</label>
                     <input type="date" name="dob" id="dob" placeholder="Your date of birth..." required>
+                </div>
+                <div>   
+                    <label for="avatar" class="">Avatar</label>
+                    <input type="file" name="image" id="avatar" accept="image/*">
                 </div>
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
             </form>

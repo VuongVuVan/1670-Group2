@@ -7,16 +7,30 @@ class AdminController {
     }
 
     showAction(req, res, next) {
-        Account.find({}, (err, accounts) => {
-            if(!err) res.render("admin/create", {accounts});
+        Admin.find({}, (err, admins) => {
+            if(!err) res.render("admin/admin-accounts", {admins});
             else next(err);
         });
     }
 
     store(req, res, next) {
-        const account = new Account(req.body);
+        const account = new Account({
+            email: req.body.email,
+            password: req.body.password,
+            role: "admin"
+        });
+        const admin = new Admin({
+            email: req.body.email,
+            name: req.body.name,
+            dob: req.body.dob,
+            address: req.body.address
+        });
         account.save(err => {
-            if (!err) res.redirect("/admin/create");
+            // if (!err) res.redirect("/admin/admin-accounts");
+            // else next(err);
+        });
+        admin.save(err => {
+            if (!err) res.redirect("/admin/admin-accounts");
             else next(err);
         });
     }

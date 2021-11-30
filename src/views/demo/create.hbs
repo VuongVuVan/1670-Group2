@@ -6,7 +6,7 @@
         <div class="mt-5">
             <h3>Add demo</h3>
         </div>
-        <form method="POST" action="/demo/store" class="mt-4"> 
+        <form method="POST" action="/demo/store" class="mt-4" enctype="multipart/form-data"> 
             <div class="form-group">
                 <label for="categoryName">Demo Name</label>
                 <input type="text" class="form-control" id="categoryName" name="name">
@@ -14,6 +14,10 @@
             <div class="form-group">
                 <label for="categoryDescription">Demo Description</label>
                 <textarea class="form-control" id="categoryDescription" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control" id="image" name="image">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

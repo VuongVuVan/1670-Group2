@@ -1,9 +1,12 @@
 const Demo = require("../models/Demo");
+const fs = require("fs");
+const path = require("path");
+const currentPath = path.join(__dirname, "../public/uploads/demo");
 
 class DemoController {
     show(req, res, next) {
         Demo.find({}, (err, demos) => {
-            if (!err) res.render("demo", { data: demos });
+            if (!err) res.render("demo/index", {data: demos});
             else next(err);
         });
     }
@@ -13,7 +16,16 @@ class DemoController {
     }
 
     store(req, res, next) {
-        const demo = new Demo(req.body);
+        const obj = {
+            name: req.body.name,
+            description: req.body.description,
+            image: {
+                data: fs.readFileSync(path.join(currentPath, req.file.filename)),
+                contentType: "image/png"
+            }
+        }
+
+        const demo = new Demo(obj);
         demo.save(err => {
             if (!err) res.redirect("/demo");
             else next(err);

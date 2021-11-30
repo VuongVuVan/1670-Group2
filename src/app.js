@@ -7,8 +7,10 @@ app.set('view engine', 'hbs');
 
 app.set('views', path.join(__dirname, 'views'));
 const hbs = require('hbs');
-
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+hbs.registerHelper("convertImage", data => {
+    return Buffer.from(data).toString('base64');
+});
 
 // Connect to db
 const db = require("./config/db");
