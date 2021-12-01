@@ -39,6 +39,11 @@ app.use("/", siteRouter);
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
 
+const seeallRouter = require("./routes/seeall");
+app.use("/seeall", seeallRouter);
+
+
+//
 const trainerRouter = require("./routes/trainer");
 app.use("/trainer", trainerRouter);
 
