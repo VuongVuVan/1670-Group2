@@ -2,9 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Course = new Schema({
-    coursecategory: { type: String, default: "Unknown" },
-    name: { type: String, default: "Unknown" },
-    description: { type: String }
+    code: { type: String, required: true },
+    name: { type: String, required: true },
+    category: { type: String, required: true },
+    description: { type: String, required: true },
+    session: { type: Number, required: true },
+    createAt: { type: String, required: true },
+    updateAt: { type: String, required: true },
+
 });
 
 module.exports = mongoose.model("Course", Course);

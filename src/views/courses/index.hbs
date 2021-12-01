@@ -17,9 +17,13 @@
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="col">#</th>
-                    <th scope="col">Course Category</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Course Name</th>
                     <th scope="col">Category Name</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Session</th>
+                    <th scope="col">createAt</th>
+                    <th scope="col">updateAt</th>
                     <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
                 </tr>
             </thead>
@@ -27,15 +31,19 @@
                 {{#each data}}
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="row">{{@index}}</th>
-                    <td>{{this.coursecategory}}</td>
+                    <td>{{this.code}}</td>
                     <td>{{this.name}}</td>
+                    <td>{{this.category}}</td>
                     <td>{{this.description}}</td>
+                    <td>{{this.session}}</td>
+                    <td>{{this.createAt}}</td>
+                    <td>{{this.updateAt}}</td>
                     <td>
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn btn-success js-edit-info">
                                 <i class="bi bi-pencil-square"></i>
-                                <a class ="underline-white" href="/courses/update/?id={{data._id}}">
-                                    <span class=" fs-6" style="margin-left: 18px;">Edit</span>
+                                <a class ="underline-white" href="/courses/edit/?id={{this._id}}">
+                                    <span class=" fs-6" style="margin-left: auto;">Edit</span>
                                 </a>
                             </button>
                             <button type="button" class="btn btn-danger">
@@ -55,23 +63,50 @@
         <div class="modal-action_form-container js-modal-action_form-container">
             <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
             <header class="modal-action_form-header">
-                <i style="margin-right: 20px;" class="bi bi-person-plus"></i>
+                <i style="margin-right: 20px;" class="bi bi-book"></i>
                 New Course
             </header>
 
             {{!-- block of code for add new course --}}
             <form class="modal-action_form-body" method="POST" action="/courses/store">
                 <div class="form-group">
-                    <label for="courseCategory">Course Category</label>
-                    <input type="text" class="form-control" id="courseCategory" name="coursecategory" placeholder="Course Category..." required>
+                    <label for="codeCourse">Code</label>
+                    <input type="text" class="form-control" id="codeCourse" name="code" placeholder="Code of Course..." required>
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Course Name</label>
-                    <input type="text" class="form-control" id="categoryName" name="name" placeholder="Course Name..." required>
+                    <input type="text" class="form-control" id="courseName" name="name" placeholder="Course Name..." required>
                 </div>
+
+
+
+                <div class="col-md-4">
+                <label for="categoryname" class="form-label">Category Name</label>
+                <select name="category" id="categoryname" class="form-select">
+                    for
+                    <option value="{{category}}">IT</option>
+                </select>
+                </div>
+
+                {{!-- <div class="form-group">
+                    <label for="name">Category Name</label>
+                    <input type="text" class="form-control" id="categoryName" name="name" placeholder="Category Name..." required>
+                </div> --}}
                 <div class="form-group">
                     <label for="courseDescription">Course Description</label>
                     <textarea class="form-control" id="courseDescription" name="description" placeholder="Course Description..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="session">Session</label>
+                    <input type="number" class="form-control" id="session" name="session" placeholder="Session of Course..." required>
+                </div>
+                <div class="form-group">
+                    <label for="create">CreateAt</label>
+                    <input type="date" class="form-control" id="create" name="createAt" placeholder="Update At..." required>
+                </div>
+                <div class="form-group">
+                    <label for="update">UpdateAt</label>
+                    <input type="date" class="form-control" id="update" name="updateAt" placeholder="Update At..." required>
                 </div>
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
             </form>
@@ -80,35 +115,6 @@
             </footer>
         </div>
     </div>
-
-    {{!-- block of code for editing --}}
-        <div class="modal-action_form js-modal-editing_form">
-        <div class="modal-action_form-container js-modal-action_form-container">
-            <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
-            <header class="modal-action_form-header">
-                <i style="margin-right: 20px;" class="bi bi-person"></i>
-                Edit Course
-            </header>
-
-        <form class="modal-action_form-body">
-                <div class="form-group"> 
-                    <label for="coursecategory">Course Category</label>
-                    <input type="text" class="form-control" value="{{data.coursecategory}}" id="coursecategory" name="coursecategory" placeholder="Course Category..." required>
-                </div>
-                <div class="form-group">
-                    <label for="name">Course Name</label>
-                    <input type="text" class="form-control" value="{{data.name}}" id="name" name="name" placeholder="Course Name..." required>    
-                </div>
-                <div class="form-group">
-                    <label for="description">Course Description</label>
-                    <textarea class="form-control" id="description" name="description" placeholder="Course Description...." required>{{data.description}}</textarea>
-                </div>
-                <button type="submit" class="btn-action">Update<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
-            </form class="form-group">
-            <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
-            </footer>
-        </div>
     </div>
 {{> bottom}}
 </body>
