@@ -3,10 +3,13 @@ const Schema = mongoose.Schema;
 
 const AdminSchema = new Schema({
     email: {type:String, required:true, unique:true},
-    image: {type:Buffer},
+    image: {
+        data: {type:Buffer, required:true},
+        contentType: String
+    },
     name: {type:String, required:true},
-    age: {type:Number},
-    dob: {type:Date, required:true},
+    age: {type:Number, required:true},
+    dob: {type:String, required:true},
     address: {type:String, required:true}
 });
 

@@ -1,7 +1,7 @@
 const Demo = require("../models/Demo");
 const fs = require("fs");
 const path = require("path");
-const avatarPath = path.join(__dirname, "../public/uploads/demo");
+const destiantion = path.join(__dirname, "../public/uploads/demo");
 
 class DemoController {
     show(req, res, next) {
@@ -20,7 +20,7 @@ class DemoController {
             name: req.body.name,
             description: req.body.description,
             image: {
-                data: fs.readFileSync(path.join(avatarPath, req.file.filename)),
+                data: fs.readFileSync(path.join(destiantion, req.file.filename)),
                 contentType: "image/png"
             }
         }
