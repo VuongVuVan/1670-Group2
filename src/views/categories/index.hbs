@@ -19,6 +19,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Total Course</th>
                     <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
                 </tr>
             </thead>
@@ -28,12 +29,13 @@
                     <th scope="row">{{@index}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.description}}</td>
+                    <td>{{this.total}}</td>
                     <td>
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn btn-success js-edit-info">
                                 <i class="bi bi-pencil-square"></i>
-                                <a class ="underline-white" href="/categories/update/?id={{data._id}}">
-                                    <span class=" fs-6" style="margin-left: 18px;">Edit</span>
+                                <a class ="underline-white" href="/categories/edit?id={{this._id}}">
+                                    <span class=" fs-6" style="margin-left: auto;">Edit</span>
                                 </a>
                             </button>
                             <button type="button" class="btn btn-danger">
@@ -54,7 +56,7 @@
         <div class="modal-action_form-container js-modal-action_form-container">
             <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
             <header class="modal-action_form-header">
-                <i style="margin-right: 20px;" class="bi bi-person-plus"></i>
+                <i style="margin-right: 20px;" class="bi bi-stack"></i>
                 New Category
             </header>
 
@@ -68,6 +70,10 @@
                     <label for="categoryDescription">Category Description</label>
                     <textarea class="form-control" id="categoryDescription" name="description" placeholder="Description..." required></textarea>
                 </div>
+                <div>
+                    <label for="TotalCourse">Total Course</label>
+                    <input type="number" class="form-control" id="totalCourse" name="total"  placeholder="Total of Course..." required>
+                </div>
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
             </form>
             <footer class="modal-action_form-footer">
@@ -75,33 +81,6 @@
             </footer>
         </div>
     </div>
-
-    {{!-- block of code for editing --}}
-        <div class="modal-action_form js-modal-editing_form">
-        <div class="modal-action_form-container js-modal-action_form-container">
-            <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
-            <header class="modal-action_form-header">
-                <i style="margin-right: 20px;" class="bi bi-person"></i>
-                Edit Category
-            </header>
-
-        <form class="modal-action_form-body">
-                <div>
-                    <label for="name">Category Name</label>
-                    <input type="text" class="form-control" value="{{data.name}}" id="name" name="name"  placeholder="Name of Category..." required>
-                </div>
-                <div>
-                    <label for="description">Category Description</label>
-                    <textarea class="form-control" id="description" name="description" placeholder="Name of Category..." required>{{data.description}}</textarea>
-                </div>
-                <button type="submit" class="btn-action">Update<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
-            </form>
-            <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
-            </footer>
-        </div>
-    </div>
-
 {{> bottom}}
 </body>
 </html>

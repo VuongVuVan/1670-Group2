@@ -1,4 +1,5 @@
 const Course = require("../models/Course");
+const Category = require("../models/Category");
 
 class CourseController {
     show(req, res, next) {
@@ -6,7 +7,12 @@ class CourseController {
             if (!err) res.render("courses", { data: courses });
             else next(err);
         });
+        Category.find({}, (err, categories) => {
+            if (!err) res.render("categories", { data: categories });
+            else next(err);
+        })
     }
+
 
     create(req, res, next) {
         res.render("courses/create")

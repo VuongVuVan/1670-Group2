@@ -28,7 +28,10 @@ class CategoryController {
         });
     }
 
+
     update(req, res, next) {
+        // console.log(req.body)
+        // console.log(req.query.id)
         Category.updateOne({ _id: req.query.id }, req.body, err => {
             if (!err) res.redirect("/categories");
             else next(err);
