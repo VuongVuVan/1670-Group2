@@ -2,22 +2,31 @@
 <html lang="en">
 {{> head}}
 <body>
-    <div class="container">
-        <div class="mt-4">
-            <h3>Update Category</h3>
-        </div>
-        <form class="mt-4" method="POST", action="/categories/update/?id={{data._id}}">
-            <div class="form-group">
+    {{> staffLayout}}
+    <main class="content-detail" id="common_content-area">
+        <a href="/categories" type="button" class="btn btn-link fs-5">
+            <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+        </a>
+        <form class="row g-3 mt-4" method="POST" action="/categories/update/?id={{data._id}}">
+            <div class="col-md-6">
                 <label for="name">Category Name</label>
-                <input type="text" class="form-control" value="{{data.name}}" id="name" name="name">
+                <input type="text" class="form-control" value="{{data.name}}" id="name" name="name" placeholder="Name of Category..." required>
             </div>
-            <div class="form-group">
-                <label for="description">Category Description</label>
-                <textarea class="form-control" id="description" name="description">{{data.description}}</textarea>
+            <div class="col-md-6">
+                <label for="TotalCourse">Total Course</label>
+                <input type="number" class="form-control"  value="{{data.total}}" id="totalCourse" name="total"  placeholder="Total of Course..." required>
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <div class="col-md-6">
+                    <label for="description">Category Description</label>
+                    <textarea class="form-control" id="description" name="description" placeholder="Name of Category..." required>{{data.description}}</textarea>
+            </div>
+            <div class="col-12 mt-5" style= "text-align: center">
+                <button type="submit" class="btn btn-primary fs-5" style="font-weight: 500;">Update
+                    <i class="bi bi-check2 fs-5"></i>
+                </button>
+            </div>
         </form>
-    </div>
+    </main>
 {{> bottom}}
 </body>
 </html>
