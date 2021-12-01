@@ -32,7 +32,7 @@ class TraineeController {
             address: req.body.address,
             education: req.body.education,
             image: {
-                data: fs.readFileSync(path.join(avatarPath, req.file.filename)),
+                data: fs.readFileSync(path.join(destiantion, req.file.filename)),
                 contentType: "image/png"
             }
         }
