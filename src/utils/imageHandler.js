@@ -6,7 +6,7 @@ const path = require("path");
 exports.resize = (req, res, next) => {
     sharp(req.file.path)
     .resize(200, 200)
-    .toFile("../config", (err, info) => {
+    .toFile("../", (err, info) => {
         console.log(err)
         console.log("===============")
         console.log(info)
@@ -20,16 +20,17 @@ exports.resize = (req, res, next) => {
 exports.upload = destination => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, currentPath);
+            cb(null, destination);
         },
         filename: (req, file, cb) => {
             var index = file.originalname.lastIndexOf(".");
-            var extension = file.originalname.substr(index + 1);
-            var image_name = req.body.name + "_" + Date.now() + "." + extension;
+            var extension = file.originalname.substr(index+1);
+            var image_name = req.body.email.split("@")[0] + "_" +  Date.now() + "." + extension;
             cb(null, image_name);
         }
     });
-    return multer({ storage: storage });
+    const limits = {
+        fieldSize: 1000000
+    }
+    return multer({storage, limits}).single("image");
 }
-
-module.exports = { upload };
