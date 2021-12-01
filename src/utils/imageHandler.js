@@ -7,13 +7,12 @@ function upload(currentPath) {
         },
         filename: (req, file, cb) => {
             var index = file.originalname.lastIndexOf(".");
-            var extension = file.originalname.substr(index+1);
-            var image_name = req.body.name + "_" +  Date.now() + "." + extension;
+            var extension = file.originalname.substr(index + 1);
+            var image_name = req.body.name + "_" + Date.now() + "." + extension;
             cb(null, image_name);
         }
     });
-    return multer({storage: storage});
+    return multer({ storage: storage });
 }
 
-module.exports = upload;
-
+module.exports = { upload };

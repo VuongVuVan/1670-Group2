@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../utils/uploadImage");
+const upload = require("../utils/imageHandler");
 const demoController = require("../controllers/DemoController");
 const path = require("path");
 const avatarPath = path.join(__dirname, "../public/uploads/demo");
