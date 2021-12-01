@@ -1,16 +1,20 @@
 const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("fs");
+const path = require("path");
 
 exports.resize = (req, res, next) => {
-    console.log("");
     sharp(req.file.path)
     .resize(200, 200)
-    .toFile("../", (err, info) => {
+    .toFile("../config", (err, info) => {
+        console.log(err)
+        console.log("===============")
+        console.log(info)
         // fs.unlinkSync(req.file.path);
         if(!err) console.log("Resize succeed");
-        else next(err);
+        else console.log(err);
     });
+    next();
 }
 
 exports.upload = destination => {
