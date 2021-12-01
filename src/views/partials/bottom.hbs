@@ -75,3 +75,20 @@
         }
     });
 </script>
+
+<script>
+    const previewImg = document.querySelector("#previewImage");
+    const uploadBtnP = document.querySelector("#btn-add-img");
+
+    uploadBtnP.addEventListener("change", function() {
+        const file = this.files[0];
+        if(file) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const result = reader.result;
+                previewImg.src = result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
