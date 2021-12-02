@@ -11,6 +11,9 @@ hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 hbs.registerHelper("convertImage", data => {
     return Buffer.from(data).toString('base64');
 });
+hbs.registerHelper("convertDate", stringDate => {
+    return stringDate.split("-").reverse().join("-");
+});
 
 // Connect to db
 const db = require("./config/db");
