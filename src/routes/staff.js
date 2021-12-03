@@ -9,6 +9,6 @@ router.get("/profile", staffController.show);
 router.get("/edit", staffController.edit);
 router.post("/update", staffController.update);
 router.get("/", staffController.index);
-router.post("/store", img.upload(destination), staffController.store);
+// router.post("/store", img.upload(destination), staffController.store);
 
 module.exports = router;

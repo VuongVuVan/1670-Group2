@@ -18,7 +18,6 @@ class AdminController {
     }
 
     store(req, res, next) {
-        console.log(req.file)
         const account = new Account({
             email: req.body.email,
             role: "admin"
@@ -44,8 +43,15 @@ class AdminController {
     }
 
     edit(req, res, next) {
-        Account.findById(req.query.id, (err, account) => {
-            if (!err) res.render("admin/edit", {account});
+        Admin.findById(req.query.id, (err, admin) => {
+            if (!err) res.render("admin/edit", {admin});
+            else next(err);
+        });
+    }
+
+    update(req, res, next) {
+        Demo.updateOne({ _id: req.query.id }, req.body, err => {
+            if (!err) res.redirect("/demo");
             else next(err);
         });
     }
