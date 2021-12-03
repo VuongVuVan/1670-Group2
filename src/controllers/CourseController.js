@@ -4,13 +4,17 @@ const Category = require("../models/Category");
 class CourseController {
     show(req, res, next) {
         Course.find({}, (err, courses) => {
-            if (!err) res.render("courses", { data: courses });
-            else next(err);
+            // if (!err) res.render("courses", { data: courses });
+            // else next(err);
+            Category.find({}, (err, categories) => {
+                if (!err) res.render("courses", { data: categories, data1: courses });
+                else next(err);
+            })
         });
-        Category.find({}, (err, categories) => {
-            if (!err) res.render("categories", { data: categories });
-            else next(err);
-        })
+        // Category.find({}, (err, categories) => {
+        //     if (!err) res.render("categories", { data: categories, data1: courses });
+        //     else next(err);
+        // })
     }
 
 
