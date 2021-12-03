@@ -22,17 +22,20 @@ class AdminController {
             email: req.body.email,
             role: "admin"
         });
-        const admin = new Admin({
-            email: req.body.email,
-            image: {
-                data: fs.readFileSync(path.join(destination, req.file.filename)),
-                contentType: "image/png"
-            },
-            name: req.body.name,
-            age: date.calculateAge(req.body.dob),
-            dob: date.convertDateAsString(req.body.dob),
-            address: req.body.address
-        });
+        let admin;
+        if(req.file) {
+            admin = new Admin({
+                email: req.body.email,
+                image: {
+                    data: fs.readFileSync(req.file.path),
+                    contentType: "image/png"
+                },
+                name: req.body.name,
+                age: date.calculateAge(req.body.dob),
+                dob: date.convertDateAsString(req.body.dob),
+                address: req.body.address
+            });
+        }
         account.save(err => {
             if (err) return next(err);
         });
@@ -50,8 +53,34 @@ class AdminController {
     }
 
     update(req, res, next) {
-        Demo.updateOne({ _id: req.query.id }, req.body, err => {
-            if (!err) res.redirect("/demo");
+        const account = {email: req.body.email};
+        let admin;
+        if(req.file) {
+            admin = {
+                email: req.body.email,
+                image: {
+                    data: fs.readFileSync(req.file.path),
+                    contentType: "image/png"
+                },
+                name: req.body.name,
+                age: date.calculateAge(req.body.dob),
+                dob: date.convertDateAsString(req.body.dob),
+                address: req.body.address
+            };
+        }else {
+            admin = {
+                email: req.body.email,
+                name: req.body.name,
+                age: date.calculateAge(req.body.dob),
+                dob: date.convertDateAsString(req.body.dob),
+                address: req.body.address
+            }
+        }
+        Account.updateOne({email: req.body.email}, account, err => {
+            if(err) next(err);
+        });
+        Admin.updateOne({_id: req.query.id}, admin, err => {
+            if(!err) res.redirect("/admin/admin-accounts");
             else next(err);
         });
     }
