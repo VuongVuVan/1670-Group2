@@ -5,36 +5,25 @@
     {{> traineeLayout}}
 
     <main class="content-detail" id="common_content-area">
-        <a href="/trainee/profile" type="button" class="btn btn-link fs-5">
+        <a href="/seeall" type="button" class="btn btn-link fs-5">
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
         </a>
-        <form class="row g-3 mt-4" method="POST" action="">
-            {{!-- <div class="text-left">
-                <img style="width: 200px; height: 200px; margin-right: 20px;" src="/images/admin/background_image1.jpg" class="img-thumbnail" alt="">
-                <div class="chosen_image-container">
-                    <img style="width: 200px; height: 200px;" src="" class="img-thumbnail" id="chosenImage" alt="">
-                    <i id="cancel-btn" class="bi bi-x-lg"></i>
-                </div>
-            </div> --}}
-            {{!-- <div class="input-group mt-4 mb-3">
-                <label class="input-group-text" for="btn-upload-img">Upload</label>
-                <input type="file" class="form-control" id="btn-upload-img" accept="">
-            </div> --}}
+        <form class="row g-3 mt-4" method="POST" action="/seeall/update/?id={{data._id}}">
             <div class="col-md-6">
-                <label for="code" class="form-label">Course Category</label>
-                <input type="code" class="form-control" id="inputEmail4" value="">
+                <label for="coursecategory" class="form-label">Course Category</label>
+                <input type="coursecategory" class="form-control" id="coursecategory" value="{{data.coursecategory}}"  name="coursecategory" placeholder="Course Category..." required>
             </div>
-            <div class="col-12">
+            <div class="col-md-6">
                 <label for="name" class="form-label">Name</label>
-                <input type="name" class="form-control" id="inputAddress" placeholder="">
+                <input type="name" class="form-control" value="{{data.name}}" id="name" name="name" placeholder="Name of Category..." required>
             </div>
-            <div class="col-12">
+            <div class="col-md-6">
                 <label for="inputAddress2" class="form-label">Trainer</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="">
+                <input type="text" class="form-control" value="{{data.trainer}}" id="trainer" name="trainer" placeholder="Trainer of course">
             </div>
             <div class="col-md-6">
                 <label for="inputCity" class="form-label">Total</label>
-                <input type="text" class="form-control" id="">
+                <input type="number" class="form-control" value="{{data.total}}" id="totalCourse" name="total"  placeholder="Total of Course..." required>
             </div>
             {{!-- <div class="col-md-4">
                 <label for="inputState" class="form-label">State</label>
