@@ -2,58 +2,62 @@ const Admin = require("../models/Admin");
 const Account = require("../models/Account");
 const date = require("../utils/dateHandler");
 const fs = require("fs");
+const path = require("path");
+const { encrypt } = require("../utils/hashingHandler");
+const defaultPassword = "123456789";
+const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 
 class AdminController {
     indexAction(req, res, next) {
         res.render("admin", {user: req.session.user});
     }
     
-    showAction(req, res, next) {
+    showAdminAccounts(req, res, next) {
         Admin.find({}, (err, admins) => {
             if(!err) res.render("admin/admin-accounts", {admins, user: req.session.user});
             else next(err);
         });
     }
 
-    store(req, res, next) {
-        const account = new Account({
-            email: req.body.email,
-            role: "admin"
-        });
-        let admin;
-        if(req.file) {
-            admin = new Admin({
+    async storeAdminAccount(req, res, next) {
+        try {
+            const account = new Account({
+                email: req.body.email,
+                password: await encrypt(defaultPassword),
+                role: "admin"
+            });
+            const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
+            const admin = new Admin({
                 email: req.body.email,
                 image: {
-                    data: fs.readFileSync(req.file.path),
+                    data: data,
                     contentType: "image/png"
                 },
                 name: req.body.name,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address
             });
+            account.save();
+            admin.save();
+        } catch (err) {
+            console.log(err);
+            return next(err);
         }
-        account.save(err => {
-            if (err) return next(err);
-        });
-        admin.save(err => {
-            if (!err) res.redirect("/admin/admin-accounts");
-            else next(err);
-        });
+        res.redirect("/admin/admin-accounts");
     }
 
-    edit(req, res, next) {
+    editAdminAccount(req, res, next) {
         Admin.findById(req.query.id, (err, admin) => {
-            if (!err) res.render("admin/edit", {admin});
+            if (!err) res.render("admin/edit", {admin, user: req.session.user});
             else next(err);
         });
     }
 
-    update(req, res, next) {
-        const account = {email: req.body.email};
-        let admin;
+    async updateAdminAccount(req, res, next) {
+        const newAccount = {email: req.body.email};
+        let newAdmin;
         if(req.file) {
-            admin = {
+            newAdmin = {
                 email: req.body.email,
                 image: {
                     data: fs.readFileSync(req.file.path),
@@ -62,34 +66,34 @@ class AdminController {
                 name: req.body.name,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address
-            };
+            }
         }else {
-            admin = {
+            newAdmin = {
                 email: req.body.email,
                 name: req.body.name,
-                age: date.calculateAge(req.body.dob),
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address
             }
         }
-        Account.updateOne({email: req.body.email}, account, err => {
-            if(err) return next(err);
-        });
-        Admin.updateOne({_id: req.query.id}, admin, err => {
-            if(!err) res.redirect("/admin/admin-accounts");
-            else next(err);
-        });
-    }
-
-    async delete(req, res, next) {
-        const deletedAdmin = await Admin.findByIdAndDelete(req.query.id).catch(err => {
+        try {
+            await Account.updateOne({email: req.body.email}, newAccount);
+            await Admin.updateOne({_id: req.query.id}, newAdmin);
+        } catch (err) {
             console.log(err);
             return next(err);
-        });
-        Account.deleteOne({email: deletedAdmin.email}, err => {
-            if (!err) res.redirect("/admin/admin-accounts");
-            else next(err);
-        });
+        }
+        res.redirect("/admin/admin-accounts");
+    }
+
+    async deleteAdminAccount(req, res, next) {
+        try {
+            const deletedAdmin = await Admin.findByIdAndDelete(req.query.id);
+            await Account.deleteOne({email: deletedAdmin.email});
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.redirect("/admin/admin-accounts");
     }
 }
 

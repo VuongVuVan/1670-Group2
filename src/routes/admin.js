@@ -7,11 +7,11 @@ const path = require("path");
 const destination = path.join(__dirname, "../public/uploads/admins");
 const width = height = 170;
 
-router.post("/admin-accounts/update", isAdmin, img.upload(destination), img.resize(width, height), adminController.update);
-router.get("/admin-accounts/edit", isAdmin, adminController.edit);
-router.post("/admin-accounts/store", isAdmin, img.upload(destination), img.resize(width, height), adminController.store);
-router.get("/admin-accounts/delete", isAdmin, adminController.delete);
-router.get("/admin-accounts", isAdmin, adminController.showAction);
+router.post("/admin-accounts/update", isAdmin, img.upload(destination), img.resize(width, height), adminController.updateAdminAccount);
+router.get("/admin-accounts/edit", isAdmin, adminController.editAdminAccount);
+router.post("/admin-accounts/store", isAdmin, img.upload(destination), img.resize(width, height), adminController.storeAdminAccount);
+router.get("/admin-accounts/delete", isAdmin, adminController.deleteAdminAccount);
+router.get("/admin-accounts", isAdmin, adminController.showAdminAccounts);
 router.get("/", isAdmin, adminController.indexAction);
 
 module.exports = router;
