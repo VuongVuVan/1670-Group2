@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const avatarPath = path.join(__dirname, "../public/uploads/demo");
 
-
 class StaffController {
     index(req, res) {
         res.render("staff");
@@ -51,6 +50,14 @@ class StaffController {
             } else next(err);
         });
     }
+
+    /** (Vuong)
+     * ================================================================ *
+     * ================================================================ *
+     * ====================MANAGE TRAINEE ACCOUNT====================== *
+     * ================================================================ *
+     * ================================================================ *
+     */
 }
 
 module.exports = new StaffController();
