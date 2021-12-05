@@ -3,20 +3,22 @@ const Admin = require("../models/Admin");
 const Staff = require("../models/Staff");
 const Trainer = require("../models/Trainer");
 const Trainee = require("../models/Trainee");
+const { checkPassword } = require("../utils/hashingHandler");
 
 class SiteController {
     indexAction(req, res, next) {
         res.render("index");
     }
 
-    async loginAction(req, res, next) {
+    async login(req, res, next) {
         let anAccount;
         let anUser;
+        var match = false;
         try {
             const email = req.body.email;
             anAccount = await Account.findOne({email});
-            if(!anAccount || req.body.password != anAccount.password) 
-                return res.render("index", {msg: "Your email or password is incorrect!"});
+            if(anAccount) match = checkPassword(req.body.password, anAccount.password);
+            if(!match) return res.render("index", {msg: "Your email or password is incorrect!"});
             if(anAccount.role == "admin") {
                 anUser = await Admin.findOne({email});
             }else if(anAccount.role == "staff") {
@@ -39,7 +41,7 @@ class SiteController {
         }
     }
 
-    logoutAction(req, res, next) {
+    logout(req, res, next) {
         req.session.destroy();
         res.redirect("/");
     }
