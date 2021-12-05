@@ -1,20 +1,15 @@
 const Course = require("../models/Course");
 const Category = require("../models/Category");
+const date = require("../utils/dateHandler");
 
 class CourseController {
     show(req, res, next) {
         Course.find({}, (err, courses) => {
-            // if (!err) res.render("courses", { data: courses });
-            // else next(err);
             Category.find({}, (err, categories) => {
                 if (!err) res.render("courses", { data: categories, data1: courses });
                 else next(err);
             })
         });
-        // Category.find({}, (err, categories) => {
-        //     if (!err) res.render("categories", { data: categories, data1: courses });
-        //     else next(err);
-        // })
     }
 
 
@@ -23,25 +18,47 @@ class CourseController {
     }
 
     store(req, res, next) {
-        const course = new Course(req.body);
+        const obj = {
+            code: req.body.code,
+            name: req.body.name,
+            category: req.body.category,
+            description: req.body.description,
+            session: req.body.session,
+            createAt: date.convertDateAsString(req.body.createAt),
+            updateAt: date.convertDateAsString(req.body.updateAt),
+        }
+        console.log(obj)
+        const course = new Course(obj);
         course.save(err => {
             if (!err) res.redirect("/courses");
             else next(err);
-        })
+        });
     }
 
     edit(req, res, next) {
         Course.findById(req.query.id, (err, course) => {
-            if (!err) res.render("courses/edit", { data: course });
-            else next(err);
-        })
+            Category.find({}, (err, categories) => {
+                if (!err) res.render("courses/edit", { data: categories, data1: course });
+                else next(err);
+            })
+        });
     }
 
     update(req, res, next) {
-        Course.updateOne({ _id: req.query.id }, req.body, err => {
+        const obj = {
+            code: req.body.code,
+            name: req.body.name,
+            category: req.body.category,
+            description: req.body.description,
+            session: req.body.session,
+            createAt: date.convertDateAsString(req.body.createAt),
+            updateAt: date.convertDateAsString(req.body.updateAt),
+        }
+        Course.updateOne({ _id: req.query.id }, obj, err => {
+            console.log(obj)
             if (!err) res.redirect("/courses");
             else next(err);
-        })
+        });
     }
 
     delete(req, res, next) {
@@ -54,7 +71,7 @@ class CourseController {
     search(req, res, next) {
         Course.find({ name: { $regex: req.query.qq, $options: 'i' } }, (err, courses) => {
             if (!err) {
-                res.render("courses", { data: courses });
+                res.render("courses", { data1: courses });
             } else next(err);
         });
     }
