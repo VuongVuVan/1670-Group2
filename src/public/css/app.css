@@ -161,6 +161,8 @@
     width: 56px; 
     height: 56px;
     border-radius: 100px;
+    background-color: white;
+    border: 1px solid rgb(236, 236, 236);
 }
 
 .header_r-area-info label {

@@ -2,17 +2,15 @@ const Admin = require("../models/Admin");
 const Account = require("../models/Account");
 const date = require("../utils/dateHandler");
 const fs = require("fs");
-const path = require("path");
-const destination = path.join(__dirname, "../public/uploads/admins");
 
 class AdminController {
-    index(req, res) {
-        res.render("admin");
+    indexAction(req, res, next) {
+        res.render("admin", {user: req.session.user});
     }
     
     showAction(req, res, next) {
         Admin.find({}, (err, admins) => {
-            if(!err) res.render("admin/admin-accounts", {admins});
+            if(!err) res.render("admin/admin-accounts", {admins, user: req.session.user});
             else next(err);
         });
     }
@@ -31,7 +29,6 @@ class AdminController {
                     contentType: "image/png"
                 },
                 name: req.body.name,
-                age: date.calculateAge(req.body.dob),
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address
             });
@@ -63,7 +60,6 @@ class AdminController {
                     contentType: "image/png"
                 },
                 name: req.body.name,
-                age: date.calculateAge(req.body.dob),
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address
             };
@@ -77,7 +73,7 @@ class AdminController {
             }
         }
         Account.updateOne({email: req.body.email}, account, err => {
-            if(err) next(err);
+            if(err) return next(err);
         });
         Admin.updateOne({_id: req.query.id}, admin, err => {
             if(!err) res.redirect("/admin/admin-accounts");
@@ -85,8 +81,12 @@ class AdminController {
         });
     }
 
-    delete(req, res, next) {
-        Admin.deleteOne({ _id: req.query.id }, err => {
+    async delete(req, res, next) {
+        const deletedAdmin = await Admin.findByIdAndDelete(req.query.id).catch(err => {
+            console.log(err);
+            return next(err);
+        });
+        Account.deleteOne({email: deletedAdmin.email}, err => {
             if (!err) res.redirect("/admin/admin-accounts");
             else next(err);
         });

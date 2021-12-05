@@ -20,7 +20,6 @@ exports.resize = (width, height) => {
 exports.upload = destination => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
-            console.log(destination)
             cb(null, destination);
         },
         filename: (req, file, cb) => {
