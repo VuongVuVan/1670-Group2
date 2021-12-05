@@ -95,6 +95,32 @@ class AdminController {
         }
         res.redirect("/admin/admin-accounts");
     }
+
+    async setDefaultPassA(req, res, next) {
+        try {
+            const anAdmin = await Admin.findById({_id: req.query.id});
+            const passwordHash = await encrypt(defaultPassword);
+            const obj = {password: passwordHash};
+            await Account.updateOne({email: anAdmin.email}, obj);
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.redirect("/admin/admin-accounts");
+    } 
+
+    async setDefaultPassS(req, res, next) {
+        try {
+            const aStaff = await Staff.findById({_id: req.query.id});
+            const passwordHash = await encrypt(defaultPassword);
+            const obj = {password: passwordHash};
+            await Account.updateOne({email: aStaff.email}, obj);
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.redirect("/admin/staff-accounts");
+    } 
 }
 
 module.exports = new AdminController();
