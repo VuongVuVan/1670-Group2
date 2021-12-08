@@ -232,6 +232,117 @@ class AdminController {
         }
         res.redirect("/admin/staff-accounts");
     } 
+
+    // =================================================================== //
+    // ====================Trainer Accounts Management==================== //
+    // =================================================================== //
+    
+    showTrainerAccounts(req, res, next) {
+        Trainer.find({}, (err, trainers) => {
+            const total = trainers.length;
+            const user = req.session.user;
+            if(!err) res.render("admin/trainer-accounts", {trainers, user, total});
+            else next(err);
+        });
+    }
+
+    async storeTrainerAccount(req, res, next) {
+        try {
+            const account = new Account({
+                email: req.body.email,
+                password: await encrypt(defaultPassword),
+                role: "trainer"
+            });
+            const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
+            const filename = (req.file) ? req.file.filename : "";
+            const trainer = new Trainer({
+                email: req.body.email,
+                image: {
+                    data: data,
+                    contentType: "image/png",
+                    name: filename
+                },
+                name: req.body.name,
+                dob: date.convertDateAsString(req.body.dob),
+                address: req.body.address,
+                specialty: req.body.specialty
+            });
+            account.save();
+            trainer.save();
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.redirect("/admin/trainer-accounts");
+    }
+
+    editTrainerAccount(req, res, next) {
+        Trainer.findById(req.query.id, (err, trainer) => {
+            if (!err) res.render("admin/editTrainer", {trainer, user: req.session.user});
+            else next(err);
+        });
+    }
+
+    async updateTrainerAccount(req, res, next) {
+        const newAccount = {email: req.body.email};
+        let newTrainer;
+        if(req.file) {
+            newTrainer = {
+                email: req.body.email,
+                image: {
+                    data: fs.readFileSync(req.file.path),
+                    contentType: "image/png",
+                    name: req.file.filename
+                },
+                name: req.body.name,
+                dob: date.convertDateAsString(req.body.dob),
+                address: req.body.address,
+                specialty: req.body.specialty
+            }
+        }else {
+            newTrainer = {
+                email: req.body.email,
+                name: req.body.name,
+                dob: date.convertDateAsString(req.body.dob),
+                address: req.body.address,
+                specialty: req.body.specialty
+            }
+        }
+        try {
+            await Account.updateOne({email: req.body.email}, newAccount);
+            await Trainer.updateOne({_id: req.query.id}, newTrainer);
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.redirect("/admin/trainer-accounts");
+    }
+
+    async deleteTrainerAccount(req, res, next) {
+        try {
+            const deletedTrainer = await Trainer.findByIdAndDelete(req.query.id);
+            const filename = deletedTrainer.image.name;
+            if(filename) fs.unlinkSync(path.join(trainerUploads, filename));
+            await Account.deleteOne({email: deletedTrainer.email});
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.redirect("/admin/trainer-accounts");
+    }
+
+    async setDefaultPassTer(req, res, next) {
+        try {
+            const aTrainer = await Trainer.findById({_id: req.query.id});
+            const passwordHash = await encrypt(defaultPassword);
+            const obj = {password: passwordHash};
+            await Account.updateOne({email: aTrainer.email}, obj);
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.redirect("/admin/trainer-accounts");
+    }
 }
 
 module.exports = new AdminController();
