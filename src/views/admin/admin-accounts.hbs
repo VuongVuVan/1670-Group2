@@ -5,7 +5,7 @@
     {{> adminLayout}}
 
     <main class="content-detail" id="">
-        <h3 class="fs-4 mt-5">Accounts (~ 20 records)</h3>
+        <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
             <form action="" class="content-detail-header-search">
@@ -14,7 +14,7 @@
             </form>
         </div>
         
-        <table class="table table-hover table-bordered caption-top mt-5">
+        <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
             {{!-- <caption class="fs-5"></caption> --}}
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
@@ -78,20 +78,20 @@
             
             <form class="modal-action_form-body" method="POST" action="/admin/admin-accounts/store" enctype="multipart/form-data">
                 <div>
-                    <label for="email" class="">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Your email..." required>
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email..." required>
                 </div>
                 <div>
-                    <label for="name" class="">Full name</label>
-                    <input type="text" name="name" id="name" placeholder="Your full name..." required>
+                    <label for="name" class="form-label">Full name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." required>
                 </div>
                 <div>
                     <label for="address" class="">Address</label>
-                    <input type="text" name="address" id="address" placeholder="Your address..." required>
+                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required></textarea>
                 </div>
                 <div>   
                     <label for="dob" class="">Date of birth</label>
-                    <input type="date" name="dob" id="dob" placeholder="Your date of birth..." required>
+                    <input type="date" class="form-control" name="dob" id="dob" required>
                 </div>
                 <div>
                     <label for="btn-add-img" class="form-label">Upload</label>
