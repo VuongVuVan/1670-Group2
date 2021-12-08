@@ -6,9 +6,8 @@ const Staff = new Schema({
         data: { type: Buffer, require: true },
         contentType: String
     },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    age: { type: Number, min: 18, max: 65, required: true },
     dob: { type: String, required: true },
     address: { type: String, required: true }
 

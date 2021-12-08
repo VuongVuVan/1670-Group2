@@ -1,7 +1,8 @@
 const Staff = require("../models/Staff");
+const date = require("../utils/dateHandler");
 const fs = require("fs");
 const path = require("path");
-const avatarPath = path.join(__dirname, "../public/uploads/demo");
+
 
 
 class StaffController {
@@ -24,8 +25,18 @@ class StaffController {
     }
 
     update(req, res, next) {
-        Staff.updateOne({ _id: req.query.id }, req.body, err => {
-            if (!err) res.redirect("/profile");
+        const obj = {
+            email: req.body.email,
+            name: req.body.name,
+            dob: date.convertDateAsString(req.body.dob),
+            address: req.body.address,
+            image: {
+                data: fs.readFileSync(req.file.path),
+                contentType: "image/png"
+            }
+        }
+        Staff.updateOne({ _id: req.query.id }, obj, err => {
+            if (!err) res.redirect("/staff/profile");
             else next(err);
         });
     }
@@ -34,11 +45,10 @@ class StaffController {
         const obj = {
             email: req.body.email,
             name: req.body.name,
-            age: req.body.age,
-            dob: req.body.dob,
+            dob: date.convertDateAsString(req.body.dob),
             address: req.body.address,
             image: {
-                data: fs.readFileSync(path.join(avatarPath, req.file.filename)),
+                data: fs.readFileSync(req.file.path),
                 contentType: "image/png"
             }
         }
@@ -46,9 +56,15 @@ class StaffController {
         const staff = new Staff(obj);
         staff.save(err => {
             if (!err) {
-                console.log("dasdsadsd")
                 res.redirect("/staff/profile");
             } else next(err);
+        });
+    }
+
+    delete(req, res, next) {
+        Staff.deleteOne({ _id: req.query.id }, err => {
+            if (!err) res.redirect("/staff/profile");
+            else next(err);
         });
     }
 }
