@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Staff = new Schema({
+    email: { type: String, required: true, unique: true },
     image: {
-        data: { type: Buffer, require: true },
-        contentType: String
+        data: { type: Buffer, required: true },
+        contentType: { type: String, required: true },
+        name: { type: String }
     },
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
