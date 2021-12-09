@@ -66,6 +66,9 @@ app.use("/seeall", seeallRouter);
 const trainerRouter = require("./routes/trainer");
 app.use("/trainer", trainerRouter);
 
+const coursetrainerRouter = require("./routes/coursetrainer");
+app.use("/coursetrainer", coursetrainerRouter);
+
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
 
