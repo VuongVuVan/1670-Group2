@@ -3,7 +3,7 @@ const Admin = require("../models/Admin");
 const Staff = require("../models/Staff");
 const Trainer = require("../models/Trainer");
 const Trainee = require("../models/Trainee");
-const { checkPassword } = require("../utils/hashingHandler");
+const {checkPassword, encrypt} = require("../utils/hashingHandler");
 
 class SiteController {
     indexAction(req, res, next) {
@@ -44,6 +44,51 @@ class SiteController {
     logout(req, res, next) {
         req.session.destroy();
         res.redirect("/");
+    }
+
+    showProfile(req, res, next) {
+        var flag = false;
+        if(req.session.user) {
+            const slug = req.params.slug;
+            const name = req.session.user.name.split(" ").join("");
+            flag = (slug==name);
+        }
+        if(!flag) return res.status(404).send("Page not found");
+        const role = req.session.user.role;
+        if(role == "admin") {
+            res.render("admin/profile", {user: req.session.user});
+        }else if(role == "staff") {
+            // res.render("");
+        }else if(role == "trainer") {
+            // res.render("");
+        }else if(role == "trainee") {
+            // res.render("");
+        }
+    }
+
+    changePassword(req, res, next) {
+        res.render("site/changePassword", {user: req.session.user});
+    }
+
+    async storePassword(req, res, next) {
+        try {
+            if(req.body.newPassword == req.body.oldPassword) {
+                const anAccount = await Account.findOne({email: req.session.user.email});
+                const match = checkPassword(req.body.oldPassword, req.body.newPassword);
+            }
+            if(match) {
+                const passwordHash = await encrypt(req.body.newPassword);
+                await Account.updateOne({email: req.body.email}, {password: passwordHash});
+            }
+        } catch (err) {
+            console.log(err);
+            return next(err);
+        }
+        console.log(req.body.oldPassword);
+        console.log(req.body.newPassword);
+        console.log(req.body.confirmPassword);
+        const name = req.session.user.split(" ").join("");
+        res.redirect(`/${name}`);
     }
 }
 
