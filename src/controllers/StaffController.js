@@ -1,5 +1,4 @@
 const Staff = require("../models/Staff");
-const date = require("../utils/dateHandler");
 const fs = require("fs");
 const path = require("path");
 const Trainee = require("../models/Trainee");

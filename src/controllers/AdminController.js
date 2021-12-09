@@ -125,6 +125,17 @@ class AdminController {
         res.redirect("/admin/admin-accounts");
     } 
 
+    searchAdminAccounts(req, res, next) {
+        if(!req.query.q) return res.redirect("/admin/admin-accounts");
+        const keyword = {$regex: req.query.q, $options: 'i'};
+        Admin.find({$or: [{email: keyword}, {name: keyword}]}, (err, admins) => {
+            if (!err) {
+                res.render("admin/admin-accounts", {admins, user: req.session.user, q: req.query.q});
+            }
+            else next(err);
+        });
+    }
+
     // =================================================================== //
     // =====================Staff Accounts Management===================== //
     // =================================================================== //
