@@ -23,10 +23,13 @@ class AdminController {
 
     showAdminAccounts(req, res, next) {
         Admin.find({}, (err, admins) => {
-            const total = admins.length;
-            const user = req.session.user;
-            if(!err) res.render("admin/admin-accounts", {admins, user, total});
-            else next(err);
+            if(!err) {
+                res.render("admin/admin-accounts", {
+                    admins, 
+                    user: req.session.user,
+                    total: admins.length,
+                });
+            }else next(err);
         });
     }
 
@@ -130,7 +133,12 @@ class AdminController {
         const keyword = {$regex: req.query.q, $options: 'i'};
         Admin.find({$or: [{email: keyword}, {name: keyword}]}, (err, admins) => {
             if (!err) {
-                res.render("admin/admin-accounts", {admins, user: req.session.user, q: req.query.q});
+                res.render("admin/admin-accounts", {
+                    admins, 
+                    user: req.session.user,
+                    total: admins.length, 
+                    q: req.query.q
+                });
             }
             else next(err);
         });
@@ -142,10 +150,13 @@ class AdminController {
     
     showStaffAccounts(req, res, next) {
         Staff.find({}, (err, staffs) => {
-            const total = staffs.length;
-            const user = req.session.user;
-            if(!err) res.render("admin/staff-accounts", {staffs, user, total});
-            else next(err);
+            if(!err) {
+                res.render("admin/staff-accounts", {
+                    staffs, 
+                    user: req.session.user,
+                    total: staffs.length,
+                });
+            }else next(err);
         });
     }
 
@@ -243,6 +254,22 @@ class AdminController {
         }
         res.redirect("/admin/staff-accounts");
     } 
+
+    searchStaffAccounts(req, res, next) {
+        if(!req.query.q) return res.redirect("/admin/staff-accounts");
+        const keyword = {$regex: req.query.q, $options: 'i'};
+        Staff.find({$or: [{email: keyword}, {name: keyword}]}, (err, staffs) => {
+            if (!err) {
+                res.render("admin/staff-accounts", {
+                    staffs, 
+                    user: req.session.user,
+                    total: staffs.length, 
+                    q: req.query.q
+                });
+            }
+            else next(err);
+        });
+    }
 
     // =================================================================== //
     // ====================Trainer Accounts Management==================== //
