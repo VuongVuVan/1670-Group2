@@ -4,19 +4,15 @@
 <body>
     <div class="container">
         <div class="mt-4">
-            <h3>Update Course</h3>
+            <h3>Update Demo</h3>
         </div>
-        <form class="mt-4" method="POST", action="/coursestrainer/update/?id={{data._id}}">
+        <form class="mt-4" method="POST", action="/demo/update/?id={{data._id}}">
             <div class="form-group">
-                <label for="coursecategory">Course Category</label>
-                <input type="text" class="form-control" value="{{data.coursecategory}}" id="coursecategory" name="coursecategory">
-            </div>
-            <div class="form-group">
-                <label for="name">Course Name</label>
+                <label for="name">Demo Name</label>
                 <input type="text" class="form-control" value="{{data.name}}" id="name" name="name">
             </div>
             <div class="form-group">
-                <label for="description">Course Description</label>
+                <label for="description">Demo Description</label>
                 <textarea class="form-control" id="description" name="description">{{data.description}}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>

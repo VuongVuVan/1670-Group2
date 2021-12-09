@@ -47,6 +47,9 @@ app.use("/seeall", seeallRouter);
 const trainerRouter = require("./routes/trainer");
 app.use("/trainer", trainerRouter);
 
+const coursetrainerRouter = require("./routes/coursetrainer");
+app.use("/coursetrainer", coursetrainerRouter);
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log('Sever is running at port ' + port);
