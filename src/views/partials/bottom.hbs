@@ -72,6 +72,8 @@
                 chosenImgContainer.classList.remove("active");
             });
             reader.readAsDataURL(file);
+        }else {
+            img.src = "";
         }
     });
 </script>
@@ -89,6 +91,8 @@
                 previewImg.src = result;
             }
             reader.readAsDataURL(file);
+        }else {
+            previewImg.src = "";
         }
     });
 </script>

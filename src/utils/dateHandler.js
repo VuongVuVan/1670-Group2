@@ -1,6 +1,5 @@
 exports.convertDateAsString = stringDate => {
-    const arr = stringDate.split("-");
-    return arr.reverse().join("-");
+    return stringDate.split("-").reverse().join("-");
 }
 
 exports.calculateAge = stringDate => {

@@ -5,51 +5,62 @@
     {{> adminLayout}}
 
     <main class="content-detail" id="">
-        <h3 class="fs-4 mt-5">Accounts (~ 20 records)</h3>
+        <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
-            <form action="" class="content-detail-header-search">
-                <input type="search" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+            <form action="/admin/admin-accounts/search" class="content-detail-header-search" method="GET">
+                <input type="search" class="form-control" placeholder="Search by email or name..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="q">
+                <button style="width: 90px;" class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
             </form>
         </div>
-        
-        <table class="table table-hover table-bordered caption-top mt-5">
+        {{#if admins}}
+        <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
             {{!-- <caption class="fs-5"></caption> --}}
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="col">#</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Date of birth</th>
+                    <th scope="col" style="width: 190px;">Avatar</th>
+                    <th scope="col" style="width: 150px;">Email</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col" style="width: 80px;">Age</th>
+                    <th scope="col" style="width: 130px;">Date of birth</th>
                     <th scope="col">Address</th>
-                    <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
+                    <th scope="col" style="width: 220px;">
+                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 {{#each admins}}
                 <tr>
-                    <th scope="row">{{@index}}</th>
-                    <th scope="col">
-                        <img style="width: 200px; height: 200px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="">
-                    </th>
-                    <th scope="col">{{this.email}}</th>
-                    <th scope="col">{{this.name}}</th>
-                    <th scope="col">{{this.age}}</th>
-                    <th scope="col">{{this.dob}}</th>       
-                    <th scope="col">{{this.address}}</th>
+                    <th scope="row" style="text-align: center;">{{@index}}</th>
+                    <td scope="col">
+                        <div class="text-center">
+                            <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="" class="img-thumbnail">
+                        </div>
+                    </td>
+                    <td scope="col">{{this.email}}</td>
+                    <td scope="col" style="text-align: center;">{{this.name}}</td>
+                    <td scope="col" style="text-align: center;">{{calculateAge this.dob}}</td>
+                    <td scope="col" style="text-align: center;">{{this.dob}}</td>       
+                    <td scope="col">{{this.address}}</td>
                     <td style="text-align: center;">
-                        <div class="btn-group" style="z-index: 0; height: 40px;" role="group" aria-label="Basic mixed styles example">
-                            <a href="/admin/accounts/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
-                                <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
-                            </a>
-                            <a href="/admin/admin-accounts/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
-                                <i class="bi bi-x-lg"></i><span class=" fs-6" style="margin-left: 5px;">Delete</span>
-                            </a>
-                            <a href="/admin/admin-accounts/delete?id={{this._id}}" class="btn btn-warning" style="border-bottom-left-radius: unset; border-top-left-radius: unset;">
-                                <i class="bi bi-gear"></i><span class=" fs-6" style="margin-left: 5px;">Set default password</span>
+                        <div>
+                            <div class="btn-group" style="z-index: 0; height: 40px; width: 199px;" role="group" aria-label="Basic mixed styles example">
+                                <a href="/admin/admin-accounts/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-left-radius: unset;">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span class=" fs-6" style="margin-left: 5px;">Edit</span>
+                                </a>
+                                <a href="/admin/admin-accounts/delete?id={{this._id}}" class="btn btn-danger" style="border-bottom-right-radius: unset;">
+                                    <i class="bi bi-x-lg"></i>
+                                    <span class=" fs-6" style="margin-left: 5px;">Delete</span>
+                                </a>
+                            </div>
+                            <a href="/admin/admin-accounts/passwords/set_default?id={{this._id}}" class="btn btn-warning" style="height: 40px; border-top-left-radius: unset; border-top-right-radius: unset;">
+                                <i class="bi bi-gear"></i>
+                                <span class=" fs-6" style="margin-left: 5px;">Set default password</span>
                             </a>
                         </div>
                     </td>
@@ -57,6 +68,11 @@
                 {{/each}}
             </tbody>
         </table>
+        {{else}}
+        <div class="text-center fs-3" style="margin-top: 140px; color: #198754;">
+            <span>No results found for query "{{q}}"</span>
+        </div>
+        {{/if}}
     </main>
 
     <div class="modal-action_form js-modal-adding_form">
@@ -69,20 +85,20 @@
             
             <form class="modal-action_form-body" method="POST" action="/admin/admin-accounts/store" enctype="multipart/form-data">
                 <div>
-                    <label for="email" class="">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Your email..." required>
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email address..." required>
                 </div>
                 <div>
-                    <label for="name" class="">Full name</label>
-                    <input type="text" name="name" id="name" placeholder="Your full name..." required>
+                    <label for="name" class="form-label">Full name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." required>
                 </div>
                 <div>
                     <label for="address" class="">Address</label>
-                    <input type="text" name="address" id="address" placeholder="Your address..." required>
+                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required></textarea>
                 </div>
                 <div>   
                     <label for="dob" class="">Date of birth</label>
-                    <input type="date" name="dob" id="dob" placeholder="Your date of birth..." required>
+                    <input type="date" class="form-control" name="dob" id="dob" required>
                 </div>
                 <div>
                     <label for="btn-add-img" class="form-label">Upload</label>

@@ -1,14 +1,34 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
+const {isStaff} = require("../utils/authHandler");
+const destination2 = path.join(__dirname, "../public/uploads/trainees");
 const img = require("../utils/imageHandler");
 const staffController = require("../controllers/StaffController");
-const path = require("path");
-const destination = path.join(__dirname, "../public/uploads/demo");
+const width = height = 170;
+const destination = path.join(__dirname, "../public/uploads/staff");
 
 router.get("/profile", staffController.show);
 router.get("/edit", staffController.edit);
-router.post("/update", staffController.update);
 router.get("/", staffController.index);
-router.post("/store", img.upload(destination), staffController.store);
+router.get("/delete", staffController.delete);
+router.post("/update", img.upload(destination), img.resize(width, height), staffController.update);
+router.post("/store", img.upload(destination), img.resize(width, height), staffController.store);
+
+
+/** (Vuong)
+ *========================================================================================*
+ *========================================================================================*
+ *=========================Routers for trainee accounts management========================*
+ *========================================================================================*
+ *========================================================================================*
+ */
+ router.get("/trainee-accounts/search", isStaff, staffController.searchTraineeAccounts);
+ router.get("/trainee-accounts/passwords/set_default", isStaff, staffController.setDefaultPassTee);
+ router.post("/trainee-accounts/update", isStaff, img.upload(destination2), img.resize(width, height), staffController.updateTraineeAccount);
+ router.get("/trainee-accounts/edit", isStaff, staffController.editTraineeAccount);
+ router.post("/trainee-accounts/store", isStaff, img.upload(destination2), img.resize(width, height), staffController.storeTraineeAccount);
+ router.get("/trainee-accounts/delete", isStaff, staffController.deleteTraineeAccount);
+ router.get("/trainee-accounts", isStaff, staffController.showTraineeAccounts); 
 
 module.exports = router;

@@ -42,7 +42,7 @@ class SeeallController {
     }
 
     search(req, res, next) {
-        Seeall.find({name: {$regex: req.query.q, $options: 'i'}}, (err, sees) => {
+        Seeall.find({name: {$regex: req.query.q, $options: 'i'}}, (err, seealls) => {
             if (!err) {
                 res.render("seeall", { data: seealls });
             }

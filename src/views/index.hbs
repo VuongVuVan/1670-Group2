@@ -12,6 +12,7 @@
                 <h4 class="login-child_block-title">Log Into Your Account</h4>
                 <form action="/login" method="POST" class="login-form">
                     <input type="email" name="email" id="" placeholder="Email" required minlength="10" class="login-form-input">
+                    <span>{{msg}}</span>
                     <input type="password" name="password" id="" placeholder="Password" required minlength="8" class="login-form-input">
                     <div style="width: 60%;"><a href="#" class="login-form-forgot_password-link">Forgot Password?</a></div>
                     <input type="submit" value="Log In" class="login-button">

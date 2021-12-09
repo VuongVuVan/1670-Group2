@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Staff = new Schema({
+    email: { type: String, required: true, unique: true },
     image: {
-        data: { type: Buffer },
-        contentType: String
+        data: { type: Buffer, required: true },
+        contentType: { type: String, required: true },
+        name: { type: String }
     },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    age: { type: Number, min: 18, max: 65 },
     dob: { type: String, required: true },
     address: { type: String, required: true }
 

@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each data}}
+                {{#each data1}}
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="row">{{@index}}</th>
                     <td>{{this.code}}</td>
@@ -52,6 +52,7 @@
                                     <span class=" fs-6" style="margin-left: auto;">Delete</span>
                                 </a>
                             </button>
+                        </div>
                     </td>
                 </tr>
                 {{/each}}
@@ -77,21 +78,15 @@
                     <label for="categoryName">Course Name</label>
                     <input type="text" class="form-control" id="courseName" name="name" placeholder="Course Name..." required>
                 </div>
-
-
-
                 <div class="col-md-4">
-                <label for="categoryname" class="form-label">Category Name</label>
+                <label for="category" class="form-label">Category Name</label>
                 <select name="category" id="categoryname" class="form-select">
-                    for
-                    <option value="{{category}}">IT</option>
+                    {{#each data}}
+                    <option value="{{this.name}}">{{this.name}}</option>
+                    {{/each }}
                 </select>
                 </div>
 
-                {{!-- <div class="form-group">
-                    <label for="name">Category Name</label>
-                    <input type="text" class="form-control" id="categoryName" name="name" placeholder="Category Name..." required>
-                </div> --}}
                 <div class="form-group">
                     <label for="courseDescription">Course Description</label>
                     <textarea class="form-control" id="courseDescription" name="description" placeholder="Course Description..." required></textarea>
