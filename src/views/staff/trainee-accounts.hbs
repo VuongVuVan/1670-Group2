@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    {{> staffLayout}}
+
+    <main class="content-detail" id="">
+        <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
+        <div class="content-detail-header mt-4">
+            <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
+            <form action="" class="content-detail-header-search">
+                <input type="search" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+        
+        <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
+            <thead class="table-light">
+                <tr style="font-size: 18px; text-align: center;">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width: 190px;">Avatar</th>
+                    <th scope="col" style="width: 150px;">Email</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col" style="width: 90px;">Education</th>
+                    <th scope="col" style="width: 60px;">Age</th>
+                    <th scope="col" style="width: 130px;">Date of birth</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" style="width: 220px;">
+                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each trainees}}
+                <tr>
+                    <th scope="row" style="text-align: center;">{{@index}}</th>
+                    <td scope="col">
+                        <div class="text-center">
+                            <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="" class="img-thumbnail">
+                        </div>
+                    </td>
+                    <td scope="col">{{this.email}}</td>
+                    <td scope="col" style="text-align: center;">{{this.name}}</td>
+                    <td scope="col" style="text-align: center;">{{this.education}}</td>
+                    <td scope="col" style="text-align: center;">{{calculateAge this.dob}}</td>
+                    <td scope="col" style="text-align: center;">{{this.dob}}</td>       
+                    <td scope="col">{{this.address}}</td>
+                    <td style="text-align: center;">
+                        <div>
+                            <div class="btn-group" style="z-index: 0; height: 40px; width: 199px;" role="group" aria-label="Basic mixed styles example">
+                                <a href="/staff/trainee-accounts/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-left-radius: unset;">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span class=" fs-6" style="margin-left: 5px;">Edit</span>
+                                </a>
+                                <a href="/staff/trainee-accounts/delete?id={{this._id}}" class="btn btn-danger" style="border-bottom-right-radius: unset;">
+                                    <i class="bi bi-x-lg"></i>
+                                    <span class=" fs-6" style="margin-left: 5px;">Delete</span>
+                                </a>
+                            </div>
+                            <a href="/staff/trainee-accounts/passwords/set_default?id={{this._id}}" class="btn btn-warning" style="height: 40px; border-top-left-radius: unset; border-top-right-radius: unset;">
+                                <i class="bi bi-gear"></i>
+                                <span class=" fs-6" style="margin-left: 5px;">Set default password</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </main>
+
+    <div class="modal-action_form js-modal-adding_form">
+        <div class="modal-action_form-container js-modal-action_form-container">
+            <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
+            <header class="modal-action_form-header">
+                <i style="margin-right: 20px;" class="bi bi-person-plus"></i>
+                New Account
+            </header>
+            
+            <form class="modal-action_form-body" method="POST" action="/staff/trainee-accounts/store" enctype="multipart/form-data">
+                <div>
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email..." required>
+                </div>
+                <div>
+                    <label for="name" class="form-label">Full name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." required>
+                </div>
+                <div>
+                    <label for="address" class="">Address</label>
+                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required></textarea>
+                </div>
+                <div>   
+                    <label for="dob" class="">Date of birth</label>
+                    <input type="date" class="form-control" name="dob" id="dob" required>
+                </div>
+                <div>   
+                    <label for="education" class="">Education</label>
+                    <input type="text" class="form-control" name="education" id="education" required placeholder="Your education...">
+                </div>
+                <div>
+                    <label for="btn-add-img" class="form-label">Upload</label>
+                    <input class="form-control" type="file" id="btn-add-img" name="image" accept="image/*">
+                </div>
+                <div class="text-center">
+                    <label for="previewImage" class="form-label">Avatar</label>
+                    <img style="width: 170px; height: 170px;" id="previewImage" name="avatar" src="" class="img-thumbnail" alt="">
+                </div>
+                <button type="submit" class="btn-action">
+                    Add<i style="margin-left: 5px;" class="bi bi-check2"></i>
+                </button>
+            </form>
+
+            <footer class="modal-action_form-footer">
+                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
+            </footer>
+        </div>
+    </div>
+
+{{> bottom}}
+</body>
+</html>
