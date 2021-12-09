@@ -381,6 +381,22 @@ class AdminController {
         }
         res.redirect("/admin/trainer-accounts");
     }
+
+    searchTrainerAccounts(req, res, next) {
+        if(!req.query.q) return res.redirect("/admin/trainer-accounts");
+        const keyword = {$regex: req.query.q, $options: 'i'};
+        Trainer.find({$or: [{email: keyword}, {name: keyword}]}, (err, trainers) => {
+            if (!err) {
+                res.render("admin/trainer-accounts", {
+                    trainers, 
+                    user: req.session.user,
+                    total: trainers.length, 
+                    q: req.query.q
+                });
+            }
+            else next(err);
+        });
+    }
 }
 
 module.exports = new AdminController();

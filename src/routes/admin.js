@@ -9,6 +9,7 @@ const destination2 = path.join(__dirname, "../public/uploads/staffs");
 const destination3 = path.join(__dirname, "../public/uploads/trainers");
 const width = height = 170;
 
+router.get("/trainer-accounts/search", isAdmin, adminController.searchTrainerAccounts);
 router.get("/trainer-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassTer);
 router.post("/trainer-accounts/update", isAdmin, img.upload(destination3), img.resize(width, height), adminController.updateTrainerAccount);
 router.get("/trainer-accounts/edit", isAdmin, adminController.editTrainerAccount);
