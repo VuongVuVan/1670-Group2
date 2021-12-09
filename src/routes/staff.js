@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const {isStaff} = require("../utils/authHandler");
+const destination2 = path.join(__dirname, "../public/uploads/trainees");
 const img = require("../utils/imageHandler");
 const staffController = require("../controllers/StaffController");
-const destination = path.join(__dirname, "../public/uploads/staff");
 const width = height = 170;
+const destination = path.join(__dirname, "../public/uploads/staff");
 
 router.get("/profile", staffController.show);
 router.get("/edit", staffController.edit);
@@ -20,5 +22,12 @@ router.post("/store", img.upload(destination), img.resize(width, height), staffC
  *========================================================================================*
  *========================================================================================*
  */
+
+ router.get("/trainee-accounts/passwords/set_default", isStaff, staffController.setDefaultPassTee);
+ router.post("/trainee-accounts/update", isStaff, img.upload(destination2), img.resize(width, height), staffController.updateTraineeAccount);
+ router.get("/trainee-accounts/edit", isStaff, staffController.editTraineeAccount);
+ router.post("/trainee-accounts/store", isStaff, img.upload(destination2), img.resize(width, height), staffController.storeTraineeAccount);
+ router.get("/trainee-accounts/delete", isStaff, staffController.deleteTraineeAccount);
+ router.get("/trainee-accounts", isStaff, staffController.showTraineeAccounts); 
 
 module.exports = router;
