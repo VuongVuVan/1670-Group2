@@ -52,9 +52,12 @@ app.use("/staff", staffRouter);
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
 
-//Trainee
+//Trainee: 
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
+
+const gradeRouter = require("./routes/grade");
+app.use("/grade", gradeRouter);
 
 const seeallRouter = require("./routes/seeall");
 app.use("/seeall", seeallRouter);
