@@ -1,7 +1,8 @@
 const Trainee = require("../models/Trainee");
 const fs = require("fs");
 const path = require("path");
-const avatarPath = path.join(__dirname, "../public/uploads/trainee");
+const date = require("../utils/dateHandler");
+
 
 class TraineeController {
     index(req, res) {
@@ -27,12 +28,11 @@ class TraineeController {
         const obj = {
             email: req.body.email,
             name: req.body.name,
-            age: req.body.age,
-            dob: req.body.dob,
+            dob: date.convertDateAsString(req.body.dob),
             address: req.body.address,
             education: req.body.education,
             image: {
-                data: fs.readFileSync(path.join(destiantion, req.file.filename)),
+                data: fs.readFileSync(req.file.path),
                 contentType: "image/png"
             }
         }
@@ -52,18 +52,29 @@ class TraineeController {
     }
 
     update(req, res, next) {
+        const obj = {
+            email: req.body.email,
+            name: req.body.name,
+            dob: date.convertDateAsString(req.body.dob),
+            address: req.body.address,
+            education: req.body.education,
+            image: {
+                data: fs.readFileSync(req.file.path),
+                contentType: "image/png"
+            }
+        }
         Trainee.updateOne({ _id: req.query.id }, req.body, err => {
-            if (!err) res.redirect("trainee/profile");
+            if (!err) res.redirect("/trainee/profile");
             else next(err);
         });
     }
 
-    // delete(req, res, next) {
-    //     Seeall.deleteOne({ _id: req.query.id }, err => {
-    //         if (!err) res.redirect("/seeall");
-    //         else next(err);
-    //     });
-    // }
+    delete(req, res, next) {
+        Trainee.deleteOne({ _id: req.query.id }, err => {
+            if (!err) res.redirect("/trainee/profile");
+            else next(err);
+        });
+    }
 
 }
 

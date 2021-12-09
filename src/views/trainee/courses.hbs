@@ -19,27 +19,27 @@
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="col">#</th>
-                    <th scope="col" style="width: 190px;">Image</th>
-                    <th scope="col" style="width: 150px;">Email</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Name</th>
-                    <th scope="col" style="width: 130px;">Date of birth</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Date of birth</th>
                     <th scope="col">Address</th>
                     <th scope="col">Education</th>
-                    <th scope="col">
-                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
-                    </th>
+                    <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
                 </tr>
             </thead>
             <tbody>
                 {{#each data}}
                 <tr>
-                    <th scope="row" style="text-align: center;">{{@index}}</th>
+                    <th scope="row">1</th>
                     <th scope="col">
-                        <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="">
+                        <img src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="">
                     </th>
                     <th scope="col">{{this.email}}</th>
-                    <th scope="col" style="text-align: center;">{{this.name}}</th>
-                    <th scope="col" style="text-align: center;">{{this.dob}}</th>
+                    <th scope="col">{{this.name}}</th>
+                    <th scope="col">{{this.age}}</th>
+                    <th scope="col">{{this.dob}}</th>
                     <th scope="col">{{this.address}}</th>
                     <th scope="col">{{this.education}}</th>
                     <td style="text-align: center;">
@@ -76,6 +76,10 @@
                     <input type="text" name="name" id="name" placeholder="Your full name..." required>
                 </div>
                 <div>
+                    <label for="age" class="">Age</label>
+                    <input type="number" name="age" id="age" placeholder="Your age..." required>
+                </div>
+                <div>
                     <label for="address" class="">Address</label>
                     <input type="text" name="address" id="address" placeholder="Your address..." required>
                 </div>
@@ -109,7 +113,7 @@
                 Current Account
             </header>
 
-            <form class="modal-action_form-body" method="POST" action="/trainee/create">
+            <form class="modal-action_form-body" method="POST" action="/admin/create">
                 <div>
                     <label for="editEmail" class="">Email</label>
                     <input type="email" value="{{account.email}}" name="email" id="editEmail" placeholder="Your email..." required>
