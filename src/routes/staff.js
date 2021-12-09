@@ -23,7 +23,7 @@ router.post("/store", img.upload(destination), img.resize(width, height), staffC
  *========================================================================================*
  *========================================================================================*
  */
-
+ router.get("/trainee-accounts/search", isStaff, staffController.searchTraineeAccounts);
  router.get("/trainee-accounts/passwords/set_default", isStaff, staffController.setDefaultPassTee);
  router.post("/trainee-accounts/update", isStaff, img.upload(destination2), img.resize(width, height), staffController.updateTraineeAccount);
  router.get("/trainee-accounts/edit", isStaff, staffController.editTraineeAccount);

@@ -186,6 +186,22 @@ class StaffController {
         }
         res.redirect("/staff/trainee-accounts");
     }
+
+    searchTraineeAccounts(req, res, next) {
+        if(!req.query.q) return res.redirect("/staff/trainee-accounts");
+        const keyword = {$regex: req.query.q, $options: 'i'};
+        Trainee.find({$or: [{email: keyword}, {name: keyword}]}, (err, trainees) => {
+            if (!err) {
+                res.render("staff/trainee-accounts", {
+                    trainees, 
+                    user: req.session.user,
+                    total: trainees.length, 
+                    q: req.query.q
+                });
+            }
+            else next(err);
+        });
+    }
 }
 
 module.exports = new StaffController();
