@@ -47,17 +47,15 @@ class SiteController {
     }
 
     showProfile(req, res, next) {
-        const slug = req.params.slug;
-        const name = req.session.user.name.split(" ").join("");
         const role = req.session.user.role;
         if(role == "admin") {
             res.render("admin/profile", {user: req.session.user});
         }else if(role == "staff") {
-            // res.render("");
+            res.render("staff/profile");
         }else if(role == "trainer") {
-            // res.render("");
+            res.render("trainer/profile");
         }else if(role == "trainee") {
-            // res.render("");
+            res.render("trainee/profile");
         }
     }
 
@@ -66,23 +64,20 @@ class SiteController {
     }
 
     async storePassword(req, res, next) {
-        const user = req.session.user;
         try {
+            const user = req.session.user;
             if(!(req.body.newP == req.body.confirmNP)) {
                 return res.render("site/changePassword", {
                     user,
-                    msg: "Your confirm password is invalid"
+                    msg: "The passwords you entered do not match. Check your typing and try again."
                 });
             }
             const anAccount = await Account.findOne({email: user.email});
-            console.log(anAccount)
-            const match = await checkPassword(req.body.currentP, anAccount.password);
-            console.log(req.body.currentP)
-            console.log(match)
+            const match = await checkPassword(req.body.oldP, anAccount.password);
             if(!match) {
                 return res.render("site/changePassword", {
                     user,
-                    msg2: "Your current password is invalid"
+                    msg2: "Make sure your entry is correct."
                 });
             }
             const passwordHash = await encrypt(req.body.newP);
@@ -91,7 +86,7 @@ class SiteController {
             console.log(err);
             return next(err);
         }
-        res.redirect(`/${user.name.split(" ").join("")}`);
+        res.redirect("/logout");
     }
 }
 
