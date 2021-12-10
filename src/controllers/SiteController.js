@@ -69,7 +69,10 @@ class SiteController {
             if(!(req.body.newP == req.body.confirmNP)) {
                 return res.render("site/changePassword", {
                     user,
-                    msg: "The passwords you entered do not match. Check your typing and try again."
+                    msg3: {
+                        s1: "The passwords you entered do not match.", 
+                        s2: "Check your typing and try again."
+                    }
                 });
             }
             const anAccount = await Account.findOne({email: user.email});
@@ -77,7 +80,7 @@ class SiteController {
             if(!match) {
                 return res.render("site/changePassword", {
                     user,
-                    msg2: "Make sure your entry is correct."
+                    msg: "Make sure your entry is correct."
                 });
             }
             const passwordHash = await encrypt(req.body.newP);
