@@ -34,11 +34,11 @@ class SiteController {
                 image: anUser.image,
                 role: anAccount.role
             }
-            res.redirect(`/${anAccount.role}`);
         } catch (err) {
             console.log(err);
             return next(err);
         }
+        res.redirect(`/${anAccount.role}`);
     }
 
     logout(req, res, next) {
