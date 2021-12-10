@@ -11,7 +11,8 @@ class StaffController {
 
     show(req, res, next) {
         Staff.find({}, (err, staffs) => {
-            if (!err) res.render("staff/profile", { data: staffs });
+            const total = staffs.length;
+            if (!err) res.render("staff/profile", { data: staffs, total });
             else next(err);
         });
     }

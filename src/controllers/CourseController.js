@@ -5,8 +5,9 @@ const date = require("../utils/dateHandler");
 class CourseController {
     show(req, res, next) {
         Course.find({}, (err, courses) => {
+            const total = courses.length;
             Category.find({}, (err, categories) => {
-                if (!err) res.render("courses", { data: categories, data1: courses });
+                if (!err) res.render("courses", { data: categories, data1: courses, total });
                 else next(err);
             })
         });

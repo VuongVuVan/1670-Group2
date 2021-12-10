@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require("path");
 const img = require("../utils/imageHandler");
 const staffController = require("../controllers/StaffController");
-const destination = path.join(__dirname, "../public/uploads/staff");
+const destination = path.join(__dirname, "../public/uploads/staffs");
 const width = height = 170;
 
 router.get("/profile", staffController.show);
