@@ -3,7 +3,8 @@ const Category = require("../models/Category");
 class CategoryController {
     show(req, res, next) {
         Category.find({}, (err, categories) => {
-            if (!err) res.render("categories", { data: categories });
+            const total = categories.length;
+            if (!err) res.render("categories", { data: categories, total });
             else next(err);
         });
     }

@@ -5,6 +5,10 @@ const {isStaff} = require("../utils/authHandler");
 const destination2 = path.join(__dirname, "../public/uploads/trainees");
 const img = require("../utils/imageHandler");
 const staffController = require("../controllers/StaffController");
+<<<<<<< HEAD
+const destination = path.join(__dirname, "../public/uploads/staffs");
+=======
+>>>>>>> 317a27e3f89bfd345e09f4588633e2f088bb590c
 const width = height = 170;
 const destination = path.join(__dirname, "../public/uploads/staff");
 
