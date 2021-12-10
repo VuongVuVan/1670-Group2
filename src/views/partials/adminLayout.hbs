@@ -11,7 +11,7 @@
             </label>
             <input type="checkbox" name="" id="info-checkbox">
             <ul>
-                <li><a href="/admin/profile">Your profile</a></li>
+                <li><a href="/{{removeSpace user.name}}">Your profile</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -27,8 +27,8 @@
         <a href="/admin/staff-accounts"><i class="fa fa-users"></i>Staff Accounts</a>
         <a href="/admin/trainer-accounts"><i class="fa fa-users"></i>Trainer Accounts</a>
         {{!-- <a href="/admin/trainer-accounts"><i class="fa fa-book"></i>Trainer Accounts</a> --}}
-        <a href="#"><i class="fa fa-file-o"></i>Your Profile</a>
-        <a href="#"><i class="fa fa-phone"></i>Logout</a>
+        <a href="/{{removeSpace user.name}}"><i class="fa fa-file-o"></i>Your Profile</a>
+        <a href="/logout"><i class="fa fa-phone"></i>Logout</a>
     </div>
 </aside>
 

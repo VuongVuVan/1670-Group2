@@ -4,7 +4,7 @@
 <body>
     {{> staffLayout}}
     <main class="content-detail" id="">
-        <h3 class="fs-4 mt-5">Categories (~ 20 records)</h3>
+        <h3 class="fs-4 mt-5">Categories (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Category</button>
             <form action="/categories/search" class="content-detail-header-search" method="GET">
