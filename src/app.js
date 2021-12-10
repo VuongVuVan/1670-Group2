@@ -28,12 +28,16 @@ hbs.registerHelper("calculateAge", stringDate => {
     const currentYear = new Date().getFullYear();
     return currentYear - birthYear;
 });
+hbs.registerHelper("removeSpace", string => {
+    return string.split(" ").join("");
+});
 
 // Connect to db
 const db = require("./config/db");
 db.connect();
 
 // Use a router for a particular root URL
+
 const demoRouter = require("./routes/demo");
 app.use("/demo", demoRouter);
 
@@ -49,18 +53,24 @@ app.use("/admin", adminRouter);
 const staffRouter = require("./routes/staff");
 app.use("/staff", staffRouter);
 
-const siteRouter = require("./routes/site");
-app.use("/", siteRouter);
-
-//Trainee
+//Trainee: 
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
+
+const gradeRouter = require("./routes/grade");
+app.use("/grade", gradeRouter);
 
 const seeallRouter = require("./routes/seeall");
 app.use("/seeall", seeallRouter);
 
 const trainerRouter = require("./routes/trainer");
 app.use("/trainer", trainerRouter);
+
+const coursetrainerRouter = require("./routes/coursetrainer");
+app.use("/coursetrainer", coursetrainerRouter);
+
+const siteRouter = require("./routes/site");
+app.use("/", siteRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

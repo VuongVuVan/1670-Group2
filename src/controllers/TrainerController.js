@@ -4,62 +4,67 @@ const path = require("path");
 const avatarPath = path.join(__dirname, "../public/uploads/trainer");
 
 class TrainerController {
+    index(req, res) {
+        res.render("trainer");
+    }
+
+    layout(req, res) {
+        res.render("trainer/layout");
+    }
+
     show(req, res, next) {
-        Trainer.find({}, (err, trainer) => {
-            if (!err) res.render("demo/index", { data: trainer });
+        Trainer.find({}, (err, trainees) => {
+            if (!err) res.render("trainer/profile", { data: trainers });
             else next(err);
         });
     }
 
-    create(req, res, next) {
-        res.render("trainer/create")
-    }
+    // create(req, res, next) {
+    //     res.render("seeall/create")
+    // }
 
     store(req, res, next) {
         const obj = {
+            email: req.body.email,
             name: req.body.name,
-            description: req.body.description,
+            age: req.body.age,
+            dob: req.body.dob,
+            address: req.body.address,
+            education: req.body.education,
             image: {
-                data: fs.readFileSync(path.join(avatarPath, req.file.filename)),
+                data: fs.readFileSync(path.join(destiantion, req.file.filename)),
                 contentType: "image/png"
             }
         }
-
-        const trainer = new Trainer(obj);
+        console.log(obj)
+        const trainer = new Trainee(obj);
         trainer.save(err => {
-            if (!err) res.redirect("/trainer");
+            if (!err) res.redirect("/trainer/profile");
             else next(err);
         });
     }
 
     edit(req, res, next) {
-        Trainer.findById(req.query.id, (err, trainer) => {
-            if (!err) res.render("trainer/edit", { data: trainer });
+        Trainer.findById(req.query.id, (err, trainers) => {
+            if (!err) res.render("trainee/edit", { data: trainers });
             else next(err);
         });
     }
 
     update(req, res, next) {
         Trainer.updateOne({ _id: req.query.id }, req.body, err => {
-            if (!err) res.redirect("/trainer");
+            if (!err) res.redirect("trainer/profile");
             else next(err);
         });
     }
 
-    delete(req, res, next) {
-        Trainer.deleteOne({ _id: req.query.id }, err => {
-            if (!err) res.redirect("/trainer");
-            else next(err);
-        });
-    }
+    // delete(req, res, next) {
+    //     Seeall.deleteOne({ _id: req.query.id }, err => {
+    //         if (!err) res.redirect("/seeall");
+    //         else next(err);
+    //     });
+    // }
 
-    search(req, res, next) {
-        Trainer.find({ name: { $regex: req.query.q, $options: 'i' } }, (err, trainer) => {
-            if (!err) {
-                res.render("trainer", { data: trainer });
-            } else next(err);
-        });
-    }
 }
 
 module.exports = new TrainerController();

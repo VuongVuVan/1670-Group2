@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const TraineeSchema = new Schema({
+const Trainee = new Schema({
     email: {type:String, required:true, unique:true},
     image: {
         data: {type:Buffer, required:true},
@@ -14,4 +14,4 @@ const TraineeSchema = new Schema({
     education: {type:String, required:true}
 });
 
-module.exports = mongoose.model("Trainee", TraineeSchema);
+module.exports = mongoose.model("Trainee", Trainee);

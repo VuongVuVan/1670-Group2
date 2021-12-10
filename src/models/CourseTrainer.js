@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CourseTrainer = new Schema({
-    coursecategory: { type: String, default: "Unknown" },
+    code: { type: Number },
+    coursecategory: { type: String },
     name: { type: String, default: "Unknown" },
-    description: { type: String }
+    trainer: { type: String },
+    total: { type: Number }
 });
 
 module.exports = mongoose.model("CourseTrainer", CourseTrainer);
