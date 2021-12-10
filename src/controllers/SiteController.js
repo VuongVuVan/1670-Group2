@@ -17,7 +17,7 @@ class SiteController {
         try {
             const email = req.body.email;
             anAccount = await Account.findOne({email});
-            if(anAccount) match = checkPassword(req.body.password, anAccount.password);
+            if(anAccount) match = await checkPassword(req.body.password, anAccount.password);
             if(!match) return res.render("index", {msg: "Your email or password is incorrect!"});
             if(anAccount.role == "admin") {
                 anUser = await Admin.findOne({email});
@@ -47,13 +47,8 @@ class SiteController {
     }
 
     showProfile(req, res, next) {
-        var flag = false;
-        if(req.session.user) {
-            const slug = req.params.slug;
-            const name = req.session.user.name.split(" ").join("");
-            flag = (slug==name);
-        }
-        if(!flag) return res.status(404).send("Page not found");
+        const slug = req.params.slug;
+        const name = req.session.user.name.split(" ").join("");
         const role = req.session.user.role;
         if(role == "admin") {
             res.render("admin/profile", {user: req.session.user});
@@ -71,24 +66,32 @@ class SiteController {
     }
 
     async storePassword(req, res, next) {
+        const user = req.session.user;
         try {
-            if(req.body.newPassword == req.body.oldPassword) {
-                const anAccount = await Account.findOne({email: req.session.user.email});
-                const match = checkPassword(req.body.oldPassword, req.body.newPassword);
+            if(!(req.body.newP == req.body.confirmNP)) {
+                return res.render("site/changePassword", {
+                    user,
+                    msg: "Your confirm password is invalid"
+                });
             }
-            if(match) {
-                const passwordHash = await encrypt(req.body.newPassword);
-                await Account.updateOne({email: req.body.email}, {password: passwordHash});
+            const anAccount = await Account.findOne({email: user.email});
+            console.log(anAccount)
+            const match = await checkPassword(req.body.currentP, anAccount.password);
+            console.log(req.body.currentP)
+            console.log(match)
+            if(!match) {
+                return res.render("site/changePassword", {
+                    user,
+                    msg2: "Your current password is invalid"
+                });
             }
+            const passwordHash = await encrypt(req.body.newP);
+            await Account.updateOne({email: user.email}, {password: passwordHash});
         } catch (err) {
             console.log(err);
             return next(err);
         }
-        console.log(req.body.oldPassword);
-        console.log(req.body.newPassword);
-        console.log(req.body.confirmPassword);
-        const name = req.session.user.split(" ").join("");
-        res.redirect(`/${name}`);
+        res.redirect(`/${user.name.split(" ").join("")}`);
     }
 }
 
