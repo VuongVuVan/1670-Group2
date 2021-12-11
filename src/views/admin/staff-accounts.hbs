@@ -4,7 +4,7 @@
 <body>
     {{> adminLayout}}
 
-    <main class="content-detail" id="">
+    <main class="content-detail" id="content-detail">
         <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
@@ -117,7 +117,13 @@
             </footer>
         </div>
     </div>
-
-{{> bottom}}
+    
+    <script>
+        activateModalAddingForm();
+        previewImage();
+        confirmItemDeletion();
+    </script>
+    
+{{> frameworkCDN}}
 </body>
 </html>

@@ -327,6 +327,8 @@
     padding: 20px 50px;
     min-height: 100vh;
     margin-top: 70px;
+}
+#content-detail {
     min-width: 1349px;
 }
 /* ending block */

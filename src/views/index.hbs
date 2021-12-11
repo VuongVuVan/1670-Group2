@@ -14,8 +14,8 @@
                 <span class="msg text-center mt-4">{{msg}}</span>
                 {{/if}}
                 <form action="/login" method="POST" class="login-form">
-                    <input type="email" name="email" id="" placeholder="Email" required minlength="10" class="login-form-input">
-                    <input type="password" name="password" id="" placeholder="Password" required minlength="8" class="login-form-input">
+                    <input type="email" name="email" placeholder="Email" required minlength="10" class="login-form-input">
+                    <input type="password" name="password" placeholder="Password" required minlength="8" class="login-form-input">
                     <div style="width: 60%;">
                         <a href="#" class="login-form-forgot_password-link">Forgot Password?</a>
                     </div>
@@ -25,6 +25,6 @@
             </div>
         </div>
     </main>
-{{> bottom}}
+{{> frameworkCDN}}
 </body>
 </html>
