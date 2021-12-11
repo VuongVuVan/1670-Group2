@@ -145,7 +145,7 @@ class AdminController {
     }
 
     test(req, res) {
-        res.render("admin/modal-confirm");
+        res.render("admin/test");
     }
 
     // =================================================================== //
