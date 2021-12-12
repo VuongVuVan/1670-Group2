@@ -61,21 +61,22 @@
 .login-form {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    height: 400px;
+    min-height: 400px;
+    padding: 20px 0px;
 }
 
 .login-form-input {
     height: 50px;
-    /* background-color: rgb(229, 229, 229); */
     border: none;
     outline: none;
     width: 60%;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 5px 10px;
     border-radius: 2px;
     border-bottom: 5px solid #23E3C9;
+    color: rgb(66, 66, 66);
 }
 
 .login-form-forgot_password-link {
@@ -339,6 +340,8 @@
     padding: 20px 50px;
     min-height: 100vh;
     margin-top: 70px;
+}
+#content-detail {
     min-width: 1349px;
 }
 
@@ -633,4 +636,9 @@
 
 #cancel-btn:hover {
     color: #e74c3c;
+}
+
+.msg {
+    color: red;
+    display: block;
 }

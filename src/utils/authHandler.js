@@ -2,6 +2,10 @@ exports.isLogged = (req, res, next) => {
     return (req.session.user) ? res.redirect(`/${req.session.user.role}`) : next();
 }
 
+exports.isLogged2 = (req, res, next) => {
+    return (req.session.user) ? next() : res.status(404).send("Page not found");
+}
+
 exports.isAdmin = (req, res, next) => {
     if(!req.session.user) return res.redirect("/");
     const role = req.session.user.role;

@@ -4,7 +4,7 @@
 <body>
     {{> staffLayout}}
 
-    <main class="content-detail" id="">
+    <main class="content-detail" id="content-detail">
         <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
@@ -15,7 +15,6 @@
                 </button>
             </form>
         </div>
-        {{#if trainees}}
         <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
@@ -69,11 +68,6 @@
                 {{/each}}
             </tbody>
         </table>
-        {{else}}
-        <div class="text-center fs-3" style="margin-top: 140px; color: #198754;">
-            <span>No results found for query "{{q}}"</span>
-        </div>
-        {{/if}}
     </main>
 
     <div class="modal-action_form js-modal-adding_form">

@@ -17,7 +17,7 @@ class SiteController {
         try {
             const email = req.body.email;
             anAccount = await Account.findOne({email});
-            if(anAccount) match = checkPassword(req.body.password, anAccount.password);
+            if(anAccount) match = await checkPassword(req.body.password, anAccount.password);
             if(!match) return res.render("index", {msg: "Your email or password is incorrect!"});
             if(anAccount.role == "admin") {
                 anUser = await Admin.findOne({email});
@@ -34,11 +34,11 @@ class SiteController {
                 image: anUser.image,
                 role: anAccount.role
             }
-            res.redirect(`/${anAccount.role}`);
         } catch (err) {
             console.log(err);
             return next(err);
         }
+        res.redirect(`/${anAccount.role}`);
     }
 
     logout(req, res, next) {
@@ -47,22 +47,15 @@ class SiteController {
     }
 
     showProfile(req, res, next) {
-        var flag = false;
-        if(req.session.user) {
-            const slug = req.params.slug;
-            const name = req.session.user.name.split(" ").join("");
-            flag = (slug==name);
-        }
-        if(!flag) return res.status(404).send("Page not found");
         const role = req.session.user.role;
         if(role == "admin") {
             res.render("admin/profile", {user: req.session.user});
         }else if(role == "staff") {
-            // res.render("");
+            res.render("staff/profile");
         }else if(role == "trainer") {
-            // res.render("");
+            res.render("trainer/profile");
         }else if(role == "trainee") {
-            // res.render("");
+            res.render("trainee/profile");
         }
     }
 
@@ -72,23 +65,31 @@ class SiteController {
 
     async storePassword(req, res, next) {
         try {
-            if(req.body.newPassword == req.body.oldPassword) {
-                const anAccount = await Account.findOne({email: req.session.user.email});
-                const match = checkPassword(req.body.oldPassword, req.body.newPassword);
+            const user = req.session.user;
+            if(!(req.body.newP == req.body.confirmNP)) {
+                return res.render("site/changePassword", {
+                    user,
+                    msg3: {
+                        s1: "The passwords you entered do not match.", 
+                        s2: "Check your typing and try again."
+                    }
+                });
             }
-            if(match) {
-                const passwordHash = await encrypt(req.body.newPassword);
-                await Account.updateOne({email: req.body.email}, {password: passwordHash});
+            const anAccount = await Account.findOne({email: user.email});
+            const match = await checkPassword(req.body.oldP, anAccount.password);
+            if(!match) {
+                return res.render("site/changePassword", {
+                    user,
+                    msg: "Make sure your entry is correct."
+                });
             }
+            const passwordHash = await encrypt(req.body.newP);
+            await Account.updateOne({email: user.email}, {password: passwordHash});
         } catch (err) {
             console.log(err);
             return next(err);
         }
-        console.log(req.body.oldPassword);
-        console.log(req.body.newPassword);
-        console.log(req.body.confirmPassword);
-        const name = req.session.user.split(" ").join("");
-        res.redirect(`/${name}`);
+        res.redirect("/logout");
     }
 }
 
