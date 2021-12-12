@@ -27,7 +27,7 @@ class AdminController {
                 res.render("admin/admin-accounts", {
                     admins, 
                     user: req.session.user,
-                    total: admins.length,
+                    total: admins.length
                 });
             }else next(err);
         });
@@ -35,23 +35,36 @@ class AdminController {
 
     async storeAdminAccount(req, res, next) {
         try {
+            const email = req.body.email.replace(/\s/g, "");
+            const anAccount = await Account.findOne({email});
+            if(anAccount) {
+                return res.render("admin/admin-accounts", {
+                    user: req.session.user,
+                    msg: "Your email exist. Please try again!", 
+                    attr: "display: flex;",
+                });
+            }
+            let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
-                email: req.body.email,
+                email,
                 password: await encrypt(defaultPassword),
                 role: "admin"
             });
             const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
             const admin = new Admin({
-                email: req.body.email,
+                email,
                 image: {
                     data: data,
                     contentType: "image/png",
                     name: filename
                 },
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             });
             account.save();
             admin.save();
@@ -72,6 +85,10 @@ class AdminController {
     async updateAdminAccount(req, res, next) {
         const newAccount = {email: req.body.email};
         let newAdmin;
+        let name = req.body.name.replace(/\s/g, " ");
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
         if(req.file) {
             newAdmin = {
                 email: req.body.email,
@@ -80,16 +97,16 @@ class AdminController {
                     contentType: "image/png",
                     name: req.file.filename
                 },
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             }
         }else {
             newAdmin = {
                 email: req.body.email,
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             }
         }
         try {

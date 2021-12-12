@@ -115,3 +115,20 @@ function imageSliderTimer(time, numberOfPictures) {
         if(counter > numberOfPictures) counter = 1;
     }, time);
 }
+
+function validateAdminAcc() {
+    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const emailMsg = document.getElementById("email-msg");
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const result = /^\s*[a-z]+[a-z0-9]+@fpt.edu.vn\s*$/i.test(email); //emailRe 
+    const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name); 
+    const result3 = /^\s*[a-z0-9]+[a-z0-9\s]*$/i.test(address);
+    emailMsg.innerHTML = result ? "" : "Please enter a valid email address."; 
+    nameMsg.innerHTML = result2 ? "" : "Please enter a valid name."; 
+    addressMsg.innerHTML = result3 ? "" : "Please enter a valid address."; 
+    console.log(result && result2 && result3);
+    return result && result2 && result3; 
+}
