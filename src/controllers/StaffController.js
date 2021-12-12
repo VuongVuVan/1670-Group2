@@ -8,7 +8,8 @@ const defaultPassword = "123456789";
 const date = require("../utils/dateHandler");
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const traineeUploads = path.join(__dirname, "../public/uploads/trainees");
-const avatarPath = path.join(__dirname, "../public/uploads/demo");
+// const avatarPath = path.join(__dirname, "../public/uploads/demo");
+
 
 class StaffController {
     index(req, res) {
@@ -47,32 +48,32 @@ class StaffController {
         });
     }
 
-    store(req, res, next) {
-        const obj = {
-            email: req.body.email,
-            name: req.body.name,
-            dob: date.convertDateAsString(req.body.dob),
-            address: req.body.address,
-            image: {
-                data: fs.readFileSync(req.file.path),
-                contentType: "image/png"
-            }
-        }
-        console.log(obj)
-        const staff = new Staff(obj);
-        staff.save(err => {
-            if (!err) {
-                res.redirect("/staff/profile");
-            } else next(err);
-        });
-    }
+    // store(req, res, next) {
+    //     const obj = {
+    //         email: req.body.email,
+    //         name: req.body.name,
+    //         dob: date.convertDateAsString(req.body.dob),
+    //         address: req.body.address,
+    //         image: {
+    //             data: fs.readFileSync(req.file.path),
+    //             contentType: "image/png"
+    //         }
+    //     }
+    //     console.log(obj)
+    //     const staff = new Staff(obj);
+    //     staff.save(err => {
+    //         if (!err) {
+    //             res.redirect("/staff/profile");
+    //         } else next(err);
+    //     });
+    // }
 
-    delete(req, res, next) {
-        Staff.deleteOne({ _id: req.query.id }, err => {
-            if (!err) res.redirect("/staff/profile");
-            else next(err);
-        });
-    }
+    // delete(req, res, next) {
+    //     Staff.deleteOne({ _id: req.query.id }, err => {
+    //         if (!err) res.redirect("/staff/profile");
+    //         else next(err);
+    //     });
+    // }
 
     /** (Vuong)
      * ================================================================= *
@@ -85,7 +86,7 @@ class StaffController {
     showTraineeAccounts(req, res, next) {
         Trainee.find({}, (err, trainees) => {
             const user = req.session.user;
-            if(!err) res.render("staff/trainee-accounts", {trainees, user, total: trainees.length});
+            if (!err) res.render("staff/trainee-accounts", { trainees, user, total: trainees.length });
             else next(err);
         });
     }
@@ -122,15 +123,15 @@ class StaffController {
 
     editTraineeAccount(req, res, next) {
         Trainee.findById(req.query.id, (err, trainee) => {
-            if (!err) res.render("staff/editTrainee", {trainee, user: req.session.user});
+            if (!err) res.render("staff/editTrainee", { trainee, user: req.session.user });
             else next(err);
         });
     }
 
     async updateTraineeAccount(req, res, next) {
-        const newAccount = {email: req.body.email};
+        const newAccount = { email: req.body.email };
         let newTrainee;
-        if(req.file) {
+        if (req.file) {
             newTrainee = {
                 email: req.body.email,
                 image: {
@@ -143,7 +144,7 @@ class StaffController {
                 address: req.body.address,
                 education: req.body.education
             }
-        }else {
+        } else {
             newTrainee = {
                 email: req.body.email,
                 name: req.body.name,
@@ -153,8 +154,8 @@ class StaffController {
             }
         }
         try {
-            await Account.updateOne({email: req.body.email}, newAccount);
-            await Trainee.updateOne({_id: req.query.id}, newTrainee);
+            await Account.updateOne({ email: req.body.email }, newAccount);
+            await Trainee.updateOne({ _id: req.query.id }, newTrainee);
         } catch (err) {
             console.log(err);
             return next(err);
@@ -166,8 +167,8 @@ class StaffController {
         try {
             const deletedTrainee = await Trainee.findByIdAndDelete(req.query.id);
             const filename = deletedTrainee.image.name;
-            if(filename) fs.unlinkSync(path.join(traineeUploads, filename));
-            await Account.deleteOne({email: deletedTrainee.email});
+            if (filename) fs.unlinkSync(path.join(traineeUploads, filename));
+            await Account.deleteOne({ email: deletedTrainee.email });
         } catch (err) {
             console.log(err);
             return next(err);
@@ -177,10 +178,10 @@ class StaffController {
 
     async setDefaultPassTee(req, res, next) {
         try {
-            const aTrainee = await Trainee.findById({_id: req.query.id});
+            const aTrainee = await Trainee.findById({ _id: req.query.id });
             const passwordHash = await encrypt(defaultPassword);
-            const obj = {password: passwordHash};
-            await Account.updateOne({email: aTrainee.email}, obj);
+            const obj = { password: passwordHash };
+            await Account.updateOne({ email: aTrainee.email }, obj);
         } catch (err) {
             console.log(err);
             return next(err);
@@ -189,18 +190,17 @@ class StaffController {
     }
 
     searchTraineeAccounts(req, res, next) {
-        if(!req.query.q) return res.redirect("/staff/trainee-accounts");
-        const keyword = {$regex: req.query.q, $options: 'i'};
-        Trainee.find({$or: [{email: keyword}, {name: keyword}]}, (err, trainees) => {
+        if (!req.query.q) return res.redirect("/staff/trainee-accounts");
+        const keyword = { $regex: req.query.q, $options: 'i' };
+        Trainee.find({ $or: [{ email: keyword }, { name: keyword }] }, (err, trainees) => {
             if (!err) {
                 res.render("staff/trainee-accounts", {
-                    trainees, 
+                    trainees,
                     user: req.session.user,
-                    total: trainees.length, 
+                    total: trainees.length,
                     q: req.query.q
                 });
-            }
-            else next(err);
+            } else next(err);
         });
     }
 }
