@@ -6,9 +6,9 @@
     
     <main class="content-detail" id="">
         <h3 class="fs-4 mt-5">Test Account (~ {{total}} records)</h3>
-        <div class="content-detail-header mt-4">
+        {{!-- <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
-        </div>
+        </div> --}}
 
         <table class="table table-hover table-bordered caption-top mt-5">
             <thead class="table-light">
@@ -40,20 +40,21 @@
                     <td scope="col">{{this.address}}</td>
                     <td>
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-success js-edit-info">
+                            <button type="button" class="btn btn-success js-edit-info", style="margin-left: 80px;">
                                 <i class="bi bi-pencil-square"></i>
                                 <a class ="underline-white" href="/staff/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-left-radius: unset;">
                                     <span class=" fs-6" style="margin-left: auto;">Edit</span>
                                 </a>
                             </button>
-                        <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example"> 
+                            </div>
+                        {{!-- <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example"> 
                         <button type="button" class="btn btn-danger">
                                 <i class="bi bi-x-lg"></i>
                                 <a class ="underline-white" href="/staff/delete/?id={{this._id}}">
                                     <span class=" fs-6" style="margin-left: auto;">Delete</span>
                                 </a>
                             </button>
-                            </div>
+                            </div> --}}
                     </td>
                 </tr>
                 {{/each}}
