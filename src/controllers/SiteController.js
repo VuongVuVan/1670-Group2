@@ -51,11 +51,11 @@ class SiteController {
         if(role == "admin") {
             res.render("admin/profile", {user: req.session.user});
         }else if(role == "staff") {
-            res.render("staff/profile");
+            res.render("staff/profile", {user: req.session.user});
         }else if(role == "trainer") {
-            res.render("trainer/profile");
+            res.render("trainer/profile", {user: req.session.user});
         }else if(role == "trainee") {
-            res.render("trainee/profile");
+            res.render("trainee/profile", {user: req.session.user});
         }
     }
 
@@ -66,15 +66,6 @@ class SiteController {
     async storePassword(req, res, next) {
         try {
             const user = req.session.user;
-            if(!(req.body.newP == req.body.confirmNP)) {
-                return res.render("site/changePassword", {
-                    user,
-                    msg3: {
-                        s1: "The passwords you entered do not match.", 
-                        s2: "Check your typing and try again."
-                    }
-                });
-            }
             const anAccount = await Account.findOne({email: user.email});
             const match = await checkPassword(req.body.oldP, anAccount.password);
             if(!match) {
