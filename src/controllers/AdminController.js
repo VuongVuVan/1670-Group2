@@ -339,6 +339,8 @@ class AdminController {
             address = address.match(/[^ ].*[^ ]/)[0];
             let specialty = req.body.specialty.replace(/\s/g, " ");
             specialty = specialty.match(/[^ ].*[^ ]/)[0];
+            let code = req.body.code.replace(/\s/g, " ");
+            code = code.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
                 email,
                 password: await encrypt(defaultPassword),
@@ -354,6 +356,7 @@ class AdminController {
                     name: filename
                 },
                 name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
                 address,
                 specialty
@@ -383,6 +386,8 @@ class AdminController {
         address = address.match(/[^ ].*[^ ]/)[0];
         let specialty = req.body.specialty.replace(/\s/g, " ");
         specialty = specialty.match(/[^ ].*[^ ]/)[0];
+        let code = req.body.code.replace(/\s/g, " ");
+        code = code.match(/[^ ].*[^ ]/)[0];
         if(req.file) {
             newTrainer = {
                 email: req.body.email,
@@ -392,6 +397,7 @@ class AdminController {
                     name: req.file.filename
                 },
                 name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
                 address,
                 specialty
@@ -400,6 +406,7 @@ class AdminController {
             newTrainer = {
                 email: req.body.email,
                 name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
                 address,
                 specialty

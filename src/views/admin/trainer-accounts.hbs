@@ -23,6 +23,7 @@
                     <th scope="col" style="width: 190px;">Avatar</th>
                     <th scope="col" style="width: 150px;">Email</th>
                     <th scope="col">Full name</th>
+                    <th scope="col">Code</th>
                     <th scope="col" style="width: 90px;">Specialty</th>
                     <th scope="col" style="width: 60px;">Age</th>
                     <th scope="col" style="width: 130px;">Date of birth</th>
@@ -43,6 +44,7 @@
                     </td>
                     <td scope="col">{{this.email}}</td>
                     <td scope="col" style="text-align: center;">{{this.name}}</td>
+                    <td scope="col" style="text-align: center;">{{this.code}}</td>
                     <td scope="col" style="text-align: center;">{{this.specialty}}</td>
                     <td scope="col" style="text-align: center;">{{calculateAge this.dob}}</td>
                     <td scope="col" style="text-align: center;">{{this.dob}}</td>       
@@ -96,6 +98,16 @@
                     <span class="msg" id="name-msg"></span>
                 </div>
                 <div>
+                    <label for="code" class="form-label">Code</label>
+                    <input type="text" class="form-control" name="code" id="code" placeholder="Your code..." minlength="4" maxlength="20" required>
+                    <span class="msg" id="code-msg">{{msg}}</span>
+                </div>
+                <div>   
+                    <label for="specialty" class="">Specialty</label>
+                    <input type="text" class="form-control" name="specialty" id="specialty" required placeholder="Your specialty..." minlength="2" maxlength="20">
+                    <span class="msg" id="specialty-msg"></span>
+                </div>
+                <div>
                     <label for="address" class="">Address</label>
                     <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." minlength="6" maxlength="100" required></textarea>
                     <span class="msg" id="address-msg"></span>
@@ -103,11 +115,6 @@
                 <div>   
                     <label for="dob" class="">Date of birth</label>
                     <input type="date" class="form-control" name="dob" id="dob" required>
-                </div>
-                <div>   
-                    <label for="specialty" class="">Specialty</label>
-                    <input type="text" class="form-control" name="specialty" id="specialty" required placeholder="Your specialty..." minlength="2" maxlength="20">
-                    <span class="msg" id="specialty-msg"></span>
                 </div>
                 <div>
                     <label for="btn-add-img" class="form-label">Upload</label>

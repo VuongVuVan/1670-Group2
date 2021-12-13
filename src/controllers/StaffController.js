@@ -86,7 +86,7 @@ class StaffController {
     showTraineeAccounts(req, res, next) {
         Trainee.find({}, (err, trainees) => {
             const user = req.session.user;
-            if (!err) res.render("staff/trainee-accounts", { trainees, user, total: trainees.length });
+            if (!err) res.render("staff/trainee-accounts", {trainees, user, total: trainees.length});
             else next(err);
         });
     }
@@ -108,6 +108,7 @@ class StaffController {
                     name: filename
                 },
                 name: req.body.name,
+                code: req.body.code,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address,
                 education: req.body.education
@@ -123,13 +124,13 @@ class StaffController {
 
     editTraineeAccount(req, res, next) {
         Trainee.findById(req.query.id, (err, trainee) => {
-            if (!err) res.render("staff/editTrainee", { trainee, user: req.session.user });
+            if (!err) res.render("staff/editTrainee", {trainee, user: req.session.user});
             else next(err);
         });
     }
 
     async updateTraineeAccount(req, res, next) {
-        const newAccount = { email: req.body.email };
+        const newAccount = {email: req.body.email};
         let newTrainee;
         if (req.file) {
             newTrainee = {
@@ -140,6 +141,7 @@ class StaffController {
                     name: req.file.filename
                 },
                 name: req.body.name,
+                code: req.body.code,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address,
                 education: req.body.education
@@ -148,6 +150,7 @@ class StaffController {
             newTrainee = {
                 email: req.body.email,
                 name: req.body.name,
+                code: req.body.code,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address,
                 education: req.body.education

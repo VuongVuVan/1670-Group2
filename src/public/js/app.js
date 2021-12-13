@@ -196,7 +196,7 @@ function validatePassword() {
     const confirmNPMsg2 = document.getElementById("confirmNP-msg2");
     const result = /[\d]/g.test(newP);
     const result2 = /[A-Z]/g.test(newP);
-    const result3 = /[^a-z\d\s]/ig.test(newP);
+    const result3 = /[^a-z\d]/ig.test(newP);
     if(!(result && result2 && result3)) {
         newPMsg.innerHTML = "Strong password required. Combine the following: uppercase letters, lowercase letters, numbers, and symbols."
         return false;
