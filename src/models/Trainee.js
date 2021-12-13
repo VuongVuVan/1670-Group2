@@ -11,7 +11,8 @@ const Trainee = new Schema({
     name: {type:String, required:true},
     dob: {type:String, required:true},
     address: {type:String, required:true},
-    education: {type:String, required:true}
+    education: {type:String, required:true},
+    traineecode: {type:String, required:true}
 });
 
 module.exports = mongoose.model("Trainee", Trainee);
