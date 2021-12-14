@@ -5,16 +5,14 @@ const { isStaff } = require("../utils/authHandler");
 const destination2 = path.join(__dirname, "../public/uploads/trainees");
 const img = require("../utils/imageHandler");
 const staffController = require("../controllers/StaffController");
-const destination = path.join(__dirname, "../public/uploads/staffs");
 const width = height = 170;
 
 
-router.get("/profile", staffController.show);
-router.get("/edit", staffController.edit);
+// router.get("/profile", staffController.showProfile);
+// router.get("/edit", staffController.edit);
 router.get("/", staffController.index);
-// router.get("/delete", staffController.delete);
-router.post("/update", img.upload(destination), img.resize(width, height), staffController.update);
-// router.post("/store", img.upload(destination), img.resize(width, height), staffController.store);
+// router.post("/update", img.upload(destination), img.resize(width, height), staffController.update);
+
 
 
 /** (Vuong)
