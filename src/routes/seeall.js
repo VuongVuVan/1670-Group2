@@ -10,4 +10,6 @@ router.get("/create", seeallController.create);
 router.post("/store", seeallController.store);
 router.get("/", seeallController.show);
 
+router.get("/view", seeallController.showviewtrainee);
+router.get("/view/delete", seeallController.deleteviewtrainee);
 module.exports = router;
