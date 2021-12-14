@@ -7,7 +7,7 @@ class CourseController {
         Course.find({}, (err, courses) => {
             const total = courses.length;
             Category.find({}, (err, categories) => {
-                if (!err) res.render("courses", { data: categories, data1: courses, total });
+                if (!err) res.render("courses", { data: categories, data1: courses, total, user: req.session.user });
                 else next(err);
             })
         });
@@ -39,7 +39,7 @@ class CourseController {
     edit(req, res, next) {
         Course.findById(req.query.id, (err, course) => {
             Category.find({}, (err, categories) => {
-                if (!err) res.render("courses/edit", { data: categories, data1: course });
+                if (!err) res.render("courses/edit", { data: categories, data1: course, user: req.session.user });
                 else next(err);
             })
         });
