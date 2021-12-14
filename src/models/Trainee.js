@@ -12,7 +12,7 @@ const Trainee = new Schema({
     code: {type:String, required:true, unique:true, minlength:4, maxlength:20},
     dob: {type:String, required:true},
     address: {type:String, required:true, minlength:6, maxlength:100},
-    education: {type:String, required:true, minlength:2, maxlength:20}
+    education: {type:String, required:true, minlength:2, maxlength:20},
 });
 
 module.exports = mongoose.model("Trainee", Trainee);
