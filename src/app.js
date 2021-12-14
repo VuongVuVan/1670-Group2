@@ -9,7 +9,7 @@ app.use(session({
     secret: "HnU57-Hks465",
     resave: true,
     saveUninitialized: true,
-    cookie: {maxAge: 5*24*60*60*1000}
+    cookie: { maxAge: 5 * 24 * 60 * 60 * 1000 }
 }));
 
 app.set('view engine', 'hbs');
@@ -52,6 +52,8 @@ app.use("/trainer", trainerRouter);
 
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
+
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

@@ -2,7 +2,7 @@
 <html lang="en">
 {{> head}}
 <body>
-    {{> adminLayout}}
+    {{!-- {{> adminLayout}} --}}
 
     <main class="content-detail" id="content-detail">
         <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
@@ -123,7 +123,7 @@
     </div>
 
     {{!-- block of code for editing --}}
-    {{!-- <div class="modal-action_form js-modal-editing_form">
+    <div class="modal-action_form js-modal-editing_form">
         <div class="modal-action_form-container js-modal-action_form-container">
             <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
             <header class="modal-action_form-header">
@@ -159,7 +159,7 @@
                 <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
             </footer>
         </div>
-    </div> --}}
+    </div>
 
     <div class="modal fade" id="delete-item-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

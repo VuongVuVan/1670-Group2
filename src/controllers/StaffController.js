@@ -8,47 +8,32 @@ const defaultPassword = "123456789";
 const date = require("../utils/dateHandler");
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const traineeUploads = path.join(__dirname, "../public/uploads/trainees");
-// const avatarPath = path.join(__dirname, "../public/uploads/demo");
+
 
 
 class StaffController {
     index(req, res) {
-        res.render("staff");
+
+        res.render("staff", { user: req.session.user });
     }
 
-    show(req, res, next) {
-        Staff.find({}, (err, staffs) => {
-            const total = staffs.length;
-            if (!err) res.render("staff/profile", { data: staffs, total });
-            else next(err);
-        });
-    }
+    // showProfile(req, res, next) {
+    //     Staff.find({}, (err, staffs) => {
+    //         console.log(req.session)
+    //         if (!err) res.render("staff/profile", { staffs, user: req.session.user });
+    //         else next(err);
+    //     });
+    // }
 
-    edit(req, res, next) {
-        Staff.findById(req.query.id, (err, staffs) => {
-            if (!err) res.render("staff/edit", { data: staffs });
-            else next(err);
-        });
-    }
+    // edit(req, res, next) {
+    //     Staff.findById(req.query.id, (err, staffs) => {
+    //         if (!err) res.render("staff/edit", { staffs, user: req.session.user });
+    //         else next(err);
+    //     });
+    // }
 
-    update(req, res, next) {
-        const obj = {
-            email: req.body.email,
-            name: req.body.name,
-            dob: date.convertDateAsString(req.body.dob),
-            address: req.body.address,
-            image: {
-                data: fs.readFileSync(req.file.path),
-                contentType: "image/png"
-            }
-        }
-        Staff.updateOne({ _id: req.query.id }, obj, err => {
-            if (!err) res.redirect("/staff/profile");
-            else next(err);
-        });
-    }
-
-    // store(req, res, next) {
+    // update(req, res, next) {
+    //     console.log(req.file)
     //     const obj = {
     //         email: req.body.email,
     //         name: req.body.name,
@@ -59,17 +44,7 @@ class StaffController {
     //             contentType: "image/png"
     //         }
     //     }
-    //     console.log(obj)
-    //     const staff = new Staff(obj);
-    //     staff.save(err => {
-    //         if (!err) {
-    //             res.redirect("/staff/profile");
-    //         } else next(err);
-    //     });
-    // }
-
-    // delete(req, res, next) {
-    //     Staff.deleteOne({ _id: req.query.id }, err => {
+    //     Staff.updateOne({ _id: req.query.id }, obj, err => {
     //         if (!err) res.redirect("/staff/profile");
     //         else next(err);
     //     });

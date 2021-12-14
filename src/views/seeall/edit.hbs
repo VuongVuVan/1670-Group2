@@ -10,9 +10,13 @@
         </a>
         <form class="row g-3 mt-4" method="POST" action="/seeall/update/?id={{data._id}}">
             <div class="col-md-6">
+                <label for="codeCourse">Code</label>
+                <input type="text" value="{{data.code}}" class="form-control" id="codeCourse" name="code" placeholder="Code of Course..." required>
+            </div>
+            {{!-- <div class="col-md-6">
                 <label for="coursecategory" class="form-label">Course Category</label>
                 <input type="coursecategory" class="form-control" id="coursecategory" value="{{data.coursecategory}}"  name="coursecategory" placeholder="Course Category..." required>
-            </div>
+            </div> --}}
             <div class="col-md-6">
                 <label for="name" class="form-label">Name</label>
                 <input type="name" class="form-control" value="{{data.name}}" id="name" name="name" placeholder="Name of Category..." required>
@@ -20,6 +24,14 @@
             <div class="col-md-6">
                 <label for="inputAddress2" class="form-label">Trainer</label>
                 <input type="text" class="form-control" value="{{data.trainer}}" id="trainer" name="trainer" placeholder="Trainer of course">
+            </div>
+            <div class="col-6">
+                <label for="update">UpdateAt</label>
+                <input type="date" value="{{convertDate data.updateAt}}" class="form-control" id="update" name="updateAt" placeholder="Update At..." required>
+            </div>
+            <div class="col-6">
+                <label for="create">CreateAt</label>
+                <input type="date" value="{{convertDate data.createAt}}" class="form-control" id="create" name="createAt" placeholder=" CreateAt..." required>
             </div>
             <div class="col-md-6">
                 <label for="inputCity" class="form-label">Total</label>

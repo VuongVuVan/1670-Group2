@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    {{> traineeLayout}}
+
+    <main class="content-detail" id="">
+        <a href="/seeall" type="button" class="btn btn-link fs-5">
+            <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+        </a>
+        <h3 class="fs-4 mt-5">Profile (~ 20 records)</h3>
+        <div class="content-detail-header mt-4">
+            <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Trainee</button>
+            <form action="" class="content-detail-header-search">
+                <input type="search" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+        
+        <table class="table table-hover table-bordered caption-top mt-5">
+            {{!-- <caption class="fs-5"></caption> --}}
+            <thead class="table-light">
+                <tr style="font-size: 18px; text-align: center;">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width: 190px;">Image</th>
+                    <th scope="col" style="width: 150px;">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col" style="width: 130px;">Date of birth</th>
+                    <th scope="col">
+                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <th scope="row" style="text-align: center;">{{@index}}</th>
+                    <th scope="col">
+                        {{!-- <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt=""> --}}
+                    </th>
+                    <th scope="col">{{this.email}}</th>
+                    <th scope="col" style="text-align: center;">{{this.name}}</th>
+                    <th scope="col" style="text-align: center;">{{this.dob}}</th>
+                    <td style="text-align: center;">
+                        <div class="btn-group" style="z-index: 0; height: 40px;" role="group" aria-label="Basic mixed styles example">
+                            <a href="/seeall/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
+                                <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
+                            </a>
+                            <a href="/seeall/view/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
+                                <i class="bi bi-x-lg"></i><span class=" fs-6" style="margin-left: 5px;">Delete</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </main>
+
+    <div class="modal-action_form js-modal-adding_form">
+        <div class="modal-action_form-container js-modal-action_form-container">
+            <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
+            <header class="modal-action_form-header">
+                <i style="margin-right: 20px;" class="bi bi-person-plus"></i>
+                New trainee
+            </header>
+
+            <form class="modal-action_form-body" method="POST" action="/seeall/store" enctype="multipart/form-data">
+                <div>
+                    <label for="email" class="">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Your email..." required>
+                </div>
+                <div>
+                    <label for="name" class="">Full name</label>
+                    <input type="text" name="name" id="name" placeholder="Your full name..." required>
+                </div>
+                <div>   
+                    <label for="dob" class="">Date of birth</label>
+                    <input type="string" name="dob" id="dob" placeholder="Your date of birth..." required>
+                </div>
+                <div>   
+                    <label for="avatar" class="">Avatar</label>
+                    <input type="file" name="image" id="avatar" accept="image/*">
+                </div>
+                <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
+            </form>
+            <footer class="modal-action_form-footer">
+                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
+            </footer>
+        </div>
+    </div>
+
+{{> bottom}}
+</body>
+</html>
