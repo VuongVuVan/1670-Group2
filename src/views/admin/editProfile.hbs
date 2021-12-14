@@ -2,15 +2,15 @@
 <html lang="en">
 {{> head}}
 <body>
-    {{!-- {{> adminLayout}} --}}
+    {{> adminLayout}}
 
     <main class="content-detail" id="common_content-area">
-        <a href="/admin/staff-accounts" class="btn btn-link fs-5">
+        <a href="/{{removeSpace user.name}}" class="btn btn-link fs-5">
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
         </a>
-        <form class="row g-3 mt-4" method="POST" action="/admin/staff-accounts/update?id={{staff._id}}" enctype="multipart/form-data">
+        <form class="row g-3 mt-4" method="POST" action="/{{removeSpace user.name}}/update_profile?id={{admin._id}}" enctype="multipart/form-data">
             <div class="text-left">
-                <img style="width: 170px; height: 170px; margin-right: 20px;" src="data:image/{{staff.image.contentType}};base64,{{convertImage staff.image.data}}" alt="" class="img-thumbnail">
+                <img style="width: 170px; height: 170px; margin-right: 20px;" src="data:image/{{admin.image.contentType}};base64,{{convertImage admin.image.data}}" alt="" class="img-thumbnail">
                 <div class="chosen_image-container">
                     <img style="width: 170px; height: 170px;" src="" class="img-thumbnail" id="chosenImage" alt="">
                     <i id="cancel-btn" class="bi bi-x-lg"></i>
@@ -22,19 +22,19 @@
 
             <div class="col-12">
                 <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{staff.email}}" required placeholder="Your email address...">
+                <input type="email" class="form-control" id="email" name="email" value="{{admin.email}}" required placeholder="Your email address...">
             </div>
             <div class="col-12">
                 <label for="fullName" class="form-label">Full name</label>
-                <input type="text" class="form-control" id="fullName" name="name" value="{{staff.name}}" required placeholder="Your full name...">
+                <input type="text" class="form-control" id="fullName" name="name" value="{{admin.name}}" required placeholder="Your full name...">
             </div>
             <div class="col-12">
                 <label for="dob" class="form-label">Date of birth</label>
-                <input type="date" class="form-control" id="dob" name="dob" value="{{convertDate staff.dob}}" required>
+                <input type="date" class="form-control" id="dob" name="dob" value="{{convertDate admin.dob}}" required>
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
-                <textarea class="form-control" id="address" rows="3" name="address" required placeholder="Your address...">{{staff.address}}</textarea>
+                <textarea class="form-control" id="address" rows="3" name="address" required placeholder="Your address...">{{admin.address}}</textarea>
             </div>
                 <input type="file" class="form-control" id="btn-upload-img" name="image" accept="image/*" hidden>
             <div class="col-12 mt-5">

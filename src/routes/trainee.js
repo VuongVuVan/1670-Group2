@@ -9,9 +9,9 @@ const width = height = 170;
 router.get("/profile", traineeController.show);
 router.get("/edit", traineeController.edit);
 router.get("/", traineeController.index);
-router.get("/delete", traineeController.delete);
-router.get("/update", img.upload(destination), img.resize(width, height), traineeController.update);
-router.post("/profile/store",img.upload(destination), img.resize(width, height), traineeController.store);
+
+router.post("/update", img.upload(destination), img.resize(width, height), traineeController.update);
+
 
 router.get("/layout", traineeController.layout);
 module.exports = router;

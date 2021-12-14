@@ -8,11 +8,50 @@
         <a href="/{{user.role}}" class="btn btn-link fs-5">
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
         </a>
-        {{!-- <form action="/{{removeSpace user.name}}/change_password" method="POST">
-            <input type="hidden" name="email" value="{{user.email}}">
-            <button type="submit" class="btn btn-link">Change Password</button>
-        </form> --}}
         <a href="/{{removeSpace user.name}}/change_password" class="btn btn-link">Change Password</a>
+
+
+        <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
+            <thead class="table-light">
+                <tr style="font-size: 18px; text-align: center;">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width: 190px;">Avatar</th>
+                    <th scope="col" style="width: 150px;">Email</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col" style="width: 80px;">Age</th>
+                    <th scope="col" style="width: 130px;">Date of birth</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" style="width: 220px;">
+                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" style="text-align: center;">{{@index}}</th>
+                    <td scope="col">
+                        <div class="text-center">
+                            <img style="width: 170px; height: 170px;" src="data:image/{{admin.image.contentType}};base64,{{convertImage admin.image.data}}" alt="" class="img-thumbnail">
+                        </div>
+                    </td>
+                    <td scope="col">{{admin.email}}</td>
+                    <td scope="col" style="text-align: center;">{{admin.name}}</td>
+                    <td scope="col" style="text-align: center;">{{calculateAge admin.dob}}</td>
+                    <td scope="col" style="text-align: center;">{{admin.dob}}</td>       
+                    <td scope="col">{{admin.address}}</td>
+                    <td style="text-align: center;">
+                        <div>
+                            <button type="button" class="btn btn-success js-edit-info", style="margin-left: 30px">
+                                <i class="bi bi-pencil-square"></i>
+                                <a class ="underline-white" href="/{{removeSpace user.name}}/edit_profile?id={{admin._id}}">
+                                    <span class=" fs-6" style="margin-left: 5px;">Edit</span>
+                                </a>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </main>
 
 {{> frameworkCDN}}
