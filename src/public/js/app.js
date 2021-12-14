@@ -115,3 +115,97 @@ function imageSliderTimer(time, numberOfPictures) {
         if(counter > numberOfPictures) counter = 1;
     }, time);
 }
+
+function validateAdminAcc() {
+    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const emailMsg = document.getElementById("email-msg");
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const result = /^\s*[a-z]+[a-z\d]+@fpt.edu.vn\s*$/i.test(email); //emailRe 
+    const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name); 
+    const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    emailMsg.innerHTML = result ? "" : "Please enter a valid email address."; 
+    nameMsg.innerHTML = result2 ? "" : "Please enter a valid name."; 
+    addressMsg.innerHTML = result3 ? "" : "Please enter a valid address."; 
+    return result && result2 && result3; 
+}
+
+function validateStaffAcc() {
+    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const emailMsg = document.getElementById("email-msg");
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const result = /^\s*[a-z]+[a-z\d]+@fpt.edu.vn\s*$/i.test(email); 
+    const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name); 
+    const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    emailMsg.innerHTML = result ? "" : "Please enter a valid email address."; 
+    nameMsg.innerHTML = result2 ? "" : "Please enter a valid name."; 
+    addressMsg.innerHTML = result3 ? "" : "Please enter a valid address."; 
+    return result && result2 && result3; 
+}
+
+function validateTrainerAcc() {
+    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const specialty = document.getElementById("specialty").value;
+    const emailMsg = document.getElementById("email-msg");
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const specMsg = document.getElementById("specialty-msg");
+    const result = /^\s*[a-z]+[a-z\d]+@fpt.edu.vn\s*$/i.test(email);
+    const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name); 
+    const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    const result4 = /^\s*[a-z\d]{2,}[a-z\d\s]*$/i.test(specialty);
+    emailMsg.innerHTML = result ? "" : "Please enter a valid email address."; 
+    nameMsg.innerHTML = result2 ? "" : "Please enter a valid name."; 
+    addressMsg.innerHTML = result3 ? "" : "Please enter a valid address."; 
+    specMsg.innerHTML = result4 ? "" : "Please enter a valid specialty."; 
+    return result && result2 && result3 && result4; 
+}
+
+function validateTraineeAcc() {
+    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const education = document.getElementById("specialty").value;
+    const emailMsg = document.getElementById("email-msg");
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const eduMsg = document.getElementById("education-msg");
+    const result = /^\s*[a-z]+[a-z\d]+@fpt.edu.vn\s*$/i.test(email);
+    const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name); 
+    const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    const result4 = /^\s*[a-z\d]{2,}[a-z\d\s]*$/i.test(education);
+    emailMsg.innerHTML = result ? "" : "Please enter a valid email address."; 
+    nameMsg.innerHTML = result2 ? "" : "Please enter a valid name."; 
+    addressMsg.innerHTML = result3 ? "" : "Please enter a valid address."; 
+    eduMsg.innerHTML = result4 ? "" : "Please enter a valid education."; 
+    return result && result2 && result3 && result4; 
+}
+
+function validatePassword() {
+    const newP = document.getElementById("newP").value;
+    const confirmNP = document.getElementById("confirmNP").value;
+    const newPMsg = document.getElementById("newP-msg");
+    const confirmNPMsg = document.getElementById("confirmNP-msg");
+    const confirmNPMsg2 = document.getElementById("confirmNP-msg2");
+    const result = /[\d]/g.test(newP);
+    const result2 = /[A-Z]/g.test(newP);
+    const result3 = /[^a-z\d]/ig.test(newP);
+    if(!(result && result2 && result3)) {
+        newPMsg.innerHTML = "Strong password required. Combine the following: uppercase letters, lowercase letters, numbers, and symbols."
+        return false;
+    }
+    if(!(newP == confirmNP)) {
+        confirmNPMsg.innerHTML = "The passwords you entered do not match.";
+        confirmNPMsg2.innerHTML = "Check your typing and try again.";
+        newPMsg.innerHTML = "";
+        return false;
+    }
+    return true;
+}

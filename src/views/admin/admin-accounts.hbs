@@ -75,7 +75,7 @@
         {{/if}}
     </main>
 
-    <div class="modal-action_form js-modal-adding_form">
+    <div class="modal-action_form js-modal-adding_form" style="{{attr}}">
         <div class="modal-action_form-container js-modal-action_form-container">
             <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
             <header class="modal-action_form-header">
@@ -83,18 +83,21 @@
                 New Account
             </header>
             
-            <form class="modal-action_form-body" method="POST" action="/admin/admin-accounts/store" enctype="multipart/form-data">
+            <form class="modal-action_form-body" method="POST" action="/admin/admin-accounts/store" enctype="multipart/form-data" onsubmit="return validateAdminAcc();">
                 <div>
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email address..." required>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email address..." minlength="12" maxlength="40" required>
+                    <span class="msg" id="email-msg">{{msg}}</span>
                 </div>
                 <div>
                     <label for="name" class="form-label">Full name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." required>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." minlength="5" maxlength="30" required>
+                    <span class="msg" id="name-msg"></span>
                 </div>
                 <div>
                     <label for="address" class="">Address</label>
-                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required></textarea>
+                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." minlength="6" maxlength="100" required></textarea>
+                    <span class="msg" id="address-msg"></span>
                 </div>
                 <div>   
                     <label for="dob" class="">Date of birth</label>
@@ -113,7 +116,8 @@
                 </button>
             </form>
             <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
+                <a href="/admin/admin-accounts" class="cancel">Cancel</a>
+                Need <a href="#">help?</a>
             </footer>
         </div>
     </div>

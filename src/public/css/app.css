@@ -563,11 +563,20 @@
 
 .modal-action_form-footer {
     padding: 0 16px;
-    text-align: right;
+    margin-bottom: 6px;
 }
 
 .modal-action_form-footer a {
     color: #2196F3;
+}
+
+.modal-action_form-footer .cancel {
+    text-decoration: none;
+    margin-right: 84.8%;
+}
+
+.modal-action_form-footer .cancel:hover {
+    text-decoration: underline;
 }
 
 @keyframes modalFadeIn {

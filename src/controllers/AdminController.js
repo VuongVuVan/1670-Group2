@@ -25,9 +25,15 @@ class AdminController {
         Admin.find({}, (err, admins) => {
             if (!err) {
                 res.render("admin/admin-accounts", {
+<<<<<<< HEAD
                     admins,
                     // user: req.session.user,
                     total: admins.length,
+=======
+                    admins, 
+                    user: req.session.user,
+                    total: admins.length
+>>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
                 });
             } else next(err);
         });
@@ -35,23 +41,36 @@ class AdminController {
 
     async storeAdminAccount(req, res, next) {
         try {
+            const email = req.body.email.replace(/\s/g, "");
+            const anAccount = await Account.findOne({email});
+            if(anAccount) {
+                return res.render("admin/admin-accounts", {
+                    user: req.session.user,
+                    msg: "This email address already has an account.", 
+                    attr: "display: flex;",
+                });
+            }
+            let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
-                email: req.body.email,
+                email,
                 password: await encrypt(defaultPassword),
                 role: "admin"
             });
-            const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
+            const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
             const admin = new Admin({
-                email: req.body.email,
+                email,
                 image: {
                     data: data,
                     contentType: "image/png",
                     name: filename
                 },
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             });
             account.save();
             admin.save();
@@ -72,7 +91,15 @@ class AdminController {
     async updateAdminAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newAdmin;
+<<<<<<< HEAD
         if (req.file) {
+=======
+        let name = req.body.name.replace(/\s/g, " ");
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
+        if(req.file) {
+>>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
             newAdmin = {
                 email: req.body.email,
                 image: {
@@ -80,16 +107,16 @@ class AdminController {
                     contentType: "image/png",
                     name: req.file.filename
                 },
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             }
         } else {
             newAdmin = {
                 email: req.body.email,
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             }
         }
         try {
@@ -165,23 +192,36 @@ class AdminController {
 
     async storeStaffAccount(req, res, next) {
         try {
+            const email = req.body.email.replace(/\s/g, "");
+            const anAccount = await Account.findOne({email});
+            if(anAccount) {
+                return res.render("admin/staff-accounts", {
+                    user: req.session.user,
+                    msg: "This email address already has an account.", 
+                    attr: "display: flex;",
+                });
+            }
+            let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
-                email: req.body.email,
+                email,
                 password: await encrypt(defaultPassword),
                 role: "staff"
             });
-            const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
-            const filename = (req.file) ? req.file.filename : "";
+            const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
+            const filename = req.file ? req.file.filename : "";
             const staff = new Staff({
-                email: req.body.email,
+                email,
                 image: {
                     data: data,
                     contentType: "image/png",
                     name: filename
                 },
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             });
             account.save();
             staff.save();
@@ -202,7 +242,15 @@ class AdminController {
     async updateStaffAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newStaff;
+<<<<<<< HEAD
         if (req.file) {
+=======
+        let name = req.body.name.replace(/\s/g, " ");
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
+        if(req.file) {
+>>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
             newStaff = {
                 email: req.body.email,
                 image: {
@@ -210,16 +258,16 @@ class AdminController {
                     contentType: "image/png",
                     name: req.file.filename
                 },
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             }
         } else {
             newStaff = {
                 email: req.body.email,
-                name: req.body.name,
+                name,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address
+                address
             }
         }
         try {
@@ -288,24 +336,42 @@ class AdminController {
 
     async storeTrainerAccount(req, res, next) {
         try {
+            const email = req.body.email.replace(/\s/g, "");
+            const anAccount = await Account.findOne({email});
+            if(anAccount) {
+                return res.render("admin/staff-accounts", {
+                    user: req.session.user,
+                    msg: "This email address already has an account.", 
+                    attr: "display: flex;",
+                });
+            }
+            let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
+            let specialty = req.body.specialty.replace(/\s/g, " ");
+            specialty = specialty.match(/[^ ].*[^ ]/)[0];
+            let code = req.body.code.replace(/\s/g, " ");
+            code = code.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
-                email: req.body.email,
+                email,
                 password: await encrypt(defaultPassword),
                 role: "trainer"
             });
-            const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
+            const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
             const trainer = new Trainer({
-                email: req.body.email,
+                email,
                 image: {
                     data: data,
                     contentType: "image/png",
                     name: filename
                 },
-                name: req.body.name,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                specialty: req.body.specialty
+                address,
+                specialty
             });
             account.save();
             trainer.save();
@@ -326,7 +392,19 @@ class AdminController {
     async updateTrainerAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newTrainer;
+<<<<<<< HEAD
         if (req.file) {
+=======
+        let name = req.body.name.replace(/\s/g, " ");
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
+        let specialty = req.body.specialty.replace(/\s/g, " ");
+        specialty = specialty.match(/[^ ].*[^ ]/)[0];
+        let code = req.body.code.replace(/\s/g, " ");
+        code = code.match(/[^ ].*[^ ]/)[0];
+        if(req.file) {
+>>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
             newTrainer = {
                 email: req.body.email,
                 image: {
@@ -334,18 +412,20 @@ class AdminController {
                     contentType: "image/png",
                     name: req.file.filename
                 },
-                name: req.body.name,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                specialty: req.body.specialty
+                address,
+                specialty
             }
         } else {
             newTrainer = {
                 email: req.body.email,
-                name: req.body.name,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                specialty: req.body.specialty
+                address,
+                specialty
             }
         }
         try {
