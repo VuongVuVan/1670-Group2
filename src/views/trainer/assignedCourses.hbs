@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    {{> trainerLayout}}
+    <main class="content-detail" id="">
+        
+        <div class="content-detail-header mt-4">
+            <form action="/admin/admin-accounts/search" class="content-detail-header-search" method="GET">
+                <input type="search" class="form-control" placeholder="Search by email or name..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="q">
+                <button style="width: 90px;" class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
+            {{!-- <caption class="fs-5"></caption> --}}
+            <thead class="table-light">
+                <tr style="font-size: 18px; text-align: center;">
+                    <th scope="col" style="width: 90px;">#</th>
+                    <th scope="col" style="width: 100px;">Class Name</th>
+                    <th scope="col" style="width: 190px;">Course Name</th>
+                    <th scope="col" style="width: 120px;">Total Trainees</th>
+                    <th scope="col" style="width: 220px;">
+                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <th scope="row" style="text-align: center;">{{@index}}</th>
+                    <td scope="col" style="text-align: center;">{{this.class_name}}</td>
+                    <td scope="col" style="text-align: center;">{{this.course_name}}</td>
+                    <td scope="col" style="text-align: center;">{{this.total_trainees}}</td>     
+                    <td style="text-align: center;">
+                        <div>
+                            <div class="btn-group" style="z-index: 0; height: 40px; width: 199px;" role="group" aria-label="Basic mixed styles example">
+                                <a href="/trainer/assignedCourse/viewclass?id={{_id}}" class="btn btn-success js-edit-info" style="border-bottom-left-radius: unset;">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span class=" fs-6" style="margin-left: 5px;">View</span>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </main>
+    {{> bottom}}
+</body>
+</html>

@@ -62,15 +62,14 @@ app.use("/grade", gradeRouter);
 
 const seeallRouter = require("./routes/seeall");
 app.use("/seeall", seeallRouter);
-
+//Trainer
 const trainerRouter = require("./routes/trainer");
 app.use("/trainer", trainerRouter);
 
-const coursetrainerRouter = require("./routes/coursetrainer");
-app.use("/coursetrainer", coursetrainerRouter);
-
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
+
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
