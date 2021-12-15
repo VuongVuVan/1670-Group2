@@ -71,8 +71,9 @@ class CourseController {
 
     search(req, res, next) {
         Course.find({ name: { $regex: req.query.qq, $options: 'i' } }, (err, courses) => {
+            const total = courses.length;
             if (!err) {
-                res.render("courses", { data1: courses });
+                res.render("courses", { data1: courses, user: req.session.user, total });
             } else next(err);
         });
     }

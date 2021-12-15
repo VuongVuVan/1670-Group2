@@ -46,8 +46,9 @@ class CategoryController {
 
     search(req, res, next) {
         Category.find({ name: { $regex: req.query.q, $options: 'i' } }, (err, categories) => {
+            const total = categories.length;
             if (!err) {
-                res.render("categories", { data: categories });
+                res.render("categories", { data: categories, user: req.session.user, total });
             } else next(err);
         });
     }
