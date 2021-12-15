@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const AccountSchema = new Schema({
     email: {type:String, required:true, unique:true, minlength:12, maxlength:40},
-    password: {type:String, required:true, minlength:8, maxlength:30},
+    password: {type:String, required:true},
     role: {type:String, required:true}
 }); 
 

@@ -53,8 +53,6 @@ app.use("/trainer", trainerRouter);
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
 
-
-
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log('Sever is running at port ' + port);

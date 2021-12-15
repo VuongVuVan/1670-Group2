@@ -51,7 +51,6 @@ class SiteController {
 
     showProfile(req, res, next) {
         const role = req.session.user.role;
-<<<<<<< HEAD
         if (role == "admin") {
             Admin.findOne({ mail: req.body.email }, (err, admin) => {
                 const user = req.session.user;
@@ -187,16 +186,6 @@ class SiteController {
                 if (!err) res.redirect("/Trainee/profile");
                 else next(err);
             });
-=======
-        if(role == "admin") {
-            res.render("admin/profile", {user: req.session.user});
-        }else if(role == "staff") {
-            res.render("staff/profile", {user: req.session.user});
-        }else if(role == "trainer") {
-            res.render("trainer/profile", {user: req.session.user});
-        }else if(role == "trainee") {
-            res.render("trainee/profile", {user: req.session.user});
->>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
         }
     }
 
@@ -207,20 +196,7 @@ class SiteController {
     async storePassword(req, res, next) {
         try {
             const user = req.session.user;
-<<<<<<< HEAD
-            if (!(req.body.newP == req.body.confirmNP)) {
-                return res.render("site/changePassword", {
-                    user,
-                    msg3: {
-                        s1: "The passwords you entered do not match.",
-                        s2: "Check your typing and try again."
-                    }
-                });
-            }
-            const anAccount = await Account.findOne({ email: user.email });
-=======
             const anAccount = await Account.findOne({email: user.email});
->>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
             const match = await checkPassword(req.body.oldP, anAccount.password);
             if (!match) {
                 return res.render("site/changePassword", {
