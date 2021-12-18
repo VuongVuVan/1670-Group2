@@ -7,13 +7,43 @@ const img = require("../utils/imageHandler");
 const staffController = require("../controllers/StaffController");
 const width = height = 170;
 
+/** 
+ *========================================================================================*
+ *========================================================================================*
+ *==================================Routers for Staff=====================================*
+ *========================================================================================*
+ *========================================================================================*
+ */
+router.get("/", isStaff, staffController.index);
 
-// router.get("/profile", staffController.showProfile);
-// router.get("/edit", staffController.edit);
-router.get("/", staffController.index);
-// router.post("/update", img.upload(destination), img.resize(width, height), staffController.update);
 
+/** 
+ *========================================================================================*
+ *========================================================================================*
+ *==================================Routers for Category==================================*
+ *========================================================================================*
+ *========================================================================================*
+ */
+router.get("/categories/delete", isStaff, staffController.deleteCategory);
+router.get("/categories/edit", isStaff, staffController.editCategory);
+router.post("/categories/update", isStaff, staffController.updateCategory);
+router.post("/categories/store", isStaff, staffController.storeCategory);
+router.get("/categories/search", isStaff, staffController.searchCategory);
+router.get("/categories", isStaff, staffController.showCategories);
 
+/** 
+ *========================================================================================*
+ *========================================================================================*
+ *===================================Routers for Course===================================*
+ *========================================================================================*
+ *========================================================================================*
+ */
+router.get("/courses/delete", isStaff, staffController.deleteCourse);
+router.get("/courses/edit", isStaff, staffController.editCourse);
+router.post("/courses/update", isStaff, staffController.updateCourse);
+router.post("/courses/store", isStaff, staffController.storeCourse);
+router.get("/courses/search", isStaff, staffController.searchCourse);
+router.get("/courses", isStaff, staffController.showCourses);
 
 /** (Vuong)
  *========================================================================================*
@@ -22,6 +52,7 @@ router.get("/", staffController.index);
  *========================================================================================*
  *========================================================================================*
  */
+
 router.get("/trainee-accounts/search", staffController.searchTraineeAccounts);
 router.get("/trainee-accounts/passwords/set_default", staffController.setDefaultPassTee);
 router.post("/trainee-accounts/update", img.upload(destination2), img.resize(width, height), staffController.updateTraineeAccount);

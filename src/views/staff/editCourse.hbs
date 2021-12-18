@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<style>
+    main {
+        background-color: rgb(238, 238, 238);
+        padding: 0 14%;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+    .editCourse-container {
+        background-color: white;
+        box-shadow: 0 8px 10px 6px rgb(228, 228, 228);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        min-width: 500px;
+    }
+    label {
+        cursor: pointer;
+        color: rgb(44, 44, 44);
+        font-weight: 500;
+    }
+    .sameLine {
+        margin-left: 500px;
+        margin-top: -60px;
+    }
+    .sameLine1 {
+        margin-left: 500px;
+        margin-top: -60px;
+    }
+    .sameLine2 {
+        margin-left: 500px;
+        margin-top: -60px;
+    }
+</style>
+<body>
+    <main>
+        <div class="editCourse-container">
+            <div class="text-center" style="border-bottom: 1px solid rgb(192, 192, 192);">
+                <img src="/images/header/logo.png" alt="" width="220px">
+            </div>
+            <a href="/staff/courses" type="button" class="btn btn-link fs-5">
+                <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+            </a>
+            
+            <div style="width: 50%; min-width: 475px; padding: 0px 50px;">
+            <form class="row g-3" method="POST" action="/staff/courses/update/?id={{course._id}}">
+            <div class="mt-4">
+                <label for="category" class="form-label">Category Name</label>
+                <select name="category" id="categoryname" class="form-select">
+                    {{#each categories}}
+                    <option value="{{this.name}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+                </div>
+            <div class="sameLine">
+                    <label for="codeCourse">Code</label>
+                    <input type="text" value="{{course.code}}" class="form-control" id="codeCourse" name="code" placeholder="Code of Course..." required>
+                </div>
+                <div class="mt-4">
+                    <label for="couseName">Course Name</label>
+                    <input type="text" value="{{course.name}}" class="form-control" id="name" name="name" placeholder="Course Name..." required>
+                </div>
+                <div class="sameLine1">
+                    <label for="session">Session</label>
+                    <input type="number" value="{{course.session}}" class="form-control" id="session" name="session" placeholder="Session of Course..." required>
+                </div>
+                <div class="mt-4">
+                    <label for="create">CreateAt</label>
+                    <input type="date" value="{{convertDate course.createAt}}" class="form-control" id="create" name="createAt" placeholder=" CreateAt..." required>
+                </div>
+                <div class="sameLine2">
+                    <label for="update">UpdateAt</label>
+                    <input type="date" value="{{convertDate course.updateAt}}" class="form-control" id="update" name="updateAt" placeholder="Update At..." required>
+                </div>
+                <div class="mt-4">
+                    <label for="courseDescription">Course Description</label>
+                    <textarea class="form-control" id="courseDescription" name="description" placeholder="Course Description..." required>{{course.description}}</textarea>
+                </div>
+                </div>
+            <div class="col-12 mt-4" style= "text-align: center">
+                <button type="submit" class="btn btn-primary fs-5" style="font-weight: 500;">Update
+                    <i class="bi bi-check2 fs-5"></i>
+                </button>
+            </div>
+        </form> 
+    </main>
+</body>
+</html>
+
+
