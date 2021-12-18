@@ -5,26 +5,25 @@
     {{> traineeLayout}}
 
     <main class="content-detail" id="">
-        <h3 class="fs-4 mt-5">Courses (~ 20 records)</h3>
+        <h3 class="fs-4 mt-5">Grade report for Trần Quốc Khánh (GCH190663)</h3>
         <div class="content-detail-header mt-4">
         <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Course</button>
-           <form action="/seeall/search" class="content-detail-header-search" method="GET">
+        {{!-- <form action="/seeall/search" class="content-detail-header-search" method="GET">
                 <input type="search" name="q" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
             </form>
-        </div>
+        </div> --}}
     
         <table class="table table-hover table-bordered caption-top mt-5">
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="col">#</th>
+                    {{!-- <th scope="col">Code</th> --}}
                     <th scope="col">Code</th>
-                    {{!-- <th scope="col">Course Category</th> --}}
-                    <th scope="col">Name</th>
+                    <th scope="col">Course Name</th>
                     <th scope="col">Trainer</th>
-                    <th scope="col">createAt</th>
-                    <th scope="col">updateAt</th>
-                    <th scope="col">Total</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Grade</th>
                     <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
                 </tr>
             </thead>
@@ -33,23 +32,19 @@
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="row">{{@index}}</th>
                     <td>{{this.code}}</td>
-                    {{!-- <td>{{this.coursecategory}}</td> --}}
-                    <td>{{this.name}}</td>
+                    <td>{{this.coursename}}</td>
                     <td>{{this.trainer}}</td>
-                    <td>{{this.createAt}}</td>
-                    <td>{{this.updateAt}}</td>
-                    <td>{{this.total}}</td>
+                    <td>{{this.class}}</td>
+                    <td>{{this.grade}}</td>
                     <td>
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
-                            <a href="/seeall/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
+                            {{!-- <a href="/seeall/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
                                 <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
-                            </a>
-                            <a href="/seeall/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
+                            </a> --}}
+                            <a href="/grade/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
                                 <i class="bi bi-x-lg"></i><span class=" fs-6" style="margin-left: 5px;">Delete</span>
                             </a>
-                            <a href="/seeall/view?id={{this._id}}" class="btn btn-warning" style="border-radius: unset;">
-                                <i class="bi bi-binoculars"></i><span class=" fs-6" style="margin-left: 5px;">View</span>
-                            </a>
+
                         </div>    
                     </td>
                 </tr>
@@ -67,35 +62,35 @@
             </header>
 
             {{!-- block of code for add new course --}}
-            <form class="modal-action_form-body" method="POST" action="/seeall/store">
-              <div class="form-group">
-                    <label for="codeCourse">Code</label>
-                    <input type="text" class="form-control" id="codeCourse" name="code" placeholder="Code of Course..." required>
-                </div>
-                {{!-- <div class="form-group">
-                    <label for="courseCategory">Course Category</label>
-                    <input type="text" class="form-control" id="courseCategory" name="coursecategory" placeholder="Course Category..." required>
-                </div> --}}
+            <form class="modal-action_form-body" method="POST" action="/grade/store">
                 <div class="form-group">
-                    <label for="categoryName">Name</label>
-                    <input type="text" class="form-control" id="categoryName" name="name" placeholder="Course Name..." required>
+                    <label for="code">Code</label>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="Code..." required>
+                </div>
+                <div class="form-group">
+                    <label for="courseName">Course Name</label>
+                    <input type="text" class="form-control" id="courseName" name="courseName" placeholder="Course Name..." required>
                 </div>
                 <div class="form-group">
                     <label for="courseTrainer">Trainer</label>
                     <input class="form-control" id="courseTrainer" name="trainer" placeholder="Course Trainer..." required>
                 </div>
                 <div class="form-group">
-                    <label for="create">CreateAt</label>
-                    <input type="date" class="form-control" id="create" name="createAt" placeholder="Update At..." required>
+                    <label for="class">Class</label>
+                    <input type ="text" class="form-control" id="class" name="class" placeholder="Class..." required>
                 </div>
                 <div class="form-group">
-                    <label for="update">UpdateAt</label>
-                    <input type="date" class="form-control" id="update" name="updateAt" placeholder="Update At..." required>
+                    <label for="grade">Grade</label>
+                    <input type ="text" class="form-control" id="class" name="class" placeholder="Class..." required>
                 </div>
-                <div class="form-group">
-                    <label for="courseTrainer">Total</label>
-                    <input type ="number" class="form-control" id="courseTotal" name="total" placeholder="Course Total..." required>
-                </div>
+                {{!-- <div class="col-md-4">
+                    <label for="inputGrade" class="form-label">Grade</label>
+                    <select name="" id="inputGrade" class="form-select">
+                        <option value="{{id}}">P</option>
+                        <option value="{{id}}">M</option>
+                        <option value="{{id}}">D</option>
+                    </select>
+                </div> --}}
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
             </form>
             <footer class="modal-action_form-footer">
