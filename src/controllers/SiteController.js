@@ -199,15 +199,6 @@ class SiteController {
     async storePassword(req, res, next) {
         try {
             const user = req.session.user;
-            if (!(req.body.newP == req.body.confirmNP)) {
-                return res.render("site/changePassword", {
-                    user,
-                    msg3: {
-                        s1: "The passwords you entered do not match.",
-                        s2: "Check your typing and try again."
-                    }
-                });
-            }
             const anAccount = await Account.findOne({ email: user.email });
             const match = await checkPassword(req.body.oldP, anAccount.password);
             if (!match) {
