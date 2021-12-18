@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {isAdmin} = require("../utils/authHandler");
+const { isAdmin } = require("../utils/authHandler");
 const adminController = require("../controllers/AdminController");
 const img = require("../utils/imageHandler");
 const path = require("path");
