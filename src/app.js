@@ -41,15 +41,10 @@ db.connect();
 const demoRouter = require("./routes/demo");
 app.use("/demo", demoRouter);
 
-const categoriesRouter = require("./routes/categories");
-app.use("/categories", categoriesRouter);
-
-const coursesRouter = require("./routes/courses");
-app.use("/courses", coursesRouter);
-
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
 
+//Staff: 
 const staffRouter = require("./routes/staff");
 app.use("/staff", staffRouter);
 
@@ -71,8 +66,6 @@ app.use("/coursetrainer", coursetrainerRouter);
 
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
-
-
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
