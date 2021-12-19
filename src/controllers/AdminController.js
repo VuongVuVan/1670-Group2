@@ -5,7 +5,7 @@ const Account = require("../models/Account");
 const date = require("../utils/dateHandler");
 const fs = require("fs");
 const path = require("path");
-const {encrypt} = require("../utils/hashingHandler");
+const { encrypt } = require("../utils/hashingHandler");
 const defaultPassword = "123456789";
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const adminUploads = path.join(__dirname, "../public/uploads/admins");
@@ -25,15 +25,9 @@ class AdminController {
         Admin.find({}, (err, admins) => {
             if (!err) {
                 res.render("admin/admin-accounts", {
-<<<<<<< HEAD
                     admins,
                     // user: req.session.user,
                     total: admins.length,
-=======
-                    admins, 
-                    user: req.session.user,
-                    total: admins.length
->>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
                 });
             } else next(err);
         });
@@ -42,11 +36,11 @@ class AdminController {
     async storeAdminAccount(req, res, next) {
         try {
             const email = req.body.email.replace(/\s/g, "");
-            const anAccount = await Account.findOne({email});
-            if(anAccount) {
+            const anAccount = await Account.findOne({ email });
+            if (anAccount) {
                 return res.render("admin/admin-accounts", {
                     user: req.session.user,
-                    msg: "This email address already has an account.", 
+                    msg: "This email address already has an account.",
                     attr: "display: flex;",
                 });
             }
@@ -91,15 +85,7 @@ class AdminController {
     async updateAdminAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newAdmin;
-<<<<<<< HEAD
         if (req.file) {
-=======
-        let name = req.body.name.replace(/\s/g, " ");
-        name = name.match(/[^ ].*[^ ]/)[0];
-        let address = req.body.address.replace(/\s/g, " ");
-        address = address.match(/[^ ].*[^ ]/)[0];
-        if(req.file) {
->>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
             newAdmin = {
                 email: req.body.email,
                 image: {
@@ -193,11 +179,11 @@ class AdminController {
     async storeStaffAccount(req, res, next) {
         try {
             const email = req.body.email.replace(/\s/g, "");
-            const anAccount = await Account.findOne({email});
-            if(anAccount) {
+            const anAccount = await Account.findOne({ email });
+            if (anAccount) {
                 return res.render("admin/staff-accounts", {
                     user: req.session.user,
-                    msg: "This email address already has an account.", 
+                    msg: "This email address already has an account.",
                     attr: "display: flex;",
                 });
             }
@@ -242,15 +228,7 @@ class AdminController {
     async updateStaffAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newStaff;
-<<<<<<< HEAD
         if (req.file) {
-=======
-        let name = req.body.name.replace(/\s/g, " ");
-        name = name.match(/[^ ].*[^ ]/)[0];
-        let address = req.body.address.replace(/\s/g, " ");
-        address = address.match(/[^ ].*[^ ]/)[0];
-        if(req.file) {
->>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
             newStaff = {
                 email: req.body.email,
                 image: {
@@ -337,11 +315,11 @@ class AdminController {
     async storeTrainerAccount(req, res, next) {
         try {
             const email = req.body.email.replace(/\s/g, "");
-            const anAccount = await Account.findOne({email});
-            if(anAccount) {
+            const anAccount = await Account.findOne({ email });
+            if (anAccount) {
                 return res.render("admin/staff-accounts", {
                     user: req.session.user,
-                    msg: "This email address already has an account.", 
+                    msg: "This email address already has an account.",
                     attr: "display: flex;",
                 });
             }
@@ -392,19 +370,7 @@ class AdminController {
     async updateTrainerAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newTrainer;
-<<<<<<< HEAD
         if (req.file) {
-=======
-        let name = req.body.name.replace(/\s/g, " ");
-        name = name.match(/[^ ].*[^ ]/)[0];
-        let address = req.body.address.replace(/\s/g, " ");
-        address = address.match(/[^ ].*[^ ]/)[0];
-        let specialty = req.body.specialty.replace(/\s/g, " ");
-        specialty = specialty.match(/[^ ].*[^ ]/)[0];
-        let code = req.body.code.replace(/\s/g, " ");
-        code = code.match(/[^ ].*[^ ]/)[0];
-        if(req.file) {
->>>>>>> 0a374926ea4535c6cbadf4c3f30aa7f6cfcc7d75
             newTrainer = {
                 email: req.body.email,
                 image: {

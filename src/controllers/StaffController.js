@@ -1,8 +1,9 @@
-const Staff = require("../models/Staff");
-const fs = require("fs");
-const path = require("path");
 const Trainee = require("../models/Trainee");
 const Account = require("../models/Account");
+const Category = require("../models/Category")
+const Course = require("../models/Course")
+const fs = require("fs");
+const path = require("path");
 const { encrypt } = require("../utils/hashingHandler");
 const defaultPassword = "123456789";
 const date = require("../utils/dateHandler");
@@ -13,42 +14,141 @@ const traineeUploads = path.join(__dirname, "../public/uploads/trainees");
 
 class StaffController {
     index(req, res) {
-
         res.render("staff", { user: req.session.user });
     }
 
-    // showProfile(req, res, next) {
-    //     Staff.find({}, (err, staffs) => {
-    //         console.log(req.session)
-    //         if (!err) res.render("staff/profile", { staffs, user: req.session.user });
-    //         else next(err);
-    //     });
-    // }
+    /**
+     * ================================================================= *
+     * ================================================================= *
+     * ======================Category Course============================ *
+     * ================================================================= *
+     * ================================================================= *
+     */
 
-    // edit(req, res, next) {
-    //     Staff.findById(req.query.id, (err, staffs) => {
-    //         if (!err) res.render("staff/edit", { staffs, user: req.session.user });
-    //         else next(err);
-    //     });
-    // }
+    showCategories(req, res, next) {
+        Category.find({}, (err, categories) => {
+            const total = categories.length;
+            if (!err) res.render("staff/categories", { categories, total, user: req.session.user });
+            else next(err);
+        });
+    }
 
-    // update(req, res, next) {
-    //     console.log(req.file)
-    //     const obj = {
-    //         email: req.body.email,
-    //         name: req.body.name,
-    //         dob: date.convertDateAsString(req.body.dob),
-    //         address: req.body.address,
-    //         image: {
-    //             data: fs.readFileSync(req.file.path),
-    //             contentType: "image/png"
-    //         }
-    //     }
-    //     Staff.updateOne({ _id: req.query.id }, obj, err => {
-    //         if (!err) res.redirect("/staff/profile");
-    //         else next(err);
-    //     });
-    // }
+    storeCategory(req, res, next) {
+        const category = new Category(req.body);
+        category.save(err => {
+            console.log(category);
+            if (!err) res.redirect("/staff/categories");
+            else next(err);
+        });
+    }
+
+    editCategory(req, res, next) {
+        Category.findById(req.query.id, (err, category) => {
+            if (!err) res.render("staff/editCategory", { category });
+            else next(err);
+        });
+    }
+
+
+    updateCategory(req, res, next) {
+        Category.updateOne({ _id: req.query.id }, req.body, err => {
+            if (!err) res.redirect("/staff/categories");
+            else next(err);
+        });
+    }
+
+    deleteCategory(req, res, next) {
+        Category.deleteOne({ _id: req.query.id }, err => {
+            if (!err) res.redirect("/staff/categories");
+            else next(err);
+        });
+    }
+
+    searchCategory(req, res, next) {
+        Category.find({ name: { $regex: req.query.q, $options: 'i' } }, (err, categories) => {
+            const total = categories.length;
+            if (!err) {
+                res.render("staff/categories", { categories, user: req.session.user, total });
+            } else next(err);
+        });
+    }
+
+    /**
+     * ================================================================= *
+     * ================================================================= *
+     * ============================Course=============================== *
+     * ================================================================= *
+     * ================================================================= *
+     */
+    showCourses(req, res, next) {
+        Course.find({}, (err, courses) => {
+            const total = courses.length;
+            Category.find({}, (err, categories) => {
+                if (!err) res.render("staff/courses", { categories, courses, total, user: req.session.user });
+                else next(err);
+            })
+        });
+    }
+
+    storeCourse(req, res, next) {
+        const obj = {
+            code: req.body.code,
+            name: req.body.name,
+            category: req.body.category,
+            description: req.body.description,
+            session: req.body.session,
+            createAt: date.convertDateAsString(req.body.createAt),
+            updateAt: date.convertDateAsString(req.body.updateAt),
+        }
+        console.log(obj)
+        const course = new Course(obj);
+        course.save(err => {
+            if (!err) res.redirect("/staff/courses");
+            else next(err);
+        });
+    }
+
+    editCourse(req, res, next) {
+        Course.findById(req.query.id, (err, course) => {
+            Category.find({}, (err, categories) => {
+                if (!err) res.render("staff/editCourse", { categories, course, user: req.session.user });
+                else next(err);
+            })
+        });
+    }
+
+    updateCourse(req, res, next) {
+        const obj = {
+            code: req.body.code,
+            name: req.body.name,
+            category: req.body.category,
+            description: req.body.description,
+            session: req.body.session,
+            createAt: date.convertDateAsString(req.body.createAt),
+            updateAt: date.convertDateAsString(req.body.updateAt),
+        }
+        Course.updateOne({ _id: req.query.id }, obj, err => {
+            console.log(obj)
+            if (!err) res.redirect("/staff/courses");
+            else next(err);
+        });
+    }
+
+    deleteCourse(req, res, next) {
+        Course.deleteOne({ _id: req.query.id }, err => {
+            if (!err) res.redirect("/staff/courses");
+            else next(err);
+        })
+    }
+
+    searchCourse(req, res, next) {
+        Course.find({ $or: [{ code: { $regex: req.query.qq, $options: 'i' } }, { name: { $regex: req.query.qq, $options: 'i' } }] }, (err, courses) => {
+            const total = courses.length;
+            if (!err) {
+                res.render("staff/courses", { courses, user: req.session.user, total });
+            } else next(err);
+        });
+    }
 
     /** (Vuong)
      * ================================================================= *
@@ -61,7 +161,7 @@ class StaffController {
     showTraineeAccounts(req, res, next) {
         Trainee.find({}, (err, trainees) => {
             const user = req.session.user;
-            if (!err) res.render("staff/trainee-accounts", {trainees, user, total: trainees.length});
+            if (!err) res.render("staff/trainee-accounts", { trainees, user, total: trainees.length });
             else next(err);
         });
     }
@@ -99,13 +199,13 @@ class StaffController {
 
     editTraineeAccount(req, res, next) {
         Trainee.findById(req.query.id, (err, trainee) => {
-            if (!err) res.render("staff/editTrainee", {trainee, user: req.session.user});
+            if (!err) res.render("staff/editTrainee", { trainee, user: req.session.user });
             else next(err);
         });
     }
 
     async updateTraineeAccount(req, res, next) {
-        const newAccount = {email: req.body.email};
+        const newAccount = { email: req.body.email };
         let newTrainee;
         if (req.file) {
             newTrainee = {

@@ -1,145 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 {{> head}}
+<style>
+    body {
+    background: rgb(99, 39, 120)
+}
+.margin{
+    margin-top: -24px;
+    margin-left: 80px;
+}
+
+.changeProfile-container {
+        background-color: white;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+</style>
 <body>
     {{> trainerLayout}}
+    <main >
+    <div class="container rounded bg-white mt-5;" style="margin-top: 120px; width: 900px;">
+        <div>
+            <div class="text-center" style="border-bottom: 1px solid rgb(192, 192, 192);">
+                <a href="/{{user.role}}">
+                    <img src="/images/header/logo.png" alt="" width="150px">
+                </a>
+            </div>
+            <a href="/{{user.role}}" class="btn btn-link fs-5">
+            <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+        </a>
+        <a href="/{{removeSpace user.name}}/change_password" class="btn btn-link">Change Password</a>
 
-    <main class="content-detail" id="">
-        <h3 class="fs-4 mt-5">Profile (~ 20 records)</h3>
-        <div class="content-detail-header mt-4">
-            <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Profile</button>
-            {{!-- <form action="" class="content-detail-header-search">
-                <input type="search" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
-            </form> --}}
+    <div class="row" style="margin-top: -25px;">
+        <div class="col-md-3" style="margin-left: 150px; margin-top: 25px">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img style="width: 170px; height: 170px;" src="data:image/{{trainer.image.contentType}};base64,{{convertImage trainer.image.data}}" alt="" class="img-thumbnail">
+                <span>{{removeSpace user.name}}</span><span class="text-black-50">{{trainer.email}}</span></div>
         </div>
-        
-        <table class="table table-hover table-bordered caption-top mt-5">
-            {{!-- <caption class="fs-5"></caption> --}}
-            <thead class="table-light">
-                <tr style="font-size: 18px; text-align: center;">
-                    <th scope="col">#</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Date of birth</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Education</th>
-                    <th scope="col"><i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each trainers}}
-                <tr>
-                    <th scope="row">1</th>
-                    <th scope="col">
-                        <img src="{{this.image}}" alt="">
-                    </th>
-                    <th scope="col">{{this.email}}</th>
-                    <th scope="col">{{this.name}}</th>
-                    <th scope="col">{{this.age}}</th>
-                    <th scope="col">{{this.dob}}</th>
-                    <th scope="col">{{this.address}}</th>
-                    <th scope="col">{{this.education}}</th>
-                    <td style="text-align: center;">
-                        <div class="btn-group" style="z-index: 0; height: 40px;" role="group" aria-label="Basic mixed styles example">
-                            <a href="/trainer/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
-                                <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
-                            </a>
+        <div class="col-md-5">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 style= "margin-left: 0px; color: rgb(94, 94, 94); font-size: xx-large">Profile Settings</h4>
+                </div>
+                <div class="row mt-3">
+                    <span style=" color: rgb(44, 44, 44); font-weight: 500;">
+                        Email:
+                    </span>
+                    <span>{{trainer.email}}</span>
+                </div>
+                <div class="row mt-3" style="margin-right: 20px;">
+                    <span style=" color: rgb(44, 44, 44); font-weight: 500;">
+                        Full Name:
+                    </span>
+                    <span>{{trainer.name}}</span>
+                </div>
+                <div class="row mt-3" style="margin-right: 60px;">
+                    <span style="display: block; color: rgb(44, 44, 44); font-weight: 500;">
+                        Age:
+                    </span>
+                    <span>{{calculateAge trainer.dob}}</span>
+                </div>
+                <div class="row mt-3">
+                    <span style="display: block; color: rgb(44, 44, 44); font-weight: 500;">
+                        Date of birth:
+                    </span>
+                    <span>{{trainer.dob}}</span>
+                </div>
+                <div class="row mt-3">
+                    <span style="display: block; color: rgb(44, 44, 44); font-weight: 500;">
+                        Address:
+                    </span>
+                    <span>{{trainer.address}}</span>
+                </div>
+                <div class="row mt-3">
+                    <span style="display: block; color: rgb(44, 44, 44); font-weight: 500;">
+                        Specialty:
+                    </span>
+                    <span>{{trainer.specialty}}</span>
+                </div>
+                <div class="mt-2 text-center" >
+                            <button type="button" class="btn btn-success js-edit-info btn btn-primary profile-button">
+                                <a class ="underline-white" href="/{{removeSpace user.name}}/edit_profile?id={{trainer._id}}">
+                                    Edit Profile
+                                </a>
+                            </button>
                         </div>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </main>
-
-    <div class="modal-action_form js-modal-adding_form">
-        <div class="modal-action_form-container js-modal-action_form-container">
-            <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
-            <header class="modal-action_form-header">
-                <i style="margin-right: 20px;" class="bi bi-person-plus"></i>
-                New Profile
-            </header>
-
-            <form class="modal-action_form-body" method="POST" action="/trainer/profile/store" enctype="multipart/form-data">
-                <div>
-                    <label for="email" class="">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Your email..." required>
-                </div>
-                <div>
-                    <label for="name" class="">Full name</label>
-                    <input type="text" name="name" id="name" placeholder="Your full name..." required>
-                </div>
-                <div>
-                    <label for="age" class="">Age</label>
-                    <input type="number" name="age" id="age" placeholder="Your age..." required>
-                </div>
-                <div>
-                    <label for="address" class="">Address</label>
-                    <input type="text" name="address" id="address" placeholder="Your address..." required>
-                </div>
-                <div>   
-                    <label for="dob" class="">Date of birth</label>
-                    <input type="string" name="dob" id="dob" placeholder="Your date of birth..." required>
-                </div>
-                <div>
-                    <label for="education" class="">Education</label>
-                    <input type="text" name="education" id="education" placeholder="Your education..." required>
-                </div>
-                <div>   
-                    <label for="avatar" class="">Avatar</label>
-                    <input type="file" name="image" id="avatar" accept="image/*">
-                </div>
-                <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
-            </form>
-
-            <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
-            </footer>
+            </div>
         </div>
     </div>
-
-    {{!-- block of code for editing --}}
-    {{!-- <div class="modal-action_form js-modal-editing_form">
-        <div class="modal-action_form-container js-modal-action_form-container">
-            <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
-            <header class="modal-action_form-header">
-                <i style="margin-right: 20px;" class="bi bi-person"></i>
-                Current Account
-            </header>
-
-            <form class="modal-action_form-body" method="POST" action="/admin/create">
-                <div>
-                    <label for="editEmail" class="">Email</label>
-                    <input type="email" value="{{account.email}}" name="email" id="editEmail" placeholder="Your email..." required>
-                </div>
-                <div>
-                    <label for="editFullName" class="">Full name</label>
-                    <input type="text" value="{{account.name}}" name="fullName" id="editFullName" placeholder="Your full name..." required>
-                </div>
-                <div>
-                    <label for="editPassword" class="">Password</label>
-                    <input type="password" name="password" id="editPassword" placeholder="Your password..." required>
-                </div>
-                <div>
-                    <label for="editAddress" class="">Address</label>
-                    <input type="text" name="address" id="editAddress" placeholder="Your address..." required>
-                </div>
-                <div>   
-                    <label for="editDoB" class="">Date of birth</label>
-                    <input type="text" name="doB" id="editDoB" placeholder="Your date of birth..." required>
-                </div>
-                <button type="submit" class="btn-action">Update<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
-            </form>
-
-            <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
-            </footer>
-        </div>
-    </div> --}}
-
+</div>
+</div>
+</div>
+</main>
 {{> bottom}}
 </body>
 </html>

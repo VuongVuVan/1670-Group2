@@ -5,7 +5,7 @@ const traineeController = require("../controllers/TraineeController");
 const path = require("path");
 const destination = path.join(__dirname, "../public/uploads/trainee");
 const width = height = 170;
-const {isTrainee} = require("../utils/authHandler");
+const { isTrainee } = require("../utils/authHandler");
 
 router.get("/view-alltrainee", isTrainee, traineeController.show);
 router.get("/view-alltrainee/edit", isTrainee, traineeController.edit);
