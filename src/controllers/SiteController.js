@@ -52,43 +52,46 @@ class SiteController {
     showProfile(req, res, next) {
         const role = req.session.user.role;
         if (role == "admin") {
-            Admin.findOne({ mail: req.body.email }, (err, admin) => {
+            Admin.findOne({ email: req.session.user.email }, (err, admin) => {
                 const user = req.session.user;
                 if (!err) {
                     res.render("admin/profile", {
                         admin,
                         user,
-                        mail: req.body.email
+                        email: req.session.user.email
                     });
                 } else next(err);
             });
         } else if (role == "staff") {
-            Staff.findOne({}, (err, staff) => {
+            Staff.findOne({ email: req.session.user.email }, (err, staff) => {
                 const user = req.session.user;
                 if (!err) {
                     res.render("staff/profile", {
                         staff,
-                        user
+                        user,
+                        email: req.session.user.email
                     });
                 } else next(err);
             });
         } else if (role == "trainer") {
-            Trainer.findOne({}, (err, trainer) => {
+            Trainer.findOne({ email: req.session.user.email }, (err, trainer) => {
                 const user = req.session.user;
                 if (!err) {
                     res.render("trainer/profile", {
                         trainer,
-                        user
+                        user,
+                        email: req.session.user.email
                     });
                 } else next(err);
             });
         } else if (role == "trainee") {
-            Trainee.findOne({}, (err, trainee) => {
+            Trainee.findOne({ email: req.session.user.email }, (err, trainee) => {
                 const user = req.session.user;
                 if (!err) {
                     res.render("trainee/profile", {
                         trainee,
-                        user
+                        user,
+                        email: req.session.user.email
                     });
                 } else next(err);
             });
@@ -104,7 +107,7 @@ class SiteController {
             });
         } else if (role == "staff") {
             Staff.findById(req.query.id, (err, staff) => {
-                if (!err) res.render("staff/edit", { staff, user: req.session.user });
+                if (!err) res.render("staff/editStaff", { staff, user: req.session.user });
                 else next(err);
             });
         } else if (role == "trainer") {
@@ -114,7 +117,7 @@ class SiteController {
             });
         } else if (role == "trainee") {
             Trainee.findById(req.query.id, (err, trainee) => {
-                if (!err) res.render("Trainee/edit", { trainee, user: req.session.user });
+                if (!err) res.render("trainee/edit", { trainee, user: req.session.user });
                 else next(err);
             });
         }
@@ -151,7 +154,7 @@ class SiteController {
                 }
             }
             Staff.updateOne({ _id: req.query.id }, obj, err => {
-                if (!err) res.redirect("/staff/profile");
+                if (!err) res.redirect('/' + req.session.user.name.split(" ").join(""));
                 else next(err);
             });
         } else if (role == "trainer") {
@@ -167,7 +170,7 @@ class SiteController {
                 }
             }
             Staff.updateOne({ _id: req.query.id }, obj, err => {
-                if (!err) res.redirect("/trainer/profile");
+                if (!err) res.redirect('/' + req.session.user.name.split(" ").join(""));
                 else next(err);
             });
         } else if (role == "trainee") {
@@ -183,7 +186,7 @@ class SiteController {
                 }
             }
             Trainee.updateOne({ _id: req.query.id }, obj, err => {
-                if (!err) res.redirect("/Trainee/profile");
+                if (!err) res.redirect('/' + req.session.user.name.split(" ").join(""));
                 else next(err);
             });
         }

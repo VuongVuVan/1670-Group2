@@ -7,7 +7,7 @@
         <h3 class="fs-4 mt-5">Categories (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Category</button>
-            <form action="/categories/search" class="content-detail-header-search" method="GET">
+            <form action="/staff/categories/search" class="content-detail-header-search" method="GET">
                 <input type="search" name="q" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
             </form>
@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each data}}
+                {{#each categories}}
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="row">{{@index}}</th>
                     <td>{{this.name}}</td>
@@ -34,13 +34,13 @@
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn btn-success js-edit-info">
                                 <i class="bi bi-pencil-square"></i>
-                                <a class ="underline-white" href="/categories/edit?id={{this._id}}">
+                                <a class ="underline-white" href="/staff/categories/edit?id={{this._id}}">
                                     <span class=" fs-6" style="margin-left: auto;">Edit</span>
                                 </a>
                             </button>
                             <button type="button" class="btn btn-danger">
                                 <i class="bi bi-x-lg"></i>
-                                <a class ="underline-white" href="/categories/delete/?id={{this._id}}", onclick="return conFirm_Delete()">
+                                <a class ="underline-white" href="/staff/categories/delete/?id={{this._id}}", onclick="return conFirm_Delete()">
                                     <span class=" fs-6" style="margin-left: auto;">Delete</span>
                                     <script>
                                         function conFirm_Delete(){
@@ -68,7 +68,7 @@
             </header>
 
             {{!-- block of code for add new category --}}
-            <form class="modal-action_form-body" method="POST" action="/categories/store">
+            <form class="modal-action_form-body" method="POST" action="/staff/categories/store">
                 <div>
                     <label for="categoryName">Category Name</label>
                     <input type="text" class="form-control" id="categoryName" name="name"  placeholder="Name of Category..." required>
@@ -84,10 +84,11 @@
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;" class="bi bi-check2"></i></button>
             </form>
             <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
+                <a href="#" class="cancel" style="color: white">Cancel</a>
+                Need <a href="#">help?</a>
             </footer>
         </div>
     </div>
-{{> bottom}}
+{{> footerStaff}}
 </body>
 </html>

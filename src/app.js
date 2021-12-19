@@ -42,8 +42,10 @@ app.use("/demo", demoRouter);
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
 
+//Staff: 
 const staffRouter = require("./routes/staff");
 app.use("/staff", staffRouter);
+
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
 
@@ -58,8 +60,6 @@ app.use("/trainer", trainerRouter);
 
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);
-
-
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

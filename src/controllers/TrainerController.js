@@ -7,7 +7,7 @@ const Trainee = require("../models/Trainee");
 
 class TrainerController {
     index(req, res) {
-        res.render("trainer");
+        res.render("trainer", { user: req.session.user });
     }
 
     view(req, res) {
