@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Seeall = new Schema({
-    code: {type: Number },
-    coursecategory: {type: String},
-    name: { type: String, default: "Unknown" },
-    trainer: { type: String },
-    total: { type: Number }
+    code: {type: Number, require: true },
+    coursecategory: {type: String, require: true},
+    name: { type: String, require: true },
+    trainer: { type: String, require: true },
+    createAt: { type: String, required: true },
+    updateAt: { type: String, required: true },
+    total: { type: Number, require: true }
 });
 
 module.exports = mongoose.model("Seeall", Seeall);

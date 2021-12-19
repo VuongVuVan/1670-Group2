@@ -4,7 +4,7 @@
 <body>
     {{> adminLayout}}
 
-    <main class="content-detail" id="">
+    <main class="content-detail" id="content-detail">
         <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
@@ -23,6 +23,7 @@
                     <th scope="col" style="width: 190px;">Avatar</th>
                     <th scope="col" style="width: 150px;">Email</th>
                     <th scope="col">Full name</th>
+                    <th scope="col">Code</th>
                     <th scope="col" style="width: 90px;">Specialty</th>
                     <th scope="col" style="width: 60px;">Age</th>
                     <th scope="col" style="width: 130px;">Date of birth</th>
@@ -43,6 +44,7 @@
                     </td>
                     <td scope="col">{{this.email}}</td>
                     <td scope="col" style="text-align: center;">{{this.name}}</td>
+                    <td scope="col" style="text-align: center;">{{this.code}}</td>
                     <td scope="col" style="text-align: center;">{{this.specialty}}</td>
                     <td scope="col" style="text-align: center;">{{calculateAge this.dob}}</td>
                     <td scope="col" style="text-align: center;">{{this.dob}}</td>       
@@ -54,7 +56,7 @@
                                     <i class="bi bi-pencil-square"></i>
                                     <span class=" fs-6" style="margin-left: 5px;">Edit</span>
                                 </a>
-                                <a href="/admin/trainer-accounts/delete?id={{this._id}}" class="btn btn-danger" style="border-bottom-right-radius: unset;">
+                                <a href="" class="btn btn-danger" style="border-bottom-right-radius: unset;" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#delete-item-modal">
                                     <i class="bi bi-x-lg"></i>
                                     <span class=" fs-6" style="margin-left: 5px;">Delete</span>
                                 </a>
@@ -76,7 +78,7 @@
         {{/if}}
     </main>
 
-    <div class="modal-action_form js-modal-adding_form">
+    <div class="modal-action_form js-modal-adding_form" style="{{attr}}">
         <div class="modal-action_form-container js-modal-action_form-container">
             <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
             <header class="modal-action_form-header">
@@ -84,26 +86,35 @@
                 New Account
             </header>
             
-            <form class="modal-action_form-body" method="POST" action="/admin/trainer-accounts/store" enctype="multipart/form-data">
+            <form class="modal-action_form-body" method="POST" action="/admin/trainer-accounts/store" enctype="multipart/form-data" onsubmit="return validateTrainerAcc();">
                 <div>
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email..." required>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email..." minlength="12" maxlength="40" required>
+                    <span class="msg" id="email-msg">{{msg}}</span>
                 </div>
                 <div>
                     <label for="name" class="form-label">Full name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." required>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." minlength="5" maxlength="30" required>
+                    <span class="msg" id="name-msg"></span>
+                </div>
+                <div>
+                    <label for="code" class="form-label">Code</label>
+                    <input type="text" class="form-control" name="code" id="code" placeholder="Your code..." minlength="4" maxlength="20" required>
+                    <span class="msg" id="code-msg">{{msg}}</span>
+                </div>
+                <div>   
+                    <label for="specialty" class="">Specialty</label>
+                    <input type="text" class="form-control" name="specialty" id="specialty" required placeholder="Your specialty..." minlength="2" maxlength="20">
+                    <span class="msg" id="specialty-msg"></span>
                 </div>
                 <div>
                     <label for="address" class="">Address</label>
-                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required></textarea>
+                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." minlength="6" maxlength="100" required></textarea>
+                    <span class="msg" id="address-msg"></span>
                 </div>
                 <div>   
                     <label for="dob" class="">Date of birth</label>
                     <input type="date" class="form-control" name="dob" id="dob" required>
-                </div>
-                <div>   
-                    <label for="specialty" class="">Specialty</label>
-                    <input type="text" class="form-control" name="specialty" id="specialty" required placeholder="Your specialty...">
                 </div>
                 <div>
                     <label for="btn-add-img" class="form-label">Upload</label>
@@ -119,11 +130,40 @@
             </form>
 
             <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
+                <a href="/admin/trainer-accounts" class="cancel">Cancel</a>
+                Need <a href="#">help?</a>
             </footer>
         </div>
     </div>
 
-{{> bottom}}
+    <div class="modal fade" id="delete-item-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <i class="bi bi-exclamation-triangle fs-3" style="color: red; margin-left: 10px;"></i>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this account?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-delete-item" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form name="delete-item-form" action="/admin/trainer-accounts/delete">
+        <input type="hidden" name="id" value="">
+    </form>
+
+    <script>
+        activateModalAddingForm();
+        previewImage();
+        confirmItemDeletion();
+    </script>
+
+{{> frameworkCDN}}
 </body>
 </html>

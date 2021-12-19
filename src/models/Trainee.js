@@ -8,6 +8,8 @@ const Trainee = new Schema({
         contentType: { type: String, required: true },
         name: { type: String }
     },
+
+
     name: { type: String, required: true, minlength: 5, maxlength: 30 },
     code: { type: String, required: true, unique: true, minlength: 4, maxlength: 20 },
     dob: { type: String, required: true },

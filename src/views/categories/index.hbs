@@ -40,8 +40,15 @@
                             </button>
                             <button type="button" class="btn btn-danger">
                                 <i class="bi bi-x-lg"></i>
-                                <a class ="underline-white" href="/categories/delete/?id={{this._id}}">
+                                <a class ="underline-white" href="/categories/delete/?id={{this._id}}", onclick="return conFirm_Delete()">
                                     <span class=" fs-6" style="margin-left: auto;">Delete</span>
+                                    <script>
+                                        function conFirm_Delete(){
+                                        var result = confirm("Are you sure you want to delete this category?")
+                                        if(result==true)  return true;
+                                        else return false
+                                        }
+                                    </script>
                                 </a>
                             </button>
                         </div>

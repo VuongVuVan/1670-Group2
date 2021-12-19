@@ -4,7 +4,7 @@
 <body>
     {{> staffLayout}}
 
-    <main class="content-detail" id="">
+    <main class="content-detail" id="content-detail">
         <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
             <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
@@ -15,7 +15,6 @@
                 </button>
             </form>
         </div>
-        {{#if trainees}}
         <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
@@ -69,11 +68,6 @@
                 {{/each}}
             </tbody>
         </table>
-        {{else}}
-        <div class="text-center fs-3" style="margin-top: 140px; color: #198754;">
-            <span>No results found for query "{{q}}"</span>
-        </div>
-        {{/if}}
     </main>
 
     <div class="modal-action_form js-modal-adding_form">
@@ -87,23 +81,27 @@
             <form class="modal-action_form-body" method="POST" action="/staff/trainee-accounts/store" enctype="multipart/form-data">
                 <div>
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email..." required>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your email..." minlength="12" maxlength="40" required>
                 </div>
                 <div>
                     <label for="name" class="form-label">Full name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." required>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." minlength="5" maxlength="30" required>
+                </div>
+                <div>
+                    <label for="code" class="form-label">Code</label>
+                    <input type="text" class="form-control" name="code" id="code" placeholder="Your code..." minlength="4" maxlength="20" required>
+                </div>
+                <div>   
+                    <label for="education" class="">Education</label>
+                    <input type="text" class="form-control" name="education" id="education" required placeholder="Your education..." minlength="2" maxlength="20">
                 </div>
                 <div>
                     <label for="address" class="">Address</label>
-                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required></textarea>
+                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required minlength="6" maxlength="100"></textarea>
                 </div>
                 <div>   
                     <label for="dob" class="">Date of birth</label>
                     <input type="date" class="form-control" name="dob" id="dob" required>
-                </div>
-                <div>   
-                    <label for="education" class="">Education</label>
-                    <input type="text" class="form-control" name="education" id="education" required placeholder="Your education...">
                 </div>
                 <div>
                     <label for="btn-add-img" class="form-label">Upload</label>
@@ -119,7 +117,8 @@
             </form>
 
             <footer class="modal-action_form-footer">
-                <p style="margin-bottom: 6px;">Need <a href="#">help?</a></p>
+                <a href="/staff/trainee-accounts" class="cancel">Cancel</a>
+                Need <a href="#">help?</a>
             </footer>
         </div>
     </div>

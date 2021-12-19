@@ -5,13 +5,13 @@
     </div>
     <div class="common_interface_header_r-area">
         <div class="header_r-area-info">
-            <img src="https://scontent.fhan14-2.fna.fbcdn.net/v/t1.6435-9/70482426_1190461581155908_3924557999154135040_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=174925&_nc_ohc=jXkmOROlTuMAX9zy5-B&_nc_ht=scontent.fhan14-2.fna&oh=2a9bc3508d164c3ee2866dc2e6104ed0&oe=61CB7B2F" alt="">
-            <label for="info-checkbox">Do Cong Thanh
+            {{!-- <img src="data:image/{{user.image.contentType}};base64,{{convertImage user.image.data}}" alt="">
+            <label for="info-checkbox">{{user.name}}
                 <span class="fas fa-caret-down"></span>
-            </label>
+            </label> --}}
             <input type="checkbox" name="" id="info-checkbox">
             <ul>
-                <li><a href="/trainer/profile">Your profile</a></li>
+                {{!-- <li><a href="/{{removeSpace user.name}}">Your profile</a></li> --}}
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -21,7 +21,7 @@
 <aside id="common_interface-l_sidebar" class="common_interface-l_sidebar">
     <a href="javascript:void(0)" class="l_sidebar-closebtn" onclick="toggle()">&times;</a>
     <div class="l_sidebar-main_menu">
-       <h2>Menu</h2>
+    <h2>Menu</h2>
         <a href="/trainer"><i class="bi bi-house-door"></i></i>Home</a>
         <a href="/trainer/assignedCourse"><i class="bi bi-briefcase"></i> View Courses</a>
         <a href="/trainer/profile"><i class="fa fa-file-o"></i>Your Profile</a>

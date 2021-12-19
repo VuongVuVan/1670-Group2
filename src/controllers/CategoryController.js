@@ -4,7 +4,7 @@ class CategoryController {
     show(req, res, next) {
         Category.find({}, (err, categories) => {
             const total = categories.length;
-            if (!err) res.render("categories", { data: categories, total });
+            if (!err) res.render("categories", { data: categories, total, user: req.session.user });
             else next(err);
         });
     }
@@ -31,8 +31,6 @@ class CategoryController {
 
 
     update(req, res, next) {
-        // console.log(req.body)
-        // console.log(req.query.id)
         Category.updateOne({ _id: req.query.id }, req.body, err => {
             if (!err) res.redirect("/categories");
             else next(err);

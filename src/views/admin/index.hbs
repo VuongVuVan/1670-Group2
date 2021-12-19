@@ -30,16 +30,11 @@
             </div>
         </div>
     </main>
-
-    <script>
-        var counter = 2;
-        setInterval(function() {
-            document.getElementById("radio" + counter).checked = true;
-            counter++;
-            if(counter > 4) counter = 1;
-        }, 5000);
-    </script>
     
-{{> bottom}}
+    <script>
+        imageSliderTimer(5000, 4);
+    </script>
+
+{{> frameworkCDN}}
 </body>
 </html>

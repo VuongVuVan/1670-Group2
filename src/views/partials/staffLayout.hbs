@@ -5,13 +5,14 @@
     </div>
     <div class="common_interface_header_r-area">
         <div class="header_r-area-info">
-        <img src="/images/avatar/avastaff.png" alt="">
-            <label for="info-checkbox">Vu Hoang Son
+        {{!-- <img src="/images/avatar/avastaff.png" alt=""> --}}
+        <img src="data:image/{{user.image.contentType}};base64,{{convertImage user.image.data}}" alt="">
+            <label for="info-checkbox">{{user.name}}
                 <span class="fas fa-caret-down"></span>
             </label>
             <input type="checkbox" name="" id="info-checkbox">
             <ul>
-                <li><a href="/staff/profile">Your profile</a></li>
+                <li><a href="/{{removeSpace user.name}}">Your profile</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -26,7 +27,8 @@
         <a href="/staff/trainee-accounts"><i class="fa fa-users"></i>Trainee Accounts</a>
         <a href="/categories"><i class="bi bi-stack"></i>Categories Course</a>
         <a href="/courses"><i class="bi bi-book"></i>Course</a>
-        <a href="/staff/profile"><i class="fa fa-file-o"></i>Your Profile</a>
-        <a href="#"><i class="fa fa-phone"></i>Logout</a>
+        {{!-- <a href="/staff/profile"><i class="fa fa-file-o"></i>Your Profile</a> --}}
+        <a href="/{{removeSpace user.name}}"><i class="fa fa-file-o"></i>Your Profile</a>
+        <a href="/logout"><i class="fa fa-phone"></i>Logout</a>
     </div>
 </aside>
