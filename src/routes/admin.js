@@ -9,6 +9,7 @@ const destination2 = path.join(__dirname, "../public/uploads/staffs");
 const destination3 = path.join(__dirname, "../public/uploads/trainers");
 const width = height = 170;
 
+router.get("/trainer-account/:slug", isAdmin, adminController.trainerDetailAction);
 router.get("/trainer-accounts/search", adminController.searchTrainerAccounts);
 router.get("/trainer-accounts/passwords/set_default", adminController.setDefaultPassTer);
 router.post("/trainer-accounts/update", img.upload(destination3), img.resize(width, height), adminController.updateTrainerAccount);
@@ -17,6 +18,7 @@ router.post("/trainer-accounts/store", img.upload(destination3), img.resize(widt
 router.get("/trainer-accounts/delete", adminController.deleteTrainerAccount);
 router.get("/trainer-accounts", adminController.showTrainerAccounts);
 
+router.get("/staff-account/:slug", isAdmin, adminController.staffDetailAction);
 router.get("/staff-accounts/search", adminController.searchStaffAccounts);
 router.get("/staff-accounts/passwords/set_default", adminController.setDefaultPassS);
 router.post("/staff-accounts/update", img.upload(destination2), img.resize(width, height), adminController.updateStaffAccount);
@@ -26,7 +28,7 @@ router.get("/staff-accounts/delete", adminController.deleteStaffAccount);
 router.get("/staff-accounts", adminController.showStaffAccounts);
 
 router.get("/admin-accounts/search", isAdmin, adminController.searchAdminAccounts);
-router.get("/admin-account/:slug", isAdmin, adminController.detailAction);
+router.get("/admin-account/:slug", isAdmin, adminController.adminDetailAction);
 router.get("/admin-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassA);
 router.post("/admin-accounts/update", isAdmin, img.upload(destination), img.resize(width, height), adminController.updateAdminAccount);
 router.get("/admin-accounts/edit", isAdmin, adminController.editAdminAccount);

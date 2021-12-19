@@ -34,7 +34,7 @@ class AdminController {
         });
     }
 
-    detailAction(req, res, next) {
+    adminDetailAction(req, res, next) {
         Admin.findById(req.params.slug, (err, admin) => {
             if(!err) {
                 res.render("admin/adminDetail", {
@@ -191,9 +191,21 @@ class AdminController {
                     staffs,
                     user: req.session.user,
                     total: staffs.length,
+                    flashMsgs: getFlash(req),
                 });
             } else next(err);
         });
+    }
+
+    staffDetailAction(req, res, next) {
+        Staff.findById(req.params.slug, (err, staff) => {
+            if(!err) {
+                res.render("admin/staffDetail", {
+                    staff,
+                    user: req.session.user
+                });
+            }else next(err);
+        })
     }
 
     async storeStaffAccount(req, res, next) {
@@ -231,6 +243,7 @@ class AdminController {
             });
             account.save();
             staff.save();
+            addFlash(req, "success", "Add new staff succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -248,6 +261,10 @@ class AdminController {
     async updateStaffAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newStaff;
+        let name = req.body.name.replace(/\s/g, " ");
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
         if (req.file) {
             newStaff = {
                 email: req.body.email,
@@ -271,6 +288,7 @@ class AdminController {
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Staff.updateOne({ _id: req.query.id }, newStaff);
+            addFlash(req, "success", "Update staff succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -284,6 +302,7 @@ class AdminController {
             const filename = deletedStaff.image.name;
             if (filename) fs.unlinkSync(path.join(staffUploads, filename));
             await Account.deleteOne({ email: deletedStaff.email });
+            addFlash(req, "success", "Delete staff succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -297,6 +316,7 @@ class AdminController {
             const passwordHash = await encrypt(defaultPassword);
             const obj = { password: passwordHash };
             await Account.updateOne({ email: aStaff.email }, obj);
+            addFlash(req, "success", "Set default password succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -325,11 +345,26 @@ class AdminController {
 
     showTrainerAccounts(req, res, next) {
         Trainer.find({}, (err, trainers) => {
-            const total = trainers.length;
-            const user = req.session.user;
-            if (!err) res.render("admin/trainer-accounts", { trainers, user, total });
-            else next(err);
+            if (!err) {
+                res.render("admin/trainer-accounts", {
+                    trainers,
+                    user: req.session.user,
+                    total: trainers.length,
+                    flashMsgs: getFlash(req),
+                });
+            } else next(err);
         });
+    }
+
+    trainerDetailAction(req, res, next) {
+        Trainer.findById(req.params.slug, (err, trainer) => {
+            if(!err) {
+                res.render("admin/trainerDetail", {
+                    trainer, 
+                    user: req.session.user
+                });
+            }else next(err); 
+        })
     }
 
     async storeTrainerAccount(req, res, next) {
@@ -358,7 +393,7 @@ class AdminController {
             });
             const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
-            const trainer = new Trainer({
+            const trainer = new Trainer({ 
                 email,
                 image: {
                     data: data,
@@ -373,6 +408,7 @@ class AdminController {
             });
             account.save();
             trainer.save();
+            addFlash(req, "success", "Add new trainer succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -390,12 +426,20 @@ class AdminController {
     async updateTrainerAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newTrainer;
+        let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
+            let specialty = req.body.specialty.replace(/\s/g, " ");
+            specialty = specialty.match(/[^ ].*[^ ]/)[0];
+            let code = req.body.code.replace(/\s/g, " ");
+            code = code.match(/[^ ].*[^ ]/)[0];
         if (req.file) {
             newTrainer = {
                 email: req.body.email,
                 image: {
                     data: fs.readFileSync(req.file.path),
-                    contentType: "image/png",
+                    contentType: "image/png", 
                     name: req.file.filename
                 },
                 name,
@@ -417,6 +461,7 @@ class AdminController {
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Trainer.updateOne({ _id: req.query.id }, newTrainer);
+            addFlash(req, "success", "Update trainer succeed!"); 
         } catch (err) {
             console.log(err);
             return next(err);
@@ -430,6 +475,7 @@ class AdminController {
             const filename = deletedTrainer.image.name;
             if (filename) fs.unlinkSync(path.join(trainerUploads, filename));
             await Account.deleteOne({ email: deletedTrainer.email });
+            addFlash(req, "success", "Delete trainer succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -443,6 +489,7 @@ class AdminController {
             const passwordHash = await encrypt(defaultPassword);
             const obj = { password: passwordHash };
             await Account.updateOne({ email: aTrainer.email }, obj);
+            addFlash(req, "success", "Set default password succeed!");
         } catch (err) {
             console.log(err);
             return next(err);

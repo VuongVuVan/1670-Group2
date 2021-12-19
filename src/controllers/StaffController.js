@@ -188,7 +188,7 @@ class StaffController {
                 address: req.body.address,
                 education: req.body.education
             });
-            await account.save();
+            account.save();
             trainee.save();
         } catch (err) {
             console.log(err);
