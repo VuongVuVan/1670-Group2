@@ -25,8 +25,8 @@ router.post("/staff-accounts/store", img.upload(destination2), img.resize(width,
 router.get("/staff-accounts/delete", adminController.deleteStaffAccount);
 router.get("/staff-accounts", adminController.showStaffAccounts);
 
-router.get("/test", adminController.test);
 router.get("/admin-accounts/search", isAdmin, adminController.searchAdminAccounts);
+router.get("/admin-account/:slug", isAdmin, adminController.detailAction);
 router.get("/admin-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassA);
 router.post("/admin-accounts/update", isAdmin, img.upload(destination), img.resize(width, height), adminController.updateAdminAccount);
 router.get("/admin-accounts/edit", isAdmin, adminController.editAdminAccount);

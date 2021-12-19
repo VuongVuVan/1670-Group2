@@ -115,6 +115,10 @@ function imageSliderTimer(time, numberOfPictures) {
     }, time);
 }
 
+function closeFlashMsg() {
+    document.getElementById("flashMsg").classList.add("flashMsg-close");
+}
+
 function validateAdminAcc() {
     const email = document.getElementById("email").value;
     const name = document.getElementById("name").value;

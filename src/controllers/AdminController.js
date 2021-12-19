@@ -5,13 +5,13 @@ const Account = require("../models/Account");
 const date = require("../utils/dateHandler");
 const fs = require("fs");
 const path = require("path");
-const { encrypt } = require("../utils/hashingHandler");
+const {encrypt} = require("../utils/hashingHandler");
 const defaultPassword = "123456789";
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const adminUploads = path.join(__dirname, "../public/uploads/admins");
 const staffUploads = path.join(__dirname, "../public/uploads/staffs");
 const trainerUploads = path.join(__dirname, "../public/uploads/trainers");
-
+const {getFlash, addFlash} = require("../utils/flashHandler");
 class AdminController {
     indexAction(req, res, next) {
         res.render("admin", { user: req.session.user });
@@ -20,17 +20,29 @@ class AdminController {
     // =================================================================== //
     // =====================Admin Accounts Management===================== //
     // =================================================================== //
-
+    
     showAdminAccounts(req, res, next) {
         Admin.find({}, (err, admins) => {
             if (!err) {
                 res.render("admin/admin-accounts", {
                     admins,
-                    // user: req.session.user,
+                    user: req.session.user,
                     total: admins.length,
+                    flashMsgs: getFlash(req)
                 });
             } else next(err);
         });
+    }
+
+    detailAction(req, res, next) {
+        Admin.findById(req.params.slug, (err, admin) => {
+            if(!err) {
+                res.render("admin/adminDetail", {
+                    admin,
+                    user: req.session.user
+                });
+            }else next(err);
+        })
     }
 
     async storeAdminAccount(req, res, next) {
@@ -68,6 +80,7 @@ class AdminController {
             });
             account.save();
             admin.save();
+            addFlash(req, "success", "Add new admin succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -85,6 +98,10 @@ class AdminController {
     async updateAdminAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newAdmin;
+        let name = req.body.name.replace(/\s/g, " ");
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
         if (req.file) {
             newAdmin = {
                 email: req.body.email,
@@ -108,6 +125,7 @@ class AdminController {
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Admin.updateOne({ _id: req.query.id }, newAdmin);
+            addFlash(req, "success", "Update admin succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -121,6 +139,7 @@ class AdminController {
             const filename = deletedAdmin.image.name;
             if (filename) fs.unlinkSync(path.join(adminUploads, filename));
             await Account.deleteOne({ email: deletedAdmin.email });
+            addFlash(req, "success", "Delete admin succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -134,6 +153,7 @@ class AdminController {
             const passwordHash = await encrypt(defaultPassword);
             const obj = { password: passwordHash };
             await Account.updateOne({ email: anAdmin.email }, obj);
+            addFlash(req, "success", "Set default password succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
