@@ -206,7 +206,6 @@ class SiteController {
                 });
             }
             const anAccount = await Account.findOne({ email: user.email });
-            const anAccount = await Account.findOne({ email: user.email });
             const match = await checkPassword(req.body.oldP, anAccount.password);
             if (!match) {
                 return res.render("site/changePassword", {
