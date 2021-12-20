@@ -370,11 +370,16 @@ class AdminController {
     async storeTrainerAccount(req, res, next) {
         try {
             const email = req.body.email.replace(/\s/g, "");
-            const anAccount = await Account.findOne({ email });
-            if (anAccount) {
-                return res.render("admin/staff-accounts", {
+            const code = req.body.code.replace(/\s/g, "");
+            const anAccount = await Account.findOne({email});
+            const aTrainer = await Trainer.findOne({code});
+            const msg = {s1:"", s2:""};
+            if(anAccount) msg.s1 = "This email address already has an account.";
+            if(aTrainer) msg.s2 = "This code already has an account.";
+            if(msg.s1 || msg.s2) {
+                return res.render("admin/trainer-accounts", {
                     user: req.session.user,
-                    msg: "This email address already has an account.",
+                    msg,
                     attr: "display: flex;",
                 });
             }
@@ -384,8 +389,6 @@ class AdminController {
             address = address.match(/[^ ].*[^ ]/)[0];
             let specialty = req.body.specialty.replace(/\s/g, " ");
             specialty = specialty.match(/[^ ].*[^ ]/)[0];
-            let code = req.body.code.replace(/\s/g, " ");
-            code = code.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
                 email,
                 password: await encrypt(defaultPassword),

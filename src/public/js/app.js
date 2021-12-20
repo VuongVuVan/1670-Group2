@@ -166,7 +166,7 @@ function validateTrainerAcc() {
     const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
     const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
     const result4 = /^\s*[a-z\d]{2,}[a-z\d\s]*$/i.test(specialty);
-    const result5 = /^\s*[a-z\d]{4,}[a-z\d\s]*$/i.test(code);
+    const result5 = /^\s*[a-z\d]{4,}\s*$/i.test(code);
     emailMsg.innerHTML = result ? "" : "Please enter a valid email address.";
     nameMsg.innerHTML = result2 ? "" : "Please enter a valid name.";
     addressMsg.innerHTML = result3 ? "" : "Please enter a valid address.";

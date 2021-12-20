@@ -27,15 +27,15 @@
                     <td scope="col" style="text-align: center;">{{staff.dob}}</td>       
                     <td scope="col">{{staff.address}}</td>
                     <td scope="col" style="text-align: center; max-width: 220px;">
-                        <a href="/admin/staff-accounts/edit?id={{staff._id}}" class="btn btn-primary js-edit-info">
+                        <a href="/admin/staff-accounts/edit?id={{staff._id}}" class="btn btn-primary js-edit-info mb-1">
                             <i class="bi bi-pencil-square"></i>
                             <span class=" fs-6" style="margin-left: 5px;">Edit</span>
                         </a>
-                        <a href="" class="btn btn-danger" data-bs-toggle="modal" data-id="{{staff._id}}" data-bs-target="#delete-item-modal">
+                        <a href="" class="btn btn-danger mb-1" data-bs-toggle="modal" data-id="{{staff._id}}" data-bs-target="#delete-item-modal">
                             <i class="bi bi-x-lg"></i>
                             <span class=" fs-6" style="margin-left: 5px;">Delete</span>
                         </a>
-                        <a href="/admin/staff-accounts/passwords/set_default?id={{staff._id}}" class="btn btn-warning">
+                        <a href="/admin/staff-accounts/passwords/set_default?id={{staff._id}}" class="btn btn-warning mb-1">
                             <i class="bi bi-gear"></i>
                             <span class=" fs-6" style="margin-left: 5px;">Set default password</span>
                         </a>
