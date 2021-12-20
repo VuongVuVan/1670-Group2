@@ -161,6 +161,7 @@ class SiteController {
             const obj = {
                 email: req.body.email,
                 name: req.body.name,
+                code: req.body.code,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address,
                 specialty: req.body.specialty,
@@ -169,7 +170,7 @@ class SiteController {
                     contentType: "image/png"
                 }
             }
-            Staff.updateOne({ _id: req.query.id }, obj, err => {
+            Trainer.updateOne({ _id: req.query.id }, obj, err => {
                 if (!err) res.redirect('/' + req.session.user.name.split(" ").join(""));
                 else next(err);
             });
@@ -177,6 +178,7 @@ class SiteController {
             const obj = {
                 email: req.body.email,
                 name: req.body.name,
+                code: req.body.code,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address,
                 education: req.body.education,
