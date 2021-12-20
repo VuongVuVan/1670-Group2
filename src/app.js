@@ -36,33 +36,20 @@ hbs.registerHelper("removeSpace", string => {
 const db = require("./config/db");
 db.connect();
 
-// Use a router for a particular root URL
-
 const demoRouter = require("./routes/demo");
 app.use("/demo", demoRouter);
 
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
 
-//Staff: 
 const staffRouter = require("./routes/staff");
 app.use("/staff", staffRouter);
 
-//Trainee: 
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
 
-const gradeRouter = require("./routes/grade");
-app.use("/grade", gradeRouter);
-
-const seeallRouter = require("./routes/seeall");
-app.use("/seeall", seeallRouter);
-
 const trainerRouter = require("./routes/trainer");
 app.use("/trainer", trainerRouter);
-
-const coursetrainerRouter = require("./routes/coursetrainer");
-app.use("/coursetrainer", coursetrainerRouter);
 
 const siteRouter = require("./routes/site");
 app.use("/", siteRouter);

@@ -37,6 +37,10 @@ class SiteController {
                 image: anUser.image,
                 role: anAccount.role
             }
+            req.session["flashMsgs"] = {
+                success: "",
+                error: "",
+            }
         } catch (err) {
             console.log(err);
             return next(err);
@@ -161,6 +165,7 @@ class SiteController {
             const obj = {
                 email: req.body.email,
                 name: req.body.name,
+                code: req.body.code,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address,
                 specialty: req.body.specialty,
@@ -169,7 +174,7 @@ class SiteController {
                     contentType: "image/png"
                 }
             }
-            Staff.updateOne({ _id: req.query.id }, obj, err => {
+            Trainer.updateOne({ _id: req.query.id }, obj, err => {
                 if (!err) res.redirect('/' + req.session.user.name.split(" ").join(""));
                 else next(err);
             });
@@ -177,6 +182,7 @@ class SiteController {
             const obj = {
                 email: req.body.email,
                 name: req.body.name,
+                code: req.body.code,
                 dob: date.convertDateAsString(req.body.dob),
                 address: req.body.address,
                 education: req.body.education,
@@ -193,31 +199,22 @@ class SiteController {
     }
 
     changePassword(req, res, next) {
-        res.render("site/changePassword", { user: req.session.user });
+        res.render("site/changePassword", {user: req.session.user});
     }
 
     async storePassword(req, res, next) {
         try {
             const user = req.session.user;
-            if (!(req.body.newP == req.body.confirmNP)) {
-                return res.render("site/changePassword", {
-                    user,
-                    msg3: {
-                        s1: "The passwords you entered do not match.",
-                        s2: "Check your typing and try again."
-                    }
-                });
-            }
-            const anAccount = await Account.findOne({ email: user.email });
+            const anAccount = await Account.findOne({email: user.email});
             const match = await checkPassword(req.body.oldP, anAccount.password);
-            if (!match) {
+            if(!match) {
                 return res.render("site/changePassword", {
                     user,
                     msg: "Make sure your entry is correct."
                 });
             }
             const passwordHash = await encrypt(req.body.newP);
-            await Account.updateOne({ email: user.email }, { password: passwordHash });
+            await Account.updateOne({email: user.email}, {password: passwordHash});
         } catch (err) {
             console.log(err);
             return next(err);

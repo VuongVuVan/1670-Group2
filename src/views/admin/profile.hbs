@@ -1,59 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 {{> head}}
+<style>
+    body {
+    background: rgb(245, 245, 245)
+}
+.margin{
+    margin-top: -24px;
+    margin-left: 80px;
+}
+
+.changeProfile-container {
+        background-color: white;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+</style>
 <body>
     {{> adminLayout}}
-    
-    <main class="content-detail" id="common_content-area">
-        <a href="/{{user.role}}" class="btn btn-link fs-5">
+    <main >
+    <div class="container rounded bg-white mb-5;" style="margin-top: 120px; width: 900px;">
+        
+            <a href="/{{user.role}}" class="btn btn-link fs-5">
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
-        </a>
-        <a href="/{{removeSpace user.name}}/change_password" class="btn btn-link">Change Password</a>
-
-
-        <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
-            <thead class="table-light">
-                <tr style="font-size: 18px; text-align: center;">
-                    <th scope="col">#</th>
-                    <th scope="col" style="width: 190px;">Avatar</th>
-                    <th scope="col" style="width: 150px;">Email</th>
-                    <th scope="col">Full name</th>
-                    <th scope="col" style="width: 80px;">Age</th>
-                    <th scope="col" style="width: 130px;">Date of birth</th>
-                    <th scope="col">Address</th>
-                    <th scope="col" style="width: 220px;">
-                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row" style="text-align: center;">{{@index}}</th>
-                    <td scope="col">
-                        <div class="text-center">
-                            <img style="width: 170px; height: 170px;" src="data:image/{{admin.image.contentType}};base64,{{convertImage admin.image.data}}" alt="" class="img-thumbnail">
-                        </div>
-                    </td>
-                    <td scope="col">{{admin.email}}</td>
-                    <td scope="col" style="text-align: center;">{{admin.name}}</td>
-                    <td scope="col" style="text-align: center;">{{calculateAge admin.dob}}</td>
-                    <td scope="col" style="text-align: center;">{{admin.dob}}</td>       
-                    <td scope="col">{{admin.address}}</td>
-                    <td style="text-align: center;">
-                        <div>
-                            <button type="button" class="btn btn-success js-edit-info", style="margin-left: 30px">
-                                <i class="bi bi-pencil-square"></i>
-                                <a class ="underline-white" href="/{{removeSpace user.name}}/edit_profile?id={{admin._id}}">
-                                    <span class=" fs-6" style="margin-left: 5px;">Edit</span>
+            </a>
+    <div class="row" style="margin-top: -25px;">
+        <div class="col-md-3" style="margin-left: 150px; margin-top: 25px">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img style="width: 170px; height: 170px;" src="data:image/{{admin.image.contentType}};base64,{{convertImage admin.image.data}}" alt="" class="img-thumbnail">
+                <span>{{removeSpace user.name}}</span><span class="text-black-50">{{admin.email}}</span></div>
+        </div>
+        <div class="col-md-5">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 style= "margin-left: 0px; color: rgb(94, 94, 94); font-size: xx-large">Profile Settings</h4>
+                </div>
+                <div class="row mt-3">
+                    <span style=" color: rgb(44, 44, 44); font-weight: 500;">
+                        Email:
+                    </span>
+                    <span>{{admin.email}}</span>
+                </div>
+                <div class="row mt-3" style="margin-right: 20px;">
+                    <span style=" color: rgb(44, 44, 44); font-weight: 500;">
+                        Full Name:
+                    </span>
+                    <span>{{admin.name}}</span>
+                </div>
+                <div class="row mt-3" style="margin-right: 60px;">
+                    <span style="display: block; color: rgb(44, 44, 44); font-weight: 500;">
+                        Age:
+                    </span>
+                    <span>{{calculateAge admin.dob}}</span>
+                </div>
+                <div class="row mt-3">
+                    <span style="display: block; color: rgb(44, 44, 44); font-weight: 500;">
+                        Date of birth:
+                    </span>
+                    <span>{{admin.dob}}</span>
+                </div>
+                <div class="row mt-3">
+                    <span style="display: block; color: rgb(44, 44, 44); font-weight: 500;">
+                        Address:
+                    </span>
+                    <span>{{admin.address}}</span>
+                </div>
+                < <div class="mt-4 text-center" >
+                            
+                                <a class="underline-white"href="/{{removeSpace user.name}}/edit_profile?id={{admin._id}}">
+                                    <button type="button" class="btn btn-outline-primary fs-5" style="font-weight: 400;">Edit Profile</button>
                                 </a>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
-
-{{> frameworkCDN}}
+                                <a href="/{{removeSpace user.name}}/change_password">
+                                    <button type="button" class="btn btn-outline-primary fs-5" style="font-weight: 400;">Change Password</button>
+                                </a>
+        </div>
+                        
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</main>
+{{> bottom}}
 </body>
 </html>

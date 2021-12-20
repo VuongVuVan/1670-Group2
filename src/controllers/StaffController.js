@@ -9,8 +9,7 @@ const defaultPassword = "123456789";
 const date = require("../utils/dateHandler");
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const traineeUploads = path.join(__dirname, "../public/uploads/trainees");
-
-
+const { getFlash, addFlash } = require("../utils/flashHandler");
 
 class StaffController {
     index(req, res) {
@@ -28,7 +27,12 @@ class StaffController {
     showCategories(req, res, next) {
         Category.find({}, (err, categories) => {
             const total = categories.length;
-            if (!err) res.render("staff/categories", { categories, total, user: req.session.user });
+            if (!err) res.render("staff/categories", {
+                categories,
+                total,
+                user: req.session.user,
+                flashMsgs: getFlash(req),
+            });
             else next(err);
         });
     }
@@ -36,6 +40,7 @@ class StaffController {
     storeCategory(req, res, next) {
         const category = new Category(req.body);
         category.save(err => {
+            addFlash(req, "success", "Update admin succeed!");
             console.log(category);
             if (!err) res.redirect("/staff/categories");
             else next(err);
@@ -52,6 +57,7 @@ class StaffController {
 
     updateCategory(req, res, next) {
         Category.updateOne({ _id: req.query.id }, req.body, err => {
+            addFlash(req, "success", "Update category succeed!");
             if (!err) res.redirect("/staff/categories");
             else next(err);
         });
@@ -59,6 +65,7 @@ class StaffController {
 
     deleteCategory(req, res, next) {
         Category.deleteOne({ _id: req.query.id }, err => {
+            addFlash(req, "success", "Delete category succeed!");
             if (!err) res.redirect("/staff/categories");
             else next(err);
         });

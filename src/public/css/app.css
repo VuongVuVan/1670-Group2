@@ -341,9 +341,15 @@
     min-height: 100vh;
     margin-top: 70px;
 }
-#content-detail {
-    min-width: 1349px;
-}
+
+
+/* #content-detail { */
+
+
+/* min-width: 1349px; */
+
+
+/* } */
 
 
 /* ending block */
@@ -595,10 +601,18 @@
 
 .underline-white {
     text-decoration: none;
-    color: white;
 }
 
 .underline-white:hover {
+    color: unset;
+}
+
+.underline-white1 {
+    text-decoration: none;
+    color: white;
+}
+
+.underline-white1:hover {
     color: unset;
 }
 
@@ -650,4 +664,11 @@
 .msg {
     color: red;
     display: block;
+}
+
+
+/* Flash Msg */
+
+.flashMsg-close {
+    display: none;
 }

@@ -11,6 +11,7 @@ const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png")
 const adminUploads = path.join(__dirname, "../public/uploads/admins");
 const staffUploads = path.join(__dirname, "../public/uploads/staffs");
 const trainerUploads = path.join(__dirname, "../public/uploads/trainers");
+const { getFlash, addFlash } = require("../utils/flashHandler");
 
 class AdminController {
     indexAction(req, res, next) {
@@ -28,10 +29,13 @@ class AdminController {
                     admins,
                     user: req.session.user,
                     total: admins.length,
+                    flashMsgs: getFlash(req),
                 });
             } else next(err);
         });
     }
+
+
 
     async storeAdminAccount(req, res, next) {
         try {
@@ -68,6 +72,7 @@ class AdminController {
             });
             account.save();
             admin.save();
+            addFlash(req, "success", "Add new admin succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -108,6 +113,7 @@ class AdminController {
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Admin.updateOne({ _id: req.query.id }, newAdmin);
+            addFlash(req, "success", "Update admin succeed!");
         } catch (err) {
             console.log(err);
             return next(err);

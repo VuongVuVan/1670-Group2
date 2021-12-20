@@ -6,13 +6,26 @@
     <main class="content-detail" id="">
         <h3 class="fs-4 mt-5">Categories (~ {{total}} records)</h3>
         <div class="content-detail-header mt-4">
-            <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Category</button>
+            <button type="button" class="btn btn-outline-primary fs-5 js-add-info" style="font-weight: 500;">New Category</button>
             <form action="/staff/categories/search" class="content-detail-header-search" method="GET">
                 <input type="search" name="q" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                <button style="width: 90px;" class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
-
+        {{#if flashMsgs.success}}
+            <div class="container text-center alert alert-success col-8 fs-5 mt-5" id="flashMsg">
+                <span>{{flashMsgs.success}}</span>
+                <i class="bi bi-x-lg" style="margin-left: 10px; cursor: pointer;" onclick="closeFlashMsg();"></i>
+            </div>
+        {{/if}}
+        {{#if flashMsgs.error}}
+            <div class="container text-center alert alert-danger col-8 fs-5 mt-5" id="flashMsg">
+                <span>{{flashMsgs.error}}</span>
+                <i class="bi bi-x-lg" style="margin-left: 10px; cursor: pointer;" onclick="closeFlashMsg();"></i>
+            </div>
+        {{/if}}
+        {{#if categories}}
+        <h2 class="text-center mt-4 text-primary">List of Categories</h2>
         <table class="table table-hover table-bordered caption-top mt-5">
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
@@ -34,13 +47,13 @@
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn btn-success js-edit-info">
                                 <i class="bi bi-pencil-square"></i>
-                                <a class ="underline-white" href="/staff/categories/edit?id={{this._id}}">
+                                <a class ="underline-white1" href="/staff/categories/edit?id={{this._id}}">
                                     <span class=" fs-6" style="margin-left: auto;">Edit</span>
                                 </a>
                             </button>
                             <button type="button" class="btn btn-danger">
                                 <i class="bi bi-x-lg"></i>
-                                <a class ="underline-white" href="/staff/categories/delete/?id={{this._id}}", onclick="return conFirm_Delete()">
+                                <a class ="underline-white1" href="/staff/categories/delete/?id={{this._id}}", onclick="return conFirm_Delete()">
                                     <span class=" fs-6" style="margin-left: auto;">Delete</span>
                                     <script>
                                         function conFirm_Delete(){
@@ -57,6 +70,11 @@
                 {{/each}}
             </tbody>
         </table>
+        {{else}}
+            <div class="text-center fs-3" style="margin-top: 140px; color: #198754;">
+                <span>No results found for query "{{q}}"</span>
+            </div>
+        {{/if}}
     </main>
 
     <div class="modal-action_form js-modal-adding_form">

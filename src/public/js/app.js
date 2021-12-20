@@ -91,7 +91,6 @@ function previewImageAndClose() {
 function previewImage() {
     const previewImg = document.querySelector("#previewImage");
     const uploadBtnP = document.querySelector("#btn-add-img");
-
     uploadBtnP.addEventListener("change", function() {
         const file = this.files[0];
         if (file) {
@@ -114,6 +113,10 @@ function imageSliderTimer(time, numberOfPictures) {
         counter++;
         if (counter > numberOfPictures) counter = 1;
     }, time);
+}
+
+function closeFlashMsg() {
+    document.getElementById("flashMsg").classList.add("flashMsg-close");
 }
 
 function validateAdminAcc() {
@@ -153,19 +156,23 @@ function validateTrainerAcc() {
     const name = document.getElementById("name").value;
     const address = document.getElementById("address").value;
     const specialty = document.getElementById("specialty").value;
+    const code = document.getElementById("code").value;
     const emailMsg = document.getElementById("email-msg");
     const nameMsg = document.getElementById("name-msg");
     const addressMsg = document.getElementById("address-msg");
     const specMsg = document.getElementById("specialty-msg");
+    const codeMsg = document.getElementById("code-msg");
     const result = /^\s*[a-z]+[a-z\d]+@fpt.edu.vn\s*$/i.test(email);
     const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
     const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
     const result4 = /^\s*[a-z\d]{2,}[a-z\d\s]*$/i.test(specialty);
+    const result5 = /^\s*[a-z\d]{4,}\s*$/i.test(code);
     emailMsg.innerHTML = result ? "" : "Please enter a valid email address.";
     nameMsg.innerHTML = result2 ? "" : "Please enter a valid name.";
     addressMsg.innerHTML = result3 ? "" : "Please enter a valid address.";
     specMsg.innerHTML = result4 ? "" : "Please enter a valid specialty.";
-    return result && result2 && result3 && result4;
+    codeMsg.innerHTML = result5 ? "" : "Please enter a valid code.";
+    return result && result2 && result3 && result4 && result5;
 }
 
 function validateTraineeAcc() {
@@ -173,10 +180,12 @@ function validateTraineeAcc() {
     const name = document.getElementById("name").value;
     const address = document.getElementById("address").value;
     const education = document.getElementById("specialty").value;
+    const code = document.getElementById("code").value;
     const emailMsg = document.getElementById("email-msg");
     const nameMsg = document.getElementById("name-msg");
     const addressMsg = document.getElementById("address-msg");
     const eduMsg = document.getElementById("education-msg");
+    const codeMsg = document.getElementById("code-msg");
     const result = /^\s*[a-z]+[a-z\d]+@fpt.edu.vn\s*$/i.test(email);
     const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
     const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);

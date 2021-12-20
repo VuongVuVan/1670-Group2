@@ -31,6 +31,11 @@
                 <span class="msg" id="name-msg"></span>
             </div>
             <div class="col-12">
+                <label for="code" class="form-label">Code</label>
+                <input type="text" class="form-control" id="code" name="code" value="{{trainer.code}}" required placeholder="Your code..." minlength="4" maxlength="20">
+                <span class="msg" id="code-msg"></span>
+            </div>
+            <div class="col-12">
                 <label for="specialty" class="form-label">Specialty</label>
                 <input type="text" class="form-control" id="specialty" name="specialty" value="{{trainer.specialty}}" required placeholder="Your specialty..." minlength="2" maxlength="20">
                 <span class="msg" id="specialty-msg"></span>

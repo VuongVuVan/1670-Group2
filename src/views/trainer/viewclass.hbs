@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    {{> trainerLayout}}
+
+    <main class="content-detail" id="">
+        <a href="/trainer/assignedCourse" type="button" class="btn btn-link fs-5">
+            <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+        </a>
+        <div class="content-detail-header mt-4">
+            <form action="" class="content-detail-header-search">
+                <input type="search" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+        
+        <table class="table table-hover table-bordered caption-top mt-5">
+            <caption class="fs-5"></caption>
+             <thead class="table-light">
+                <tr style="font-size: 18px; text-align: center;">
+                    <th scope="col">#</th>
+                    <th scope="col" style="width: 200px;">Email</th>
+                    <th scope="col" style="width: 290px;">Image</th>
+                    <th scope="col" style="width: 290px;">Name</th>
+                    <th scope="col" style="width: 210px;">Code</th>
+                    <th scope="col" style="width: 220px;">DOB</th>
+                    <th scope="col" style="width: 220px;">Address</th>
+                    <th scope="col" style="width: 220px;">Education</th>
+                </tr>
+            </thead>
+            <tbody>
+               {{#each data}} 
+                <tr>
+                    <th scope="row" style="text-align: center;">{{@index}}</th>
+                    <th scope="col" style="text-align: center;">{{this.email}}</th>
+                   <th scope="col">
+                        <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="">
+                    </th>
+                    <th scope="col" style="text-align: center;">{{this.name}}</th>
+                    <th scope="col" style="text-align: center;">{{this.code}}</th>
+                    <th scope="col" style="text-align: center;">{{this.dob}}</th>
+                    <th scope="col" style="text-align: center;">{{this.address}}</th>
+                    <th scope="col" style="text-align: center;">{{this.education}}</th>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </main>
+{{> bottom}}
+</body>
+</html>
