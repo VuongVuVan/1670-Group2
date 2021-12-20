@@ -42,7 +42,6 @@ app.use("/demo", demoRouter);
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
 
-//Staff: 
 const staffRouter = require("./routes/staff");
 app.use("/staff", staffRouter);
 

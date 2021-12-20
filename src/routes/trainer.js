@@ -4,11 +4,10 @@ const trainerController = require("../controllers/TrainerController");
 const path = require("path");
 
 
-// router.get("/search", trainerController.search);
-// router.get("/delete", trainerController.delete);
-
-// router.get("/create", trainerController.create);
-// router.post("/store", img.upload(destination), trainerController.store);
+router.get("/assignedCourse", trainerController.showAssignedCourses);
+router.get("/assignedCourse/viewclass", trainerController.view);
 router.get("/", trainerController.index);
+router.get("/viewGrade", trainerController.showViewGrade);
+
 
 module.exports = router;

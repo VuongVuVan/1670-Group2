@@ -37,6 +37,10 @@ class SiteController {
                 image: anUser.image,
                 role: anAccount.role
             }
+            req.session["flashMsgs"] = {
+                success: "",
+                error: "",
+            }
         } catch (err) {
             console.log(err);
             return next(err);
@@ -195,22 +199,22 @@ class SiteController {
     }
 
     changePassword(req, res, next) {
-        res.render("site/changePassword", { user: req.session.user });
+        res.render("site/changePassword", {user: req.session.user});
     }
 
     async storePassword(req, res, next) {
         try {
             const user = req.session.user;
-            const anAccount = await Account.findOne({ email: user.email });
+            const anAccount = await Account.findOne({email: user.email});
             const match = await checkPassword(req.body.oldP, anAccount.password);
-            if (!match) {
+            if(!match) {
                 return res.render("site/changePassword", {
                     user,
                     msg: "Make sure your entry is correct."
                 });
             }
             const passwordHash = await encrypt(req.body.newP);
-            await Account.updateOne({ email: user.email }, { password: passwordHash });
+            await Account.updateOne({email: user.email}, {password: passwordHash});
         } catch (err) {
             console.log(err);
             return next(err);
