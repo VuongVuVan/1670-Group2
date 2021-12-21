@@ -27,7 +27,12 @@ class StaffController {
     showCategories(req, res, next) {
         Category.find({}, (err, categories) => {
             const total = categories.length;
-            if (!err) res.render("staff/categories", { categories, total, user: req.session.user });
+            if (!err) res.render("staff/categories", {
+                categories,
+                total,
+                user: req.session.user,
+                flashMsgs: getFlash(req)
+            });
             else next(err);
         });
     }
@@ -35,6 +40,7 @@ class StaffController {
     storeCategory(req, res, next) {
         const category = new Category(req.body);
         category.save(err => {
+            addFlash(req, "success", "Add category succeed!");
             console.log(category);
             if (!err) res.redirect("/staff/categories");
             else next(err);
@@ -51,6 +57,7 @@ class StaffController {
 
     updateCategory(req, res, next) {
         Category.updateOne({ _id: req.query.id }, req.body, err => {
+            addFlash(req, "success", "Update category succeed!");
             if (!err) res.redirect("/staff/categories");
             else next(err);
         });
@@ -58,6 +65,7 @@ class StaffController {
 
     deleteCategory(req, res, next) {
         Category.deleteOne({ _id: req.query.id }, err => {
+            addFlash(req, "success", "Delete category succeed!");
             if (!err) res.redirect("/staff/categories");
             else next(err);
         });
@@ -83,7 +91,13 @@ class StaffController {
         Course.find({}, (err, courses) => {
             const total = courses.length;
             Category.find({}, (err, categories) => {
-                if (!err) res.render("staff/courses", { categories, courses, total, user: req.session.user });
+                if (!err) res.render("staff/courses", {
+                    categories,
+                    courses,
+                    total,
+                    user: req.session.user,
+                    flashMsgs: getFlash(req)
+                });
                 else next(err);
             })
         });
@@ -99,9 +113,9 @@ class StaffController {
             createAt: date.convertDateAsString(req.body.createAt),
             updateAt: date.convertDateAsString(req.body.updateAt),
         }
-        console.log(obj)
         const course = new Course(obj);
         course.save(err => {
+            addFlash(req, "success", "Add course succeed!");
             if (!err) res.redirect("/staff/courses");
             else next(err);
         });
@@ -127,7 +141,7 @@ class StaffController {
             updateAt: date.convertDateAsString(req.body.updateAt),
         }
         Course.updateOne({ _id: req.query.id }, obj, err => {
-            console.log(obj)
+            addFlash(req, "success", "Update course succeed!");
             if (!err) res.redirect("/staff/courses");
             else next(err);
         });
@@ -135,6 +149,7 @@ class StaffController {
 
     deleteCourse(req, res, next) {
         Course.deleteOne({ _id: req.query.id }, err => {
+            addFlash(req, "success", "Delete course succeed!");
             if (!err) res.redirect("/staff/courses");
             else next(err);
         })
