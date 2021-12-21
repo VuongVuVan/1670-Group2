@@ -9,6 +9,6 @@ exports.getFlash = req => {
 }
 
 exports.addFlash = (req, type, msg) => {
-    if(type == "success") req.session.flashMsgs.success = msg;
-    else if(type == "error") req.session.flashMsgs.error = msg;
+    if (type == "success") req.session.flashMsgs.success = msg;
+    else if (type == "error") req.session.flashMsgs.error = msg;
 }

@@ -11,7 +11,7 @@ const width = height = 170;
 
 router.get("/trainer-account/:slug", isAdmin, adminController.trainerDetailAction);
 router.get("/trainer-accounts/search", isAdmin, adminController.searchTrainerAccounts);
-router.get("/trainer-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassTer);
+router.get("/trainer-accounts/passwords/set_default", adminController.setDefaultPassTer);
 router.post("/trainer-accounts/update", isAdmin, img.upload(destination3), img.resize(width, height), adminController.updateTrainerAccount);
 router.get("/trainer-accounts/edit", isAdmin, adminController.editTrainerAccount);
 router.post("/trainer-accounts/store", isAdmin, img.upload(destination3), img.resize(width, height), adminController.storeTrainerAccount);
