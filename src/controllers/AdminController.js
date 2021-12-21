@@ -1,6 +1,8 @@
 const Admin = require("../models/Admin");
 const Staff = require("../models/Staff");
 const Trainer = require("../models/Trainer");
+// const Trainee = require("../models/Trainee");
+// const CourseClass = require("../models/CourseClass");
 const Account = require("../models/Account");
 const date = require("../utils/dateHandler");
 const fs = require("fs");
@@ -514,6 +516,17 @@ class AdminController {
             } else next(err);
         });
     }
+
+    // async testAction(req, res, next) {
+    //     const courseClass = await CourseClass.find({class: "GCH0805"});
+    //     const traineeCodes = [];
+    //     for (let i = 0; i < courseClass[0].trainees.length; i++) {
+    //         traineeCodes[i] = courseClass[0].trainees[i].code;
+    //     }
+    //     const trainees = await Trainee.find({code: {$in : traineeCodes}});
+    //     console.log(trainees);
+    //     res.redirect("/admin");
+    // }
 }
 
 module.exports = new AdminController();
