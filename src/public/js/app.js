@@ -179,7 +179,7 @@ function validateTraineeAcc() {
     const email = document.getElementById("email").value;
     const name = document.getElementById("name").value;
     const address = document.getElementById("address").value;
-    const education = document.getElementById("specialty").value;
+    const education = document.getElementById("education").value;
     const code = document.getElementById("code").value;
     const emailMsg = document.getElementById("email-msg");
     const nameMsg = document.getElementById("name-msg");
@@ -190,16 +190,19 @@ function validateTraineeAcc() {
     const result2 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
     const result3 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
     const result4 = /^\s*[a-z\d]{2,}[a-z\d\s]*$/i.test(education);
+    const result5 = /^\s*[a-z\d]{4,}\s*$/i.test(code);
     emailMsg.innerHTML = result ? "" : "Please enter a valid email address.";
     nameMsg.innerHTML = result2 ? "" : "Please enter a valid name.";
     addressMsg.innerHTML = result3 ? "" : "Please enter a valid address.";
     eduMsg.innerHTML = result4 ? "" : "Please enter a valid education.";
-    return result && result2 && result3 && result4;
+    codeMsg.innerHTML = result5 ? "" : "Please enter a valid code.";
+    return result && result2 && result3 && result4 && result5;
 }
 
 function validatePassword() {
     const newP = document.getElementById("newP").value;
     const confirmNP = document.getElementById("confirmNP").value;
+    const oldPMsg = document.getElementById("oldP-msg");
     const newPMsg = document.getElementById("newP-msg");
     const confirmNPMsg = document.getElementById("confirmNP-msg");
     const confirmNPMsg2 = document.getElementById("confirmNP-msg2");
@@ -208,12 +211,16 @@ function validatePassword() {
     const result3 = /[^a-z\d]/ig.test(newP);
     if (!(result && result2 && result3)) {
         newPMsg.innerHTML = "Strong password required. Combine the following: uppercase letters, lowercase letters, numbers, and symbols."
+        oldPMsg.innerHTML = "";
+        confirmNPMsg.innerHTML = "";
+        confirmNPMsg2.innerHTML = "";
         return false;
     }
     if (!(newP == confirmNP)) {
         confirmNPMsg.innerHTML = "The passwords you entered do not match.";
         confirmNPMsg2.innerHTML = "Check your typing and try again.";
         newPMsg.innerHTML = "";
+        oldPMsg.innerHTML = "";
         return false;
     }
     return true;

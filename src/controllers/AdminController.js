@@ -1,17 +1,19 @@
 const Admin = require("../models/Admin");
 const Staff = require("../models/Staff");
 const Trainer = require("../models/Trainer");
+// const Trainee = require("../models/Trainee");
+// const CourseClass = require("../models/CourseClass");
 const Account = require("../models/Account");
 const date = require("../utils/dateHandler");
 const fs = require("fs");
 const path = require("path");
-const { encrypt } = require("../utils/hashingHandler");
+const {encrypt} = require("../utils/hashingHandler");
 const defaultPassword = "123456789";
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const adminUploads = path.join(__dirname, "../public/uploads/admins");
 const staffUploads = path.join(__dirname, "../public/uploads/staffs");
 const trainerUploads = path.join(__dirname, "../public/uploads/trainers");
-const { getFlash, addFlash } = require("../utils/flashHandler");
+const {getFlash, addFlash} = require("../utils/flashHandler");
 class AdminController {
     indexAction(req, res, next) {
         res.render("admin", { user: req.session.user });
@@ -20,7 +22,7 @@ class AdminController {
     // =================================================================== //
     // =====================Admin Accounts Management===================== //
     // =================================================================== //
-
+    
     showAdminAccounts(req, res, next) {
         Admin.find({}, (err, admins) => {
             if (!err) {
@@ -36,12 +38,12 @@ class AdminController {
 
     adminDetailAction(req, res, next) {
         Admin.findById(req.params.slug, (err, admin) => {
-            if (!err) {
+            if(!err) {
                 res.render("admin/adminDetail", {
                     admin,
                     user: req.session.user
                 });
-            } else next(err);
+            }else next(err);
         })
     }
 
@@ -199,12 +201,12 @@ class AdminController {
 
     staffDetailAction(req, res, next) {
         Staff.findById(req.params.slug, (err, staff) => {
-            if (!err) {
+            if(!err) {
                 res.render("admin/staffDetail", {
                     staff,
                     user: req.session.user
                 });
-            } else next(err);
+            }else next(err);
         })
     }
 
@@ -358,12 +360,12 @@ class AdminController {
 
     trainerDetailAction(req, res, next) {
         Trainer.findById(req.params.slug, (err, trainer) => {
-            if (!err) {
+            if(!err) {
                 res.render("admin/trainerDetail", {
-                    trainer,
+                    trainer, 
                     user: req.session.user
                 });
-            } else next(err);
+            }else next(err); 
         })
     }
 
@@ -371,12 +373,12 @@ class AdminController {
         try {
             const email = req.body.email.replace(/\s/g, "");
             const code = req.body.code.replace(/\s/g, "");
-            const anAccount = await Account.findOne({ email });
-            const aTrainer = await Trainer.findOne({ code });
-            const msg = { s1: "", s2: "" };
-            if (anAccount) msg.s1 = "This email address already has an account.";
-            if (aTrainer) msg.s2 = "This code already has an account.";
-            if (msg.s1 || msg.s2) {
+            const anAccount = await Account.findOne({email});
+            const aTrainer = await Trainer.findOne({code});
+            const msg = {s1:"", s2:""};
+            if(anAccount) msg.s1 = "This email address already has an account.";
+            if(aTrainer) msg.s2 = "This code already has an account.";
+            if(msg.s1 || msg.s2) {
                 return res.render("admin/trainer-accounts", {
                     user: req.session.user,
                     msg,
@@ -396,7 +398,7 @@ class AdminController {
             });
             const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
-            const trainer = new Trainer({
+            const trainer = new Trainer({ 
                 email,
                 image: {
                     data: data,
@@ -430,19 +432,19 @@ class AdminController {
         const newAccount = { email: req.body.email };
         let newTrainer;
         let name = req.body.name.replace(/\s/g, " ");
-        name = name.match(/[^ ].*[^ ]/)[0];
-        let address = req.body.address.replace(/\s/g, " ");
-        address = address.match(/[^ ].*[^ ]/)[0];
-        let specialty = req.body.specialty.replace(/\s/g, " ");
-        specialty = specialty.match(/[^ ].*[^ ]/)[0];
-        let code = req.body.code.replace(/\s/g, " ");
-        code = code.match(/[^ ].*[^ ]/)[0];
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
+            let specialty = req.body.specialty.replace(/\s/g, " ");
+            specialty = specialty.match(/[^ ].*[^ ]/)[0];
+            let code = req.body.code.replace(/\s/g, " ");
+            code = code.match(/[^ ].*[^ ]/)[0];
         if (req.file) {
             newTrainer = {
                 email: req.body.email,
                 image: {
                     data: fs.readFileSync(req.file.path),
-                    contentType: "image/png",
+                    contentType: "image/png", 
                     name: req.file.filename
                 },
                 name,
@@ -464,7 +466,7 @@ class AdminController {
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Trainer.updateOne({ _id: req.query.id }, newTrainer);
-            addFlash(req, "success", "Update trainer succeed!");
+            addFlash(req, "success", "Update trainer succeed!"); 
         } catch (err) {
             console.log(err);
             return next(err);
@@ -514,6 +516,17 @@ class AdminController {
             } else next(err);
         });
     }
+
+    // async testAction(req, res, next) {
+    //     const courseClass = await CourseClass.find({class: "GCH0805"});
+    //     const traineeCodes = [];
+    //     for (let i = 0; i < courseClass[0].trainees.length; i++) {
+    //         traineeCodes[i] = courseClass[0].trainees[i].code;
+    //     }
+    //     const trainees = await Trainee.find({code: {$in : traineeCodes}});
+    //     console.log(trainees);
+    //     res.redirect("/admin");
+    // }
 }
 
 module.exports = new AdminController();

@@ -9,7 +9,7 @@ const defaultPassword = "123456789";
 const date = require("../utils/dateHandler");
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const traineeUploads = path.join(__dirname, "../public/uploads/trainees");
-const { getFlash, addFlash } = require("../utils/flashHandler");
+const {getFlash, addFlash} = require("../utils/flashHandler");
 
 class StaffController {
     index(req, res) {
@@ -174,36 +174,73 @@ class StaffController {
 
     showTraineeAccounts(req, res, next) {
         Trainee.find({}, (err, trainees) => {
-            const user = req.session.user;
-            if (!err) res.render("staff/trainee-accounts", { trainees, user, total: trainees.length });
-            else next(err);
+            if (!err) {
+                res.render("staff/trainee-accounts", {
+                    trainees,
+                    user: req.session.user,
+                    total: trainees.length,
+                    flashMsgs: getFlash(req),
+                });
+            } else next(err);
         });
+    }
+
+    traineeDetailAction(req, res, next) {
+        Trainee.findById(req.params.slug, (err, trainee) => {
+            if(!err) {
+                res.render("staff/traineeDetail", {
+                    trainee, 
+                    user: req.session.user
+                });
+            }else next(err); 
+        })
     }
 
     async storeTraineeAccount(req, res, next) {
         try {
+            const email = req.body.email.replace(/\s/g, "");
+            const code = req.body.code.replace(/\s/g, "");
+            const anAccount = await Account.findOne({email});
+            const aTrainee = await Trainee.findOne({code});
+            const msg = {s1:"", s2:""};
+            if(anAccount) msg.s1 = "This email address already has an account.";
+            if(aTrainee) msg.s2 = "This code already has an account.";
+            if(msg.s1 || msg.s2) {
+                return res.render("staff/trainee-accounts", {
+                    user: req.session.user,
+                    msg,
+                    attr: "display: flex;",
+                });
+            }
+            let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
+            let education = req.body.education.replace(/\s/g, " ");
+            education = education.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
-                email: req.body.email,
+                email,
                 password: await encrypt(defaultPassword),
                 role: "trainee"
             });
-            const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
+            const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
-            const trainee = new Trainee({
-                email: req.body.email,
+            const trainee = new Trainee({ 
+                email,
                 image: {
                     data: data,
                     contentType: "image/png",
                     name: filename
                 },
-                name: req.body.name,
-                code: req.body.code,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                education: req.body.education
+                address,
+                education
             });
             account.save();
             trainee.save();
+            addFlash(req, "success", "Add new trainee succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -221,33 +258,42 @@ class StaffController {
     async updateTraineeAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newTrainee;
+        let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
+            let education = req.body.education.replace(/\s/g, " ");
+            education = education.match(/[^ ].*[^ ]/)[0];
+            let code = req.body.code.replace(/\s/g, " ");
+            code = code.match(/[^ ].*[^ ]/)[0];
         if (req.file) {
             newTrainee = {
                 email: req.body.email,
                 image: {
                     data: fs.readFileSync(req.file.path),
-                    contentType: "image/png",
+                    contentType: "image/png", 
                     name: req.file.filename
                 },
-                name: req.body.name,
-                code: req.body.code,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                education: req.body.education
+                address,
+                education
             }
         } else {
             newTrainee = {
                 email: req.body.email,
-                name: req.body.name,
-                code: req.body.code,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                education: req.body.education
+                address,
+                education
             }
         }
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Trainee.updateOne({ _id: req.query.id }, newTrainee);
+            addFlash(req, "success", "Update trainee succeed!"); 
         } catch (err) {
             console.log(err);
             return next(err);
@@ -261,6 +307,7 @@ class StaffController {
             const filename = deletedTrainee.image.name;
             if (filename) fs.unlinkSync(path.join(traineeUploads, filename));
             await Account.deleteOne({ email: deletedTrainee.email });
+            addFlash(req, "success", "Delete trainee succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -274,6 +321,7 @@ class StaffController {
             const passwordHash = await encrypt(defaultPassword);
             const obj = { password: passwordHash };
             await Account.updateOne({ email: aTrainee.email }, obj);
+            addFlash(req, "success", "Set default password succeed!");
         } catch (err) {
             console.log(err);
             return next(err);

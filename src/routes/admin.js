@@ -11,7 +11,7 @@ const width = height = 170;
 
 router.get("/trainer-account/:slug", isAdmin, adminController.trainerDetailAction);
 router.get("/trainer-accounts/search", isAdmin, adminController.searchTrainerAccounts);
-router.get("/trainer-accounts/passwords/set_default", adminController.setDefaultPassTer);
+router.get("/trainer-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassTer);
 router.post("/trainer-accounts/update", isAdmin, img.upload(destination3), img.resize(width, height), adminController.updateTrainerAccount);
 router.get("/trainer-accounts/edit", isAdmin, adminController.editTrainerAccount);
 router.post("/trainer-accounts/store", isAdmin, img.upload(destination3), img.resize(width, height), adminController.storeTrainerAccount);
@@ -27,6 +27,7 @@ router.post("/staff-accounts/store", isAdmin, img.upload(destination2), img.resi
 router.get("/staff-accounts/delete", isAdmin, adminController.deleteStaffAccount);
 router.get("/staff-accounts", isAdmin, adminController.showStaffAccounts);
 
+// router.get("/test", adminController.testAction);
 router.get("/admin-accounts/search", isAdmin, adminController.searchAdminAccounts);
 router.get("/admin-account/:slug", isAdmin, adminController.adminDetailAction);
 router.get("/admin-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassA);
