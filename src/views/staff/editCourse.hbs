@@ -49,9 +49,9 @@
                 <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
             </a>
             <div style="width: 50%; min-width: 475px; padding: 0px 50px;">
-                <form class="row g-3" method="POST" action="/staff/courses/update/?id={{course._id}}">
+                <form class="row g-3" method="POST" action="/staff/courses/update/?id={{course._id}}" onsubmit="return validateCourse();">
                     <div class="mt-4">
-                        <label for="category" class="form-label">Category Name</label>
+                        <label for="categoryname" class="form-label">Category Name</label>
                         <select name="category" id="categoryname" class="form-select">
                             {{#each categories}}
                             <option value="{{this.name}}">{{this.name}}</option>
@@ -59,14 +59,16 @@
                         </select>
                     </div>
                     <div class="sameLine">
-                        <label for="codeCourse">Code</label>
-                        <input type="text" value="{{course.code}}" class="form-control" id="codeCourse" name="code"
+                        <label for="code">Code</label>
+                        <input type="text" value="{{course.code}}" class="form-control" id="code" name="code"
                             placeholder="Code of Course..." required>
+                            <span class="msg" id="code-msg"></span>
                     </div>
                     <div class="mt-4">
-                        <label for="couseName">Course Name</label>
+                        <label for="name">Course Name</label>
                         <input type="text" value="{{course.name}}" class="form-control" id="name" name="name"
                             placeholder="Course Name..." required>
+                            <span class="msg" id="name-msg"></span>
                     </div>
                     <div class="sameLine1">
                         <label for="session">Session</label>
@@ -84,9 +86,10 @@
                             name="updateAt" placeholder="Update At..." required>
                     </div>
                     <div class="mt-4">
-                        <label for="courseDescription">Course Description</label>
-                        <textarea class="form-control" id="courseDescription" name="description"
+                        <label for="description">Course Description</label>
+                        <textarea class="form-control" id="description" name="description"
                             placeholder="Course Description..." required>{{course.description}}</textarea>
+                            <span class="msg" id="description-msg"></span>
                     </div>
             </div>
             <div class="col-12 mt-4" style="text-align: center">

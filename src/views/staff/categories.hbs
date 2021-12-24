@@ -91,21 +91,24 @@
             </header>
 
             {{!-- block of code for add new category --}}
-            <form class="modal-action_form-body" method="POST" action="/staff/categories/store">
+            <form class="modal-action_form-body" method="POST" action="/staff/categories/store" onsubmit="return validateCategory();">
                 <div>
-                    <label for="categoryName">Category Name</label>
-                    <input type="text" class="form-control" id="categoryName" name="name"
-                        placeholder="Name of Category..." required>
+                    <label for="name">Category Name</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                        placeholder="Name of Category..." minlength="5" maxlength="30" required>
+                        <span class="msg" id="name-msg"></span>
                 </div>
                 <div>
-                    <label for="categoryDescription">Category Description</label>
-                    <textarea class="form-control" id="categoryDescription" name="description"
-                        placeholder="Description..." required></textarea>
+                    <label for="description">Category Description</label>
+                    <textarea class="form-control" id="description" name="description"
+                        placeholder="Description..." minlength="10" maxlength="50" required></textarea>
+                        <span class="msg" id="description-msg"></span>
                 </div>
                 <div>
-                    <label for="TotalCourse">Total Course</label>
-                    <input type="number" class="form-control" id="totalCourse" name="total"
-                        placeholder="Total of Course..." required>
+                    <label for="total">Total Course</label>
+                    <input type="number" class="form-control" id="total" name="total"
+                        placeholder="Total of Course..." min= "15", max= "40" required>
+                    
                 </div>
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;"
                         class="bi bi-check2"></i></button>
