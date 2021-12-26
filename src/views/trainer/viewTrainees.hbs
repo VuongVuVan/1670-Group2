@@ -54,9 +54,9 @@
                                     <p>{{this.email}}</p>
                                 </th>
                                 <th scope="col">
-                                    <img style="width: 170px; height: 170px;"
+                                    {{!-- <img style="width: 170px; height: 170px;"
                                         src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}"
-                                        alt="" class="img-thumbnail">
+                                        alt="" class="img-thumbnail"> --}}
                                 </th>
                                 <th scope="col">
                                     <p id='traine_name_{{@index}}'>{{this.name}}</p>
@@ -73,16 +73,16 @@
                                 <th scope="col">
                                     <p><span id="grade_status_{{@index}}">{{this.gradeStatus}}</span></p>
                                 </th>
-                                <th class="action-block-trainer" scope="col">
+                                <th scope="col">
                                     <button type="button" id="viewTranieeStatus_{{@index}}"
                                         style="display: inline-block;" class="btn btn-primary button-edit"
                                         data-bs-toggle="modal" data-bs-target="#editStatus">
                                         <i class="bi bi-pen"></i> Grade Edit
                                     </button>
-                                    {{!-- <button type="button" id="deleteTrainee" style="display: inline-block;"
+                                    <button type="button" id="deleteTrainee" style="display: inline-block;"
                                         class="btn btn-primary button-delete">
                                         <i class="bi bi-pen"></i> Delete Trainee
-                                    </button> --}}
+                                    </button>
                             </tr>
                             {{/each}}
                             <span id="course_id" style="display: none;">{{courseId}}</span>

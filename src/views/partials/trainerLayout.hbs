@@ -5,6 +5,7 @@
     </div>
     <div class="common_interface_header_r-area">
         <div class="header_r-area-info">
+            {{!-- gio` ko login dc nen ko co may cai nay dau nhe --}}
             <img src="data:image/{{user.image.contentType}};base64,{{convertImage user.image.data}}" alt="">
             <label for="info-checkbox">{{user.name}}
                 <span class="fas fa-caret-down"></span>
@@ -24,8 +25,7 @@
         <h2>Menu</h2>
         <a href="/trainer"><i class="bi bi-house-door"></i></i>Home</a>
         <a href="/trainer/assignedCourse"><i class="bi bi-briefcase"></i> View Courses</a>
-        <a href="/trainer/viewGrade"><i class="bi bi-briefcase"></i>Grade</a>
-        <a href="/{{removeSpace user.name}}"><i class="fa fa-file-o"></i>Your Profile</a>
+        <a href="/trainer/profile"><i class="fa fa-file-o"></i>Your Profile</a>
         <a href="#"><i class="bi bi-box-arrow-right"></i></i>Logout</a>
     </div>
 </aside>

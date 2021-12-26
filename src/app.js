@@ -82,7 +82,9 @@ hbs.registerHelper("calculateAge", stringDate => {
     return currentYear - birthYear;
 });
 hbs.registerHelper("removeSpace", string => {
-    return string.split(" ").join("");
+    if (string) {
+        return string.split(" ").join("");
+    }
 });
 
 // Connect to db
