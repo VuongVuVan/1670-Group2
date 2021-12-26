@@ -3,77 +3,84 @@
 {{> head}}
 <body>
     {{> staffLayout}}
-
-    <main class="content-detail" id="content-detail">
+    <main class="content-detail" id="common_content-area">
         <h3 class="fs-4 mt-5">Accounts (~ {{total}} records)</h3>
-        <div class="content-detail-header mt-4">
-            <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
+        <div class="content-detail-header mt-4 mb-5">
+            <button type="button" class="btn btn-outline-primary fs-5 js-add-info" style="font-weight: 500;">New Account</button>
             <form action="/staff/trainee-accounts/search" class="content-detail-header-search" method="GET">
-                <input type="search" class="form-control" placeholder="Search by email or name..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="q">
-                <button style="width: 90px;" class="btn btn-primary" type="submit">
+                <input type="search" class="form-control" placeholder="Search by email or name..." name="q">
+                <button style="width: 90px;" class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
             </form>
         </div>
-        <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
-            <thead class="table-light">
-                <tr style="font-size: 18px; text-align: center;">
-                    <th scope="col">#</th>
-                    <th scope="col" style="width: 190px;">Avatar</th>
-                    <th scope="col" style="width: 150px;">Email</th>
-                    <th scope="col">Full name</th>
-                    <th scope="col">Code</th>
-                    <th scope="col" style="width: 60px;">Age</th>
-                    <th scope="col" style="width: 130px;">Date of birth</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Education</th>
-                    <th scope="col" style="width: 220px;">
-                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each trainees}}
-                <tr>
-                    <th scope="row" style="text-align: center;">{{@index}}</th>
-                    <td scope="col">
-                        <div class="text-center">
-                            <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="" class="img-thumbnail">
-                        </div>
-                    </td>
-                    <td scope="col">{{this.email}}</td>
-                    <td scope="col" style="text-align: center;">{{this.name}}</td>
-                    <td scope="col" style="text-align: center;">{{this.code}}</td>
-                    <td scope="col" style="text-align: center;">{{calculateAge this.dob}}</td>
-                    <td scope="col" style="text-align: center;">{{this.dob}}</td>       
-                    <td scope="col">{{this.address}}</td>
-                    <td scope="col" style="text-align: center;">{{this.education}}</td>
-                    
-                    <td style="text-align: center;">
-                        <div>
-                            <div class="btn-group" style="z-index: 0; height: 40px; width: 199px;" role="group" aria-label="Basic mixed styles example">
-                                <a href="/staff/trainee-accounts/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-left-radius: unset;">
+        {{#if flashMsgs.success}}
+            <div class="container text-center alert alert-success col-8 fs-5 mt-5" id="flashMsg">
+                <span>{{flashMsgs.success}}</span>
+                <i class="bi bi-x-lg" style="margin-left: 10px; cursor: pointer;" onclick="closeFlashMsg();"></i>
+            </div>
+        {{/if}}
+        {{#if flashMsgs.error}}
+            <div class="container text-center alert alert-danger col-8 fs-5 mt-5" id="flashMsg">
+                <span>{{flashMsgs.error}}</span>
+                <i class="bi bi-x-lg" style="margin-left: 10px; cursor: pointer;" onclick="closeFlashMsg();"></i>
+            </div>
+        {{/if}}
+        {{#if trainees}}
+            <h2 class="text-center mt-4 text-primary">List of Trainee Accounts</h2>
+            <table class="table table-bordered caption-top mt-4" style="width: 100%;">
+                <thead class="">
+                    <tr style="font-size: 18px; text-align: center;">
+                        <th scope="col">#</th>
+                        <th scope="col" style="min-width: 190px;">Avatar</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">
+                            <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Actions</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each trainees}}
+                        <tr>
+                            <th scope="row" style="text-align: center;">{{@index}}</th>
+                            <td scope="col">
+                                <div class="text-center">
+                                    <a href="/staff/trainee-account/{{this._id}}">
+                                        <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="" class="img-thumbnail">
+                                    </a>
+                                </div>
+                            </td>
+                            <td scope="col" class="text-center">{{this.email}}</td>
+                            <td scope="col" style="text-align: center;">{{this.name}}</td>
+                            <td scope="col" style="text-align: center;">{{this.code}}</td>
+                            <td style="text-align: center; width: 34%;">
+                                <a href="/staff/trainee-accounts/edit?id={{this._id}}" class="btn btn-primary js-edit-info mb-1">
                                     <i class="bi bi-pencil-square"></i>
                                     <span class=" fs-6" style="margin-left: 5px;">Edit</span>
                                 </a>
-                                <a href="/staff/trainee-accounts/delete?id={{this._id}}" class="btn btn-danger" style="border-bottom-right-radius: unset;">
+                                <a href="#" class="btn btn-danger mb-1" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#delete-item-modal">
                                     <i class="bi bi-x-lg"></i>
                                     <span class=" fs-6" style="margin-left: 5px;">Delete</span>
                                 </a>
-                            </div>
-                            <a href="/staff/trainee-accounts/passwords/set_default?id={{this._id}}" class="btn btn-warning" style="height: 40px; border-top-left-radius: unset; border-top-right-radius: unset;">
-                                <i class="bi bi-gear"></i>
-                                <span class=" fs-6" style="margin-left: 5px;">Set default password</span>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
+                                <a href="/staff/trainee-accounts/passwords/set_default?id={{this._id}}" class="btn btn-warning mb-1">
+                                    <i class="bi bi-gear"></i>
+                                    <span class=" fs-6" style="margin-left: 5px;">Set default password</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{else}}
+            <div class="text-center fs-3" style="margin-top: 140px; color: #198754;">
+                <span>No results found for query "{{q}}"</span>
+            </div>
+        {{/if}}
     </main>
 
-    <div class="modal-action_form js-modal-adding_form">
+    <div class="modal-action_form js-modal-adding_form" style="{{attr}}">
         <div class="modal-action_form-container js-modal-action_form-container">
             <div class="modal-action_form-close js-modal-action_form-close"><i class="bi bi-x-lg"></i></div>
             <header class="modal-action_form-header">
@@ -81,26 +88,31 @@
                 New Account
             </header>
             
-            <form class="modal-action_form-body" method="POST" action="/staff/trainee-accounts/store" enctype="multipart/form-data">
+            <form class="modal-action_form-body" method="POST" action="/staff/trainee-accounts/store" enctype="multipart/form-data" onsubmit="return validateTraineeAcc();">
                 <div>
                     <label for="email" class="form-label">Email address</label>
                     <input type="email" class="form-control" name="email" id="email" placeholder="Your email..." minlength="12" maxlength="40" required>
+                    <span class="msg" id="email-msg">{{msg.s1}}</span>
                 </div>
                 <div>
-                    <label for="name" class="form-label">Full name</label>
+                    <label for="name" class="form-label">Full Name</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Your full name..." minlength="5" maxlength="30" required>
+                    <span class="msg" id="name-msg"></span>
                 </div>
                 <div>
                     <label for="code" class="form-label">Code</label>
                     <input type="text" class="form-control" name="code" id="code" placeholder="Your code..." minlength="4" maxlength="20" required>
+                    <span class="msg" id="code-msg">{{msg.s2}}</span>
                 </div>
                 <div>   
-                    <label for="education" class="">Education</label>
+                    <label for="education" class="form-label">Education</label>
                     <input type="text" class="form-control" name="education" id="education" required placeholder="Your education..." minlength="2" maxlength="20">
+                    <span class="msg" id="education-msg"></span>
                 </div>
                 <div>
                     <label for="address" class="">Address</label>
-                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." required minlength="6" maxlength="100"></textarea>
+                    <textarea type="text" class="form-control" name="address" id="address" placeholder="Your address..." minlength="6" maxlength="100" required></textarea>
+                    <span class="msg" id="address-msg"></span>
                 </div>
                 <div>   
                     <label for="dob" class="">Date of birth</label>
@@ -126,6 +138,32 @@
         </div>
     </div>
 
-{{> bottom}}
+    <div class="modal fade" id="delete-item-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <i class="bi bi-exclamation-triangle fs-3" style="color: red; margin-left: 10px;"></i>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this account?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-delete-item" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form name="delete-item-form" action="/staff/trainee-accounts/delete">
+        <input type="hidden" name="id" value="">
+    </form>
+    <script>
+        activateModalAddingForm();
+        previewImage();
+        confirmItemDeletion();
+    </script>
+{{> frameworkCDN}}
 </body>
 </html>

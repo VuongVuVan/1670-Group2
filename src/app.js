@@ -95,19 +95,12 @@ app.use("/demo", demoRouter);
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
 
-//Staff: 
 const staffRouter = require("./routes/staff");
 app.use("/staff", staffRouter);
 
 const traineeRouter = require("./routes/trainee");
 app.use("/trainee", traineeRouter);
 
-const gradeRouter = require("./routes/grade");
-app.use("/grade", gradeRouter);
-
-const seeallRouter = require("./routes/seeall");
-app.use("/seeall", seeallRouter);
-//Trainer
 const trainerRouter = require("./routes/trainer");
 app.use("/trainer", trainerRouter);
 
