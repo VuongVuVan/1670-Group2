@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+
+<body>
+    {{> trainerLayout}}
+    <main class="content-detail trainer-body" id="">
+        <a href="/trainer/assignedCourse" type="button" class="btn btn-link fs-5">
+            <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+        </a>
+        <div class="content-detail-header mt-4">
+            <form action="/trainer/assignedCourse/viewclass?id={{courseId}}" method="POST" id="search"
+                class="content-detail-header-search">
+                <input type="search" name="keyword" class="form-control" placeholder="Search by name..." id="keyword">
+                <button class="btn btn-primary btn-search" value="submit"><i class="bi bi-search"></i></button>
+            </form>
+            <select class="form-select" style="width: 200px;" id="gradeStatusSelectBox"
+                aria-label="Default select example">
+                <option selected>Choose The Filter</option>
+                <option value="all">All</option>
+                <option value="fail">Fail</option>
+                <option value="pass">Pass</option>
+            </select>
+            <span id="currentFilter" style="display: none;">{{currentFilter}}</span>
+        </div>
+        <div class="trainees-table card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">List Traniee in Class <span
+                        id="class_name">{{class_name}}</span></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align: center;">STT</th>
+                                <th scope="col" style="text-align: center;">Email</th>
+                                <th scope="col" style="text-align: center;">Image</th>
+                                <th scope="col" style="text-align: center;">Name</th>
+                                <th scope="col" style="text-align: center;">Code</th>
+                                <th scope="col" style="text-align: center;">Education</th>
+                                <th scope="col" style="text-align: center;">Grade</th>
+                                <th scope="col" style="text-align: center;">Grade Status</th>
+                                <th scope="col" style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each data}}
+                            <tr id={{@index}}>
+                                <th scope="row">
+                                    <p>{{@index}}</p>
+                                </th>
+                                <th scope="col">
+                                    <p>{{this.email}}</p>
+                                </th>
+                                <th scope="col">
+                                    <img style="width: 170px; height: 170px;"
+                                        src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}"
+                                        alt="" class="img-thumbnail">
+                                </th>
+                                <th scope="col">
+                                    <p id='traine_name_{{@index}}'>{{this.name}}</p>
+                                </th>
+                                <th scope="col">
+                                    <p id='traine_code_{{@index}}'>{{this.code}}</p>
+                                </th>
+                                <th scope="col">
+                                    <p>{{this.education}}</p>
+                                </th>
+                                <th scope="col">
+                                    <p id='traine_grade_{{@index}}'>{{this.grade}}</p>
+                                </th>
+                                <th scope="col">
+                                    <p><span id="grade_status_{{@index}}">{{this.gradeStatus}}</span></p>
+                                </th>
+                                <th class="action-block-trainer" scope="col">
+                                    <button type="button" id="viewTranieeStatus_{{@index}}"
+                                        style="display: inline-block;" class="btn btn-primary button-edit"
+                                        data-bs-toggle="modal" data-bs-target="#editStatus">
+                                        <i class="bi bi-pen"></i> Grade Edit
+                                    </button>
+                                    {{!-- <button type="button" id="deleteTrainee" style="display: inline-block;"
+                                        class="btn btn-primary button-delete">
+                                        <i class="bi bi-pen"></i> Delete Trainee
+                                    </button> --}}
+                            </tr>
+                            {{/each}}
+                            <span id="course_id" style="display: none;">{{courseId}}</span>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade trainer-body" id="editStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog .modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Grade &#9999;</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="trainee">
+                        <div class="trainee-image">
+                            <img class="trainee-img"
+                                src="data:image/jpeg;base64,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"
+                                alt="">
+                        </div>
+                        <div class="trainee-info">
+                            <h3 id="trainee-name-popup">Name Prefix</h3>
+                            <p id="trainee-code-popup"><strong>GCH11111</strong></p>
+                        </div>
+                        <span class="cross-line"></span>
+                        <div class="form-edit-grade">
+                            <form action="/trainer/updateGrade" method="POST" id="update_grade" class="form-update">
+                                <input type="text" name="traineeCode" id="trainee-code-popup" style="display: none;">
+                                <div class="course">
+                                    <h6 for="course-label">Class:</h6>
+                                    <h6 id="course-name-popup" class="course-name"></h6>
+                                    <input type="text" name="classId" id="class-id-popup" style="display: none;">
+                                </div>
+                                <div class="grade">
+                                    <label for="grade-label">Grade:</label>
+                                    <input type="number" name="grade" id="grade-popup" class="form-control grade-input"
+                                        placeholder="Input grade">
+                                    <span class="msg" id="grade-msg" style="grid-column: 2/3;"></span>
+                                </div>
+                                <div class="status">
+                                    <h6 for="status-label">Status:</h6>
+                                    <h6 id="status-desc" class="status-desc"></h6>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" form="update_grade" id="grade-submit" class="btn btn-primary btn-disable"
+                        value="submit">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+{{> bottom}}
+<script>
+
+    $(document).ready(function () {
+        // check filter apply 
+        var currentFilter = $('#currentFilter').html();
+        if (currentFilter != "") {
+            switch (currentFilter) {
+                case 'all':
+                    $("#gradeStatusSelectBox option[value='all']").attr('selected', 'selected');
+                    break
+                case 'fail':
+                    $("#gradeStatusSelectBox option[value='fail']").attr('selected', 'selected');
+                    break
+                case 'pass':
+                    $("#gradeStatusSelectBox option[value='pass']").attr('selected', 'selected');
+                    break
+            }
+        }
+        // Get data for popup
+        $("button[id*='viewTranieeStatus']").click(function (e) {
+            console.log(e.target.id);
+            var index = e.target.id.split('_')[1];
+            var traineeCode = $('#traine_code_' + index).html();
+            var courseId = $('#course_id').html();
+            var traineeGrade = $('#traine_grade_' + index).html();
+            var gradeStatus = $('#grade_status_' + index).html();
+            var className = $('#class_name').html();
+            var traineName = $('#traine_name_' + index).html();
+            $.get("http://localhost:5000/trainer/viewTraineeStatus",
+                {
+                    traineeCode: traineeCode,
+                    courseId: courseId,
+                    traineeGrade: traineeGrade,
+                    gradeStatus: gradeStatus,
+                    className: className,
+                    traineeName: traineName
+                },
+                (data, status) => {
+                    $("#trainee-name-popup").html(data.traineeName);
+                    $("#trainee-code-popup").html(data.traineeCode);
+                    $("input[id='trainee-code-popup']").val(data.traineeCode);
+                    $("#course-name-popup").html(data.className);
+                    $("input[id='class-id-popup']").val(courseId);
+                    $('#status-desc').html(data.gradeStatus);
+                    if (traineeGrade != 'Not Have') {
+                        $("#grade-popup").val(Number.parseInt(traineeGrade));
+                    }
+                })
+        })
+        // filter for status
+        $("#gradeStatusSelectBox").on('change', function (e) {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            var courseId = $('#course_id').html();
+            var form = $('<form></form>');
+            form.attr("method", "POST");
+            form.attr("action", "/trainer/assignedCourse/viewclass?id=" + courseId);
+            var field = $('<input></input>');
+            field.attr("type", "hidden");
+            field.attr("name", "grade_status");
+            field.attr("value", valueSelected);
+            form.append(field);
+            // The form needs to be a part of the document in
+            // order for us to be able to submit it.
+            $(document.body).append(form);
+            form.submit();
+        })
+
+        //check grade status match with mark
+        $("#grade-popup").on('change', function () {
+            if ($(this).val() != "") {
+                var grade = Number.parseInt($(this).val());
+                if (grade > 50) {
+                    $('#status-desc').html("Pass");
+                    if (grade > 60) {
+                        $('#status-desc').html("Merit");
+                        $('#grade-submit').removeAttr('btn-disable');
+                        if (grade > 80) {
+                            $('#status-desc').html("distinction");
+                            $('#grade-submit').removeAttr('btn-disable');
+                        }
+                    }
+                    $('#grade-submit').removeClass('btn-disable');
+                    $('#grade-msg').html("");
+                } else {
+                    $('#status-desc').html("Fail");
+                    $('#grade-submit').removeClass('btn-disable');
+                    $('#grade-msg').html("");
+                }
+                if (grade < 0 || grade > 100) {
+                    $('#grade-submit').addClass('btn-disable');
+                    $('#grade-msg').html("grade must larger than 0 and less than 100");
+                }
+            } else {
+                $('#status-desc').html("Pending");
+                $('#grade-submit').removeClass('btn-disable');
+                $('#grade-msg').html("");
+            }
+        })
+        // change css of grade_status
+        $("span[id*='grade_status']").each(function (i, element) {
+            console.log(element.innerHTML.toLocaleLowerCase());
+            switch (element.innerHTML.toLocaleLowerCase()) {
+                case "pending":
+                    element.classList.add("status-pending");
+                    break;
+                case "pass":
+                    element.classList.add("status-pass");
+                    break;
+                case "merit":
+                    element.classList.add("status-merit");
+                    break;
+                case "distinction":
+                    element.classList.add("status-distinction");
+                    break;
+                case "refer":
+                    element.classList.add("status-refer");
+                    break;
+                case "fail":
+                    element.classList.add("status-fail");
+                    break;
+                default:
+                    break;
+            }
+        })
+        // check value in grade popup
+        $('#grade-popup').on('input', function (e) {
+            var val = $('#grade-popup').val();
+            console.log(val)
+            var string = '';
+            if (val) {
+
+            }
+
+        })
+    })
+</script>
+
+</html>
