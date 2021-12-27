@@ -34,21 +34,23 @@
                 <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
             </a>
             <div style="width: 50%, min-width: 475px; padding: 0px 400px;">
-                <form class="row g-3" method="POST" action="/staff/categories/update/?id={{category._id}}">
+                <form class="row g-3" method="POST" action="/staff/categories/update/?id={{category._id}}" onsubmit="return validateCategory();">
                     <div class="mt-4">
                         <label for="name">Category Name</label>
                         <input type="text" class="form-control" value="{{category.name}}" id="name" name="name"
-                            placeholder="Name of Category..." required>
+                            placeholder="Name of Category..." minlength="5" maxlength="30" required>
+                            <span class="msg" id="name-msg"></span>
                     </div>
                     <div class="mt-4">
-                        <label for="TotalCourse">Total Course</label>
-                        <input type="number" class="form-control" value="{{category.total}}" id="totalCourse"
-                            name="total" placeholder="Total of Course..." required>
+                        <label for="total">Total Course</label>
+                        <input type="number" class="form-control" value="{{category.total}}" id="total"
+                            name="total" placeholder="Total of Course..." min= "15", max= "40"required>
                     </div>
                     <div class="mt-4">
                         <label for="description">Category Description</label>
                         <textarea class="form-control" id="description" name="description"
-                            placeholder="Name of Category..." required>{{category.description}}</textarea>
+                            placeholder="Name of Category..."  minlength="10" maxlength="50" required>{{category.description}}</textarea>
+                            <span class="msg" id="description-msg"></span>
                     </div>
                     <div class="col-12 mt-4" style="text-align: center">
                         <button type="submit" class="btn btn-primary fs-5" style="font-weight: 500;">Update

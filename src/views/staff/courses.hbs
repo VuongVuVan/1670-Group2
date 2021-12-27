@@ -10,8 +10,7 @@
             <button type="button" class="btn btn-outline-primary fs-5 js-add-info" style="font-weight: 500;">New
                 Course</button>
             <form action="/staff/courses/search" class="content-detail-header-search" method="GET">
-                <input type="search" name="qq" class="form-control" placeholder="Search by code or name..."
-                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <input type="search" name="qq" class="form-control" placeholder="Search by code or name...">
                 <button style="width: 90px;" class="btn btn-outline-primary" type="submit"><i
                         class="bi bi-search"></i></button>
             </form>
@@ -99,16 +98,18 @@
             </header>
 
             {{!-- block of code for add new course --}}
-            <form class="modal-action_form-body" method="POST" action="/staff/courses/store">
+            <form class="modal-action_form-body" method="POST" action="/staff/courses/store" onsubmit="return validateCourse();">
                 <div class="form-group">
-                    <label for="codeCourse">Code</label>
-                    <input type="text" class="form-control" id="codeCourse" name="code" placeholder="Code of Course..."
-                        required>
+                    <label for="code">Code</label>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="Code of Course..."
+                    minlength="4" maxlength="20" required>
+                    <span class="msg" id="code-msg"></span>
                 </div>
                 <div class="form-group">
-                    <label for="categoryName">Course Name</label>
-                    <input type="text" class="form-control" id="courseName" name="name" placeholder="Course Name..."
-                        required>
+                    <label for="name">Course Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Course Name..."
+                        minlength="5" maxlength="30" required>
+                        <span class="msg" id="name-msg"></span>
                 </div>
                 <div class="col-md-4">
                     <label for="category" class="form-label">Category Name</label>
@@ -119,9 +120,10 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="courseDescription">Course Description</label>
-                    <textarea class="form-control" id="courseDescription" name="description"
-                        placeholder="Course Description..." required></textarea>
+                    <label for="description">Course Description</label>
+                    <textarea class="form-control" id="description" name="description"
+                        placeholder="Course Description..." minlength="10" maxlength="50" required></textarea>
+                        <span class="msg" id="description-msg"></span>
                 </div>
                 <div class="form-group">
                     <label for="create">CreateAt</label>
@@ -136,7 +138,7 @@
                 <div class="form-group">
                     <label for="session">Session</label>
                     <input type="number" class="form-control" id="session" name="session"
-                        placeholder="Session of Course..." required>
+                        placeholder="Session of Course..." min= "15", max= "40" required>
                 </div>
                 <button type="submit" class="btn-action">Add<i style="margin-left: 5px;"
                         class="bi bi-check2"></i></button>

@@ -225,3 +225,95 @@ function validatePassword() {
     }
     return true;
 }
+
+function validateCategory() {
+    const name = document.getElementById("name").value;
+    const description = document.getElementById("description").value;
+    const nameMsg = document.getElementById("name-msg")
+    const descriptionMsg = document.getElementById("description-msg");
+    const result = /^[a-z]+[a-z\s]*\S$/i.test(name);
+    const result1 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(description);
+    nameMsg.innerHTML = result ? "" : "Please enter a valid name.";
+    descriptionMsg.innerHTML = result1 ? "" : "Please enter a valid description.";
+    return result && result1;
+}
+
+function validateCourse() {
+    const code = document.getElementById("code").value;
+    const name = document.getElementById("name").value;
+    const description = document.getElementById("description").value;
+    const codeMsg = document.getElementById("code-msg");
+    const nameMsg = document.getElementById("name-msg");
+    const descriptionMsg = document.getElementById("description-msg");
+    const result = /\d/i.test(code);
+    const result1 = /^[a-z]+[a-z\s]*\S$/i.test(name);
+    const result2 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(description);
+    codeMsg.innerHTML = result ? "" : "Please enter a valid code.";
+    nameMsg.innerHTML = result1 ? "" : "Please enter a valid name.";
+    descriptionMsg.innerHTML = result2 ? "" : "Please enter a valid description.";
+    return result && result1 && result2
+}
+
+function validateProfileAdmin() {
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const result1 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
+    const result2 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    nameMsg.innerHTML = result1 ? "" : "Please enter a valid name.";
+    addressMsg.innerHTML = result2 ? "" : "Please enter a valid address.";
+    return result1 && result2;
+}
+
+function validateProfileStaff() {
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const result1 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
+    const result2 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    nameMsg.innerHTML = result1 ? "" : "Please enter a valid name.";
+    addressMsg.innerHTML = result2 ? "" : "Please enter a valid address.";
+    return result1 && result2;
+}
+
+function validateProfileTrainee() {
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const education = document.getElementById("education").value;
+    const code = document.getElementById("code").value;
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const eduMsg = document.getElementById("education-msg");
+    const codeMsg = document.getElementById("code-msg");
+    const result1 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
+    const result2 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    const result3 = /^\s*[a-z\d]{2,}[a-z\d\s]*$/i.test(education);
+    const result4 = /^\s*[a-z\d]{4,}\s*$/i.test(code);
+    nameMsg.innerHTML = result1 ? "" : "Please enter a valid name.";
+    addressMsg.innerHTML = result2 ? "" : "Please enter a valid address.";
+    eduMsg.innerHTML = result3 ? "" : "Please enter a valid education.";
+    codeMsg.innerHTML = result4 ? "" : "Please enter a valid code.";
+    return result1 && result2 && result3 && result4;
+}
+
+function validateProfileTrainer() {
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const specialty = document.getElementById("specialty").value;
+    const code = document.getElementById("code").value;
+    const nameMsg = document.getElementById("name-msg");
+    const addressMsg = document.getElementById("address-msg");
+    const specialtyMsg = document.getElementById("specialty-msg");
+    const codeMsg = document.getElementById("code-msg");
+    const result1 = /^\s*[a-z]{2,}\s+[a-z]{2,}[a-z\s]*$/i.test(name);
+    const result2 = /^\s*[a-z\d]+[a-z\d\s]*$/i.test(address);
+    const result3 = /^\s*[a-z\d]{2,}[a-z\d\s]*$/i.test(specialty);
+    const result4 = /^\s*[a-z\d]{4,}\s*$/i.test(code);
+    nameMsg.innerHTML = result1 ? "" : "Please enter a valid name.";
+    addressMsg.innerHTML = result2 ? "" : "Please enter a valid address.";
+    specialtyMsg.innerHTML = result3 ? "" : "Please enter a valid specialty.";
+    codeMsg.innerHTML = result4 ? "" : "Please enter a valid code.";
+    return result1 && result2 && result3 && result4;
+}

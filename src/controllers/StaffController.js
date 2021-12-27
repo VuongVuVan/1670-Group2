@@ -9,7 +9,7 @@ const defaultPassword = "123456789";
 const date = require("../utils/dateHandler");
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const traineeUploads = path.join(__dirname, "../public/uploads/trainees");
-const {getFlash, addFlash} = require("../utils/flashHandler");
+const { getFlash, addFlash } = require("../utils/flashHandler");
 
 class StaffController {
     index(req, res) {
@@ -72,10 +72,16 @@ class StaffController {
     }
 
     searchCategory(req, res, next) {
+        if (!req.query.q) return res.redirect("/staff/categories");
         Category.find({ name: { $regex: req.query.q, $options: 'i' } }, (err, categories) => {
             const total = categories.length;
             if (!err) {
-                res.render("staff/categories", { categories, user: req.session.user, total });
+                res.render("staff/categories", {
+                    categories,
+                    user: req.session.user,
+                    total,
+                    q: req.query.q
+                });
             } else next(err);
         });
     }
@@ -124,7 +130,11 @@ class StaffController {
     editCourse(req, res, next) {
         Course.findById(req.query.id, (err, course) => {
             Category.find({}, (err, categories) => {
-                if (!err) res.render("staff/editCourse", { categories, course, user: req.session.user });
+                if (!err) res.render("staff/editCourse", {
+                    categories,
+                    course,
+                    user: req.session.user
+                });
                 else next(err);
             })
         });
@@ -156,10 +166,20 @@ class StaffController {
     }
 
     searchCourse(req, res, next) {
-        Course.find({ $or: [{ code: { $regex: req.query.qq, $options: 'i' } }, { name: { $regex: req.query.qq, $options: 'i' } }] }, (err, courses) => {
+        if (!req.query.qq) return res.redirect("/staff/courses");
+        Course.find({
+            $or: [{ code: { $regex: req.query.qq, $options: 'i' } },
+                { name: { $regex: req.query.qq, $options: 'i' } }
+            ]
+        }, (err, courses) => {
             const total = courses.length;
             if (!err) {
-                res.render("staff/courses", { courses, user: req.session.user, total });
+                res.render("staff/courses", {
+                    courses,
+                    user: req.session.user,
+                    total,
+                    qq: req.query.qq
+                });
             } else next(err);
         });
     }
@@ -187,12 +207,12 @@ class StaffController {
 
     traineeDetailAction(req, res, next) {
         Trainee.findById(req.params.slug, (err, trainee) => {
-            if(!err) {
+            if (!err) {
                 res.render("staff/traineeDetail", {
-                    trainee, 
+                    trainee,
                     user: req.session.user
                 });
-            }else next(err); 
+            } else next(err);
         })
     }
 
@@ -200,12 +220,12 @@ class StaffController {
         try {
             const email = req.body.email.replace(/\s/g, "");
             const code = req.body.code.replace(/\s/g, "");
-            const anAccount = await Account.findOne({email});
-            const aTrainee = await Trainee.findOne({code});
-            const msg = {s1:"", s2:""};
-            if(anAccount) msg.s1 = "This email address already has an account.";
-            if(aTrainee) msg.s2 = "This code already has an account.";
-            if(msg.s1 || msg.s2) {
+            const anAccount = await Account.findOne({ email });
+            const aTrainee = await Trainee.findOne({ code });
+            const msg = { s1: "", s2: "" };
+            if (anAccount) msg.s1 = "This email address already has an account.";
+            if (aTrainee) msg.s2 = "This code already has an account.";
+            if (msg.s1 || msg.s2) {
                 return res.render("staff/trainee-accounts", {
                     user: req.session.user,
                     msg,
@@ -225,7 +245,7 @@ class StaffController {
             });
             const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
-            const trainee = new Trainee({ 
+            const trainee = new Trainee({
                 email,
                 image: {
                     data: data,
@@ -259,19 +279,19 @@ class StaffController {
         const newAccount = { email: req.body.email };
         let newTrainee;
         let name = req.body.name.replace(/\s/g, " ");
-            name = name.match(/[^ ].*[^ ]/)[0];
-            let address = req.body.address.replace(/\s/g, " ");
-            address = address.match(/[^ ].*[^ ]/)[0];
-            let education = req.body.education.replace(/\s/g, " ");
-            education = education.match(/[^ ].*[^ ]/)[0];
-            let code = req.body.code.replace(/\s/g, " ");
-            code = code.match(/[^ ].*[^ ]/)[0];
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
+        let education = req.body.education.replace(/\s/g, " ");
+        education = education.match(/[^ ].*[^ ]/)[0];
+        let code = req.body.code.replace(/\s/g, " ");
+        code = code.match(/[^ ].*[^ ]/)[0];
         if (req.file) {
             newTrainee = {
                 email: req.body.email,
                 image: {
                     data: fs.readFileSync(req.file.path),
-                    contentType: "image/png", 
+                    contentType: "image/png",
                     name: req.file.filename
                 },
                 name,
@@ -293,7 +313,7 @@ class StaffController {
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Trainee.updateOne({ _id: req.query.id }, newTrainee);
-            addFlash(req, "success", "Update trainee succeed!"); 
+            addFlash(req, "success", "Update trainee succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
