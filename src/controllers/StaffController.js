@@ -9,8 +9,7 @@ const defaultPassword = "123456789";
 const date = require("../utils/dateHandler");
 const defaultAvatar = path.join(__dirname, "../public/images/avatar/avatar.png");
 const traineeUploads = path.join(__dirname, "../public/uploads/trainees");
-
-
+const { getFlash, addFlash } = require("../utils/flashHandler");
 
 class StaffController {
     index(req, res) {
@@ -28,7 +27,12 @@ class StaffController {
     showCategories(req, res, next) {
         Category.find({}, (err, categories) => {
             const total = categories.length;
-            if (!err) res.render("staff/categories", { categories, total, user: req.session.user });
+            if (!err) res.render("staff/categories", {
+                categories,
+                total,
+                user: req.session.user,
+                flashMsgs: getFlash(req)
+            });
             else next(err);
         });
     }
@@ -36,6 +40,7 @@ class StaffController {
     storeCategory(req, res, next) {
         const category = new Category(req.body);
         category.save(err => {
+            addFlash(req, "success", "Add category succeed!");
             console.log(category);
             if (!err) res.redirect("/staff/categories");
             else next(err);
@@ -52,6 +57,7 @@ class StaffController {
 
     updateCategory(req, res, next) {
         Category.updateOne({ _id: req.query.id }, req.body, err => {
+            addFlash(req, "success", "Update category succeed!");
             if (!err) res.redirect("/staff/categories");
             else next(err);
         });
@@ -59,16 +65,23 @@ class StaffController {
 
     deleteCategory(req, res, next) {
         Category.deleteOne({ _id: req.query.id }, err => {
+            addFlash(req, "success", "Delete category succeed!");
             if (!err) res.redirect("/staff/categories");
             else next(err);
         });
     }
 
     searchCategory(req, res, next) {
+        if (!req.query.q) return res.redirect("/staff/categories");
         Category.find({ name: { $regex: req.query.q, $options: 'i' } }, (err, categories) => {
             const total = categories.length;
             if (!err) {
-                res.render("staff/categories", { categories, user: req.session.user, total });
+                res.render("staff/categories", {
+                    categories,
+                    user: req.session.user,
+                    total,
+                    q: req.query.q
+                });
             } else next(err);
         });
     }
@@ -84,7 +97,13 @@ class StaffController {
         Course.find({}, (err, courses) => {
             const total = courses.length;
             Category.find({}, (err, categories) => {
-                if (!err) res.render("staff/courses", { categories, courses, total, user: req.session.user });
+                if (!err) res.render("staff/courses", {
+                    categories,
+                    courses,
+                    total,
+                    user: req.session.user,
+                    flashMsgs: getFlash(req)
+                });
                 else next(err);
             })
         });
@@ -100,9 +119,9 @@ class StaffController {
             createAt: date.convertDateAsString(req.body.createAt),
             updateAt: date.convertDateAsString(req.body.updateAt),
         }
-        console.log(obj)
         const course = new Course(obj);
         course.save(err => {
+            addFlash(req, "success", "Add course succeed!");
             if (!err) res.redirect("/staff/courses");
             else next(err);
         });
@@ -111,7 +130,11 @@ class StaffController {
     editCourse(req, res, next) {
         Course.findById(req.query.id, (err, course) => {
             Category.find({}, (err, categories) => {
-                if (!err) res.render("staff/editCourse", { categories, course, user: req.session.user });
+                if (!err) res.render("staff/editCourse", {
+                    categories,
+                    course,
+                    user: req.session.user
+                });
                 else next(err);
             })
         });
@@ -128,7 +151,7 @@ class StaffController {
             updateAt: date.convertDateAsString(req.body.updateAt),
         }
         Course.updateOne({ _id: req.query.id }, obj, err => {
-            console.log(obj)
+            addFlash(req, "success", "Update course succeed!");
             if (!err) res.redirect("/staff/courses");
             else next(err);
         });
@@ -136,16 +159,27 @@ class StaffController {
 
     deleteCourse(req, res, next) {
         Course.deleteOne({ _id: req.query.id }, err => {
+            addFlash(req, "success", "Delete course succeed!");
             if (!err) res.redirect("/staff/courses");
             else next(err);
         })
     }
 
     searchCourse(req, res, next) {
-        Course.find({ $or: [{ code: { $regex: req.query.qq, $options: 'i' } }, { name: { $regex: req.query.qq, $options: 'i' } }] }, (err, courses) => {
+        if (!req.query.qq) return res.redirect("/staff/courses");
+        Course.find({
+            $or: [{ code: { $regex: req.query.qq, $options: 'i' } },
+                { name: { $regex: req.query.qq, $options: 'i' } }
+            ]
+        }, (err, courses) => {
             const total = courses.length;
             if (!err) {
-                res.render("staff/courses", { courses, user: req.session.user, total });
+                res.render("staff/courses", {
+                    courses,
+                    user: req.session.user,
+                    total,
+                    qq: req.query.qq
+                });
             } else next(err);
         });
     }
@@ -160,36 +194,73 @@ class StaffController {
 
     showTraineeAccounts(req, res, next) {
         Trainee.find({}, (err, trainees) => {
-            const user = req.session.user;
-            if (!err) res.render("staff/trainee-accounts", { trainees, user, total: trainees.length });
-            else next(err);
+            if (!err) {
+                res.render("staff/trainee-accounts", {
+                    trainees,
+                    user: req.session.user,
+                    total: trainees.length,
+                    flashMsgs: getFlash(req),
+                });
+            } else next(err);
         });
+    }
+
+    traineeDetailAction(req, res, next) {
+        Trainee.findById(req.params.slug, (err, trainee) => {
+            if (!err) {
+                res.render("staff/traineeDetail", {
+                    trainee,
+                    user: req.session.user
+                });
+            } else next(err);
+        })
     }
 
     async storeTraineeAccount(req, res, next) {
         try {
+            const email = req.body.email.replace(/\s/g, "");
+            const code = req.body.code.replace(/\s/g, "");
+            const anAccount = await Account.findOne({ email });
+            const aTrainee = await Trainee.findOne({ code });
+            const msg = { s1: "", s2: "" };
+            if (anAccount) msg.s1 = "This email address already has an account.";
+            if (aTrainee) msg.s2 = "This code already has an account.";
+            if (msg.s1 || msg.s2) {
+                return res.render("staff/trainee-accounts", {
+                    user: req.session.user,
+                    msg,
+                    attr: "display: flex;",
+                });
+            }
+            let name = req.body.name.replace(/\s/g, " ");
+            name = name.match(/[^ ].*[^ ]/)[0];
+            let address = req.body.address.replace(/\s/g, " ");
+            address = address.match(/[^ ].*[^ ]/)[0];
+            let education = req.body.education.replace(/\s/g, " ");
+            education = education.match(/[^ ].*[^ ]/)[0];
             const account = new Account({
-                email: req.body.email,
+                email,
                 password: await encrypt(defaultPassword),
                 role: "trainee"
             });
-            const data = (req.file) ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
+            const data = req.file ? fs.readFileSync(req.file.path) : fs.readFileSync(defaultAvatar);
             const filename = (req.file) ? req.file.filename : "";
             const trainee = new Trainee({
-                email: req.body.email,
+                email,
                 image: {
                     data: data,
                     contentType: "image/png",
                     name: filename
                 },
-                name: req.body.name,
-                code: req.body.code,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                education: req.body.education
+                address,
+                education
             });
             account.save();
             trainee.save();
+            addFlash(req, "success", "Add new trainee succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -207,6 +278,14 @@ class StaffController {
     async updateTraineeAccount(req, res, next) {
         const newAccount = { email: req.body.email };
         let newTrainee;
+        let name = req.body.name.replace(/\s/g, " ");
+        name = name.match(/[^ ].*[^ ]/)[0];
+        let address = req.body.address.replace(/\s/g, " ");
+        address = address.match(/[^ ].*[^ ]/)[0];
+        let education = req.body.education.replace(/\s/g, " ");
+        education = education.match(/[^ ].*[^ ]/)[0];
+        let code = req.body.code.replace(/\s/g, " ");
+        code = code.match(/[^ ].*[^ ]/)[0];
         if (req.file) {
             newTrainee = {
                 email: req.body.email,
@@ -215,25 +294,26 @@ class StaffController {
                     contentType: "image/png",
                     name: req.file.filename
                 },
-                name: req.body.name,
-                code: req.body.code,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                education: req.body.education
+                address,
+                education
             }
         } else {
             newTrainee = {
                 email: req.body.email,
-                name: req.body.name,
-                code: req.body.code,
+                name,
+                code,
                 dob: date.convertDateAsString(req.body.dob),
-                address: req.body.address,
-                education: req.body.education
+                address,
+                education
             }
         }
         try {
             await Account.updateOne({ email: req.body.email }, newAccount);
             await Trainee.updateOne({ _id: req.query.id }, newTrainee);
+            addFlash(req, "success", "Update trainee succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -247,6 +327,7 @@ class StaffController {
             const filename = deletedTrainee.image.name;
             if (filename) fs.unlinkSync(path.join(traineeUploads, filename));
             await Account.deleteOne({ email: deletedTrainee.email });
+            addFlash(req, "success", "Delete trainee succeed!");
         } catch (err) {
             console.log(err);
             return next(err);
@@ -260,6 +341,7 @@ class StaffController {
             const passwordHash = await encrypt(defaultPassword);
             const obj = { password: passwordHash };
             await Account.updateOne({ email: aTrainee.email }, obj);
+            addFlash(req, "success", "Set default password succeed!");
         } catch (err) {
             console.log(err);
             return next(err);

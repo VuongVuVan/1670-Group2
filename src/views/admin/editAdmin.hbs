@@ -33,22 +33,6 @@
                 <label for="dob" class="form-label">Date of birth</label>
                 <input type="date" class="form-control" id="dob" name="dob" value="{{convertDate admin.dob}}" required>
             </div>
-            {{!-- <div class="col-12">
-                <label for="inputAddress2" class="form-label">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-            </div>
-            <div class="col-md-6">
-                <label for="inputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity">
-            </div>
-            <div class="col-md-4">
-                <label for="inputState" class="form-label">State</label>
-                <select name="" id="inputState" class="form-select">
-                    <option value="{{id}}">IT</option>
-                    <option value="{{id}}">Business</option>
-                    <option value="{{id}}">ABC</option>
-                </select>
-            </div> --}}
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
                 <textarea class="form-control" id="address" rows="3" name="address" required placeholder="Your address..." minlength="6" maxlength="100">{{admin.address}}</textarea>
@@ -58,7 +42,7 @@
                 <input type="file" class="form-control" id="btn-upload-img" name="image" accept="image/*" hidden>
             {{!-- </div> --}}
             <div class="col-12 mt-5">
-                <button type="submit" class="btn btn-primary fs-5" style="font-weight: 500;">Update
+                <button type="submit" class="btn btn-outline-primary fs-5" style="font-weight: 500;">Update
                     <i class="bi bi-check2 fs-5"></i>
                 </button>
             </div>

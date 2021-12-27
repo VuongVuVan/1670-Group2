@@ -27,6 +27,7 @@ router.post("/staff-accounts/store", isAdmin, img.upload(destination2), img.resi
 router.get("/staff-accounts/delete", isAdmin, adminController.deleteStaffAccount);
 router.get("/staff-accounts", isAdmin, adminController.showStaffAccounts);
 
+// router.get("/test", adminController.testAction);
 router.get("/admin-accounts/search", isAdmin, adminController.searchAdminAccounts);
 router.get("/admin-account/:slug", isAdmin, adminController.adminDetailAction);
 router.get("/admin-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassA);
