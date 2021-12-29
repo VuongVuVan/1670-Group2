@@ -1,0 +1,180 @@
+.trainees-table {
+    margin-top: 40px;
+}
+
+.status-pending {
+    background-color: #9e9e9e;
+    color: #000;
+    padding: 5px 20px;
+    border-radius: 12px;
+}
+
+.status-pass {
+    background-color: #2eeb08;
+    color: #000;
+    padding: 5px 20px;
+    border-radius: 12px;
+}
+
+.status-merit {
+    background-color: #08ebc1;
+    color: #000;
+    padding: 5px 20px;
+    border-radius: 12px;
+}
+
+.status-distinction {
+    background-color: #fa8e01;
+    color: #000;
+    padding: 5px 20px;
+    border-radius: 12px;
+}
+
+.status-fail {
+    background-color: rgb(250, 6, 6);
+    color: #000;
+    padding: 5px 20px;
+    border-radius: 12px;
+}
+
+p {
+    text-align: center;
+}
+
+.button-edit {
+    background-color: aliceblue;
+    border-radius: 12px;
+    color: black;
+    border: none;
+}
+
+.button-edit:hover {
+    background-color: rgb(148, 86, 4);
+}
+
+.button-delete {
+    background-color: rgb(215, 217, 219);
+    border-radius: 12px;
+    color: black;
+    border: none;
+    outline: none;
+}
+
+.modal-title {
+    text-transform: uppercase;
+    letter-spacing: 1rem;
+    text-align: center;
+    outline: none;
+}
+
+
+/* Edit form  */
+
+.trainee-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.trainee-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px auto;
+    border: 10px solid #ccc;
+    border-radius: 50%;
+}
+
+.trainee-info {
+    text-align: center;
+}
+
+.trainee-info h3 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.3rem;
+}
+
+.trainee-info p {
+    font-size: 16px;
+    color: #000;
+    letter-spacing: 0.3rem;
+}
+
+.form-update {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.form-edit-grade label {
+    margin-bottom: 10px;
+}
+
+.grade-status {
+    margin-top: 10px;
+}
+
+.course {
+    display: grid;
+    grid-template-columns: 100px auto;
+    gap: 0 40px;
+}
+
+.course .course-name {
+    text-align: center;
+    gap: 0 40px;
+}
+
+.status {
+    display: grid;
+    grid-template-columns: 100px auto;
+    margin-top: 30px;
+    gap: 0 40px;
+}
+
+.status .status-desc {
+    text-align: center;
+}
+
+.grade {
+    display: grid;
+    grid-template-columns: 100px auto;
+    margin-top: 30px;
+    gap: 0 40px;
+}
+
+.grade-input {
+    text-align: center;
+}
+
+.btn-disable {
+    cursor: not-allowed;
+    background-color: gray;
+    pointer-events: none;
+}
+
+.btn-search {
+    width: 90px;
+    margin-left: 30px;
+    background-color: #5AE8CE;
+    border: none
+}
+
+.btn-search:hover {
+    background-color: #53bfab;
+}
+
+
+/* action-block-trainer */
+
+
+/* .action-block-trainer { */
+
+
+/* min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 40px 0; */
+
+
+/* } */

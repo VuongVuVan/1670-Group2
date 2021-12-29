@@ -16,7 +16,7 @@
             </form>
             <select class="form-select" style="width: 200px;" id="gradeStatusSelectBox"
                 aria-label="Default select example">
-                <option selected>Choose The Filter</option>
+                <option selected>Choose Grade</option>
                 <option value="all">All</option>
                 <option value="fail">Fail</option>
                 <option value="pass">Pass</option>
@@ -25,7 +25,7 @@
         </div>
         <div class="trainees-table card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">List Traniee in Class <span
+                <h6 class="m-0 font-weight-bold text-primary">List Trainee in Class <span
                         id="class_name">{{class_name}}</span></h6>
             </div>
             <div class="card-body">
@@ -33,9 +33,8 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th scope="col" style="text-align: center;">STT</th>
+                                <th scope="col" style="text-align: center;">Number</th>
                                 <th scope="col" style="text-align: center;">Email</th>
-                                <th scope="col" style="text-align: center;">Image</th>
                                 <th scope="col" style="text-align: center;">Name</th>
                                 <th scope="col" style="text-align: center;">Code</th>
                                 <th scope="col" style="text-align: center;">Education</th>
@@ -52,11 +51,6 @@
                                 </th>
                                 <th scope="col">
                                     <p>{{this.email}}</p>
-                                </th>
-                                <th scope="col">
-                                    {{!-- <img style="width: 170px; height: 170px;"
-                                        src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}"
-                                        alt="" class="img-thumbnail"> --}}
                                 </th>
                                 <th scope="col">
                                     <p id='traine_name_{{@index}}'>{{this.name}}</p>
@@ -78,10 +72,6 @@
                                         style="display: inline-block;" class="btn btn-primary button-edit"
                                         data-bs-toggle="modal" data-bs-target="#editStatus">
                                         <i class="bi bi-pen"></i> Grade Edit
-                                    </button>
-                                    <button type="button" id="deleteTrainee" style="display: inline-block;"
-                                        class="btn btn-primary button-delete">
-                                        <i class="bi bi-pen"></i> Delete Trainee
                                     </button>
                             </tr>
                             {{/each}}
