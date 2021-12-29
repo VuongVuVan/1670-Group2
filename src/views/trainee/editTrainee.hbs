@@ -3,16 +3,16 @@
 {{> head}}
 
 <body>
-    {{> adminLayout}}
+    {{> traineeLayout}}
 
     <main class="content-detail" id="common_content-area">
         <a href="/{{removeSpace user.name}}" class="btn btn-link fs-5">
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
         </a>
-        <form class="row g-3 mt-4" method="POST" action="/{{removeSpace user.name}}/update_profile?id={{admin._id}}" enctype="multipart/form-data" onsubmit="return validateProfileAdmin();">
+        <form class="row g-3 mt-4" method="POST" action="/{{removeSpace user.name}}/update_profile?id={{trainee._id}}" enctype="multipart/form-data" onsubmit="return validateProfileTrainee();">
             <div class="text-left">
                 <img style="width: 170px; height: 170px; margin-right: 20px;"
-                    src="data:image/{{admin.image.contentType}};base64,{{convertImage admin.image.data}}" alt=""
+                    src="data:image/{{trainee.image.contentType}};base64,{{convertImage trainee.image.data}}" alt=""
                     class="img-thumbnail">
                 <div class="chosen_image-container">
                     <img style="width: 170px; height: 170px;" src="" class="img-thumbnail" id="chosenImage" alt="">
@@ -28,22 +28,34 @@
                 </span>
                 <span style="display: block;">{{user.email}}</span>
                 <input type="hidden" class="form-control" id="email" name="email" value="{{user.email}}">
-
             </div>
             <div class="col-12">
                 <label for="name" class="form-label">Full name</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{admin.name}}" 
+                <input type="text" class="form-control" id="name" name="name" value="{{trainee.name}}" 
                     minlength="5", maxlength="30" required placeholder="Your full name...">
                     <span class="msg" id="name-msg"></span>
             </div>
             <div class="col-12">
+                <label for="code" class="form-label">Code</label>
+                <input type="text" class="form-control" id="code" name="code" value="{{trainee.code}}" 
+                    minlength="4", maxlength="20" required placeholder="Your code...">
+                    <span class="msg" id="code-msg"></span>
+            </div>
+            <div class="col-12">
                 <label for="dob" class="form-label">Date of birth</label>
-                <input type="date" class="form-control" id="dob" name="dob" value="{{convertDate admin.dob}}" required>
+                <input type="date" class="form-control" id="dob" name="dob" value="{{convertDate trainee.dob}}"
+                    required>
+            </div>
+            <div class="col-12">
+                <label for="education" class="form-label">Education</label>
+                <input type="text" class="form-control" id="education" name="education" value="{{trainee.education}}"
+                    minlength="2", maxlength="20" required>
+                    <span class="msg" id="education-msg"></span>
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
                 <textarea class="form-control" id="address" rows="3" name="address" 
-                    minlength="6", maxlength="100" required placeholder="Your address...">{{admin.address}}</textarea>
+                    minlength="6", maxlength="100" required placeholder="Your address...">{{trainee.address}}</textarea>
                     <span class="msg" id="address-msg"></span>
             </div>
             <input type="file" class="form-control" id="btn-upload-img" name="image" accept="image/*" hidden>
@@ -61,5 +73,4 @@
 
     {{> frameworkCDN}}
 </body>
-
 </html>

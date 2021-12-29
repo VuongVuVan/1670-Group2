@@ -121,12 +121,12 @@ class SiteController {
             });
         } else if (role == "trainer") {
             Trainer.findById(req.query.id, (err, trainer) => {
-                if (!err) res.render("trainer/edit", { trainer, user: req.session.user });
+                if (!err) res.render("trainer/editTrainer", { trainer, user: req.session.user });
                 else next(err);
             });
         } else if (role == "trainee") {
             Trainee.findById(req.query.id, (err, trainee) => {
-                if (!err) res.render("trainee/edit", { trainee, user: req.session.user });
+                if (!err) res.render("trainee/editTrainee", { trainee, user: req.session.user });
                 else next(err);
             });
         }

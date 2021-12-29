@@ -4,7 +4,7 @@ const path = require("path");
 const siteController = require("../controllers/SiteController");
 const { isLogged, isLogged2 } = require("../utils/authHandler");
 const img = require("../utils/imageHandler");
-const destination = path.join(__dirname, "../public/uploads/updateProfile");
+const destination = path.join(__dirname, "../public/uploads/update");
 const width = height = 170;
 
 

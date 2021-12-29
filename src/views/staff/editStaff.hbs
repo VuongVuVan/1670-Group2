@@ -9,7 +9,7 @@
         <a href="/{{removeSpace user.name}}" class="btn btn-link fs-5">
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
         </a>
-        <form class="row g-3 mt-4" method="POST" action="/{{removeSpace user.name}}/update_profile?id={{staff._id}}" onsubmit="return validateProfileStaff();">
+        <form class="row g-3 mt-4" method="POST" action="/{{removeSpace user.name}}/update_profile?id={{staff._id}}" enctype="multipart/form-data" onsubmit="return validateProfileStaff();">
             <div class="text-left">
                 <img style="width: 170px; height: 170px; margin-right: 20px;"
                     src="data:image/{{staff.image.contentType}};base64,{{convertImage staff.image.data}}" alt=""

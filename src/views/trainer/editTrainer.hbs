@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+
+<body>
+    {{> trainerLayout}}
+
+    <main class="content-detail" id="common_content-area">
+        <a href="/{{removeSpace user.name}}" class="btn btn-link fs-5">
+            <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+        </a>
+        <form class="row g-3 mt-4" method="POST" action="/{{removeSpace user.name}}/update_profile?id={{trainer._id}}" enctype="multipart/form-data" onsubmit="return validateProfileTrainer();">
+            <div class="text-left">
+                <img style="width: 170px; height: 170px; margin-right: 20px;"
+                    src="data:image/{{trainer.image.contentType}};base64,{{convertImage trainer.image.data}}" alt=""
+                    class="img-thumbnail">
+                <div class="chosen_image-container">
+                    <img style="width: 170px; height: 170px;" src="" class="img-thumbnail" id="chosenImage" alt="">
+                    <i id="cancel-btn" class="bi bi-x-lg"></i>
+                </div>
+            </div>
+            <div class="col-12 mt-4 mb-3">
+                <label class="input-group-text" style="cursor: pointer;" for="btn-upload-img">Upload</label>
+            </div>
+            <span style="display: block; color: rgb(44, 44, 44);">
+                Email Address
+            </span>
+            <span style="display: block;">{{user.email}}</span>
+            <input type="hidden" class="form-control" id="email" name="email" value="{{user.email}}">
+
+            </div>
+            <div class="col-12">
+                <label for="name" class="form-label">Full name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{trainer.name}}" required
+                    minlength="5", maxlength="30" placeholder="Your full name...">
+                    <span class="msg" id="name-msg"></span>
+            </div>
+            <div class="col-12">
+                <label for="code" class="form-label">Code</label>
+                <input type="text" class="form-control" id="code" name="code" value="{{trainer.code}}" required
+                    minlength="4", maxlength="20" placeholder="Your code...">
+                    <span class="msg" id="code-msg"></span>
+            </div>
+            <div class="col-12">
+                <label for="dob" class="form-label">Date of birth</label>
+                <input type="date" class="form-control" id="dob" name="dob" value="{{convertDate trainer.dob}}"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="specialty" class="form-label">Specialty</label>
+                <input class="form-control" id="specialty" rows="3" name="specialty" value="{{trainer.specialty}}" required
+                    minlength="2", maxlength="20" placeholder="Your Specialty...">
+                    <span class="msg" id="specialty-msg"></span>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" rows="3" name="address" required
+                    minlength="6", maxlength="100" placeholder="Your address...">{{trainer.address}}</textarea>
+                    <span class="msg" id="address-msg"></span>
+            </div>
+            <input type="file" class="form-control" id="btn-upload-img" name="image" accept="image/*" hidden>
+            <div class="col-12 mt-5">
+                <button type="submit" class="btn btn-primary fs-5" style="font-weight: 500;">Update
+                    <i class="bi bi-check2 fs-5"></i>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        previewImageAndClose();
+    </script>
+
+    {{> frameworkCDN}}
+</body>
+</html>

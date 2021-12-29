@@ -11,6 +11,6 @@ router.get("/assignedCourse/viewclass", trainerController.view);
 router.post("/assignedCourse/viewclass", trainerController.viewClassWithSearch);
 router.get("/", trainerController.index);
 router.post("/updateGrade", trainerController.updateGrade);
-router.get("/viewTraineeStatus", trainerController.viewTraineeStatus)
+router.get("/viewTraineeStatus", trainerController.viewTraineeStatus);
 
 module.exports = router;

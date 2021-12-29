@@ -153,7 +153,7 @@
 
 .header_r-area-info {
     display: flex;
-    width: 300px;
+    width: 330px;
     position: relative;
     justify-content: space-between;
     align-items: center;
@@ -675,4 +675,8 @@
 
 .flashMsg-close {
     display: none;
+}
+
+.arrow-link {
+    color: black;
 }
