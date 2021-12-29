@@ -6,13 +6,15 @@
     <main class="content-detail trainer-body" id="">
         
         <div class="content-detail-header mt-4">
-            <form action="/admin/admin-accounts/search" class="content-detail-header-search" method="GET">
-                <input type="search" class="form-control" placeholder="Search by email or name..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="q">
-                <button style="width: 90px;" class="btn btn-primary" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
+             <form action="/trainer/assignedCourse" method="POST" id="search"
+                class="content-detail-header-search">
+                <input type="search" name="keyword" class="form-control" placeholder="Search by name..." id="keyword">
+                <button class="btn btn-primary btn-search" value="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
+        <h1 class="class-title">
+            List Class
+        </h1>
         <table class="table table-hover table-bordered caption-top mt-5" style="width: 100%;">
             {{!-- <caption class="fs-5"></caption> --}}
             <thead class="table-light">
