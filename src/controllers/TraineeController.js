@@ -18,10 +18,6 @@ class TraineeController {
         res.render("trainee", { user: req.session.user });
     }
 
-    // layout(req, res) {
-    //     res.render("trainee/layout");
-    // }
-
     show(req, res, next) {
         Trainee.find({}, (err, trainees) => {
             if (!err) res.render("trainee/view-alltrainee", { data: trainees, user: req.session.user });

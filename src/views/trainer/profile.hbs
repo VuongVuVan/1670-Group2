@@ -3,7 +3,7 @@
 {{> head}}
 <style>
     body {
-        background: rgb(99, 39, 120)
+        background: #d6d6c2
     }
 
     .margin {
@@ -70,8 +70,8 @@
                 <div class="col-md-3" style="margin-left: 150px; margin-top: 25px">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                         <img style="width: 170px; height: 170px;"
-                            src="data:image/{{trainer.image.contentType}};base64,{{trainer.image.data}}" alt=""
-                            class="img-thumbnail">
+                            src="data:image/{{trainer.image.contentType}};base64,{{convertImage trainer.image.data}}"
+                            alt="" class="img-thumbnail">
                         <span>{{removeSpace user.name}}</span><span class="text-black-50">{{trainer.email}}</span>
                     </div>
                 </div>
@@ -112,7 +112,6 @@
                             <span>{{trainer.specialty}}</span>
                         </div>
                         <div class="mt-4 text-center">
-
                             <a class="underline-white"
                                 href="/{{removeSpace user.name}}/edit_profile?id={{trainer._id}}">
                                 <button type="button" class="btn btn-outline-primary">Edit Profile</button>
@@ -129,5 +128,6 @@
     </main>
     {{> bottom}}
 </body>
-
 </html>
+
+

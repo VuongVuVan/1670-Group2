@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const avatarPath = path.join(__dirname, "../public/uploads/trainer");
 const CourseClass = require("../models/CourseClass")
-const Trainee = require("../models/Trainee");
+const Trainaee = require("../models/Trainee");
 const Grade = require("../models/Grade");
 
 class TrainerController {
@@ -59,6 +59,7 @@ class TrainerController {
                                 })
                             })
                             res.render("trainer/viewtrainees", {
+                                user: req.session.user,
                                 class_name: courseClass.class_name,
                                 data: listTrainees,
                                 courseId: req.query.id
@@ -116,6 +117,7 @@ class TrainerController {
                                     })
                                 })
                                 res.render("trainer/viewtrainees", {
+                                    user: req.session.user,
                                     class_name: courseClass.class_name,
                                     data: listTrainees,
                                     courseId: req.query.id,
@@ -181,6 +183,7 @@ class TrainerController {
                         console.table(listTrainees);
                         console.table(listTrainees.map(item => item._doc));
                         res.render("trainer/viewtrainees", {
+                            user: req.session.user,
                             class_name: courseClass.class_name,
                             data: listTrainees,
                             courseId: req.query.id,
@@ -196,21 +199,8 @@ class TrainerController {
         });
     }
 
-    //view trainer profile 
-    viewProfile(req, res) {
-            // user session as trainer logined
-            let trainer = req.session.user;
-            // find Trainer
-            Trainer.findOne({
-                code: trainer.code
-            }).then((trainer, err) => {
-                if (!err) res.render("trainer/profile", {
-                    trainer: trainer
-                });
-                else console.log('err = ' + err)
-            })
-        }
-        // view trainee status
+
+    // view trainee status
     viewTraineeStatus(req, res) {
             console.log("queryy = " + req.query);
             res.status(200).send(req.query);
@@ -293,6 +283,7 @@ class TrainerController {
             }
         }, (err, courseClasses) => {
             if (!err) res.render("trainer/assignedCourses", {
+                user: req.session.user,
                 data: courseClasses
             });
             else next(err);
