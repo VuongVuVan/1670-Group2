@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const avatarPath = path.join(__dirname, "../public/uploads/trainer");
 const CourseClass = require("../models/CourseClass")
-const Trainaee = require("../models/Trainee");
+const Trainee = require("../models/Trainee");
 const Grade = require("../models/Grade");
 
 class TrainerController {
