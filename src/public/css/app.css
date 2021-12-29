@@ -656,3 +656,7 @@
 .flashMsg-close {
     display: none;
 }
+
+.arrow-link {
+    color: black;
+}
