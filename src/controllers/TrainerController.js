@@ -140,75 +140,60 @@ class TrainerController {
 
     // View traniees in selected class
     view(req, res, currentFilter) {
-        CourseClass.findById({
-            _id: req.query.id
-        }, (err, courseClass) => {
-            const TraineesCode = courseClass.trainees.map(item => item.code);
-            console.log(TraineesCode);
-            const traineesInCoureClass = courseClass.trainees;
-            // find all trainee in list of trainee code
-            Trainee.find({
-                code: {
-                    $in: TraineesCode
-                }
-            }, (err, listTrainees) => {
-                Grade.find({
-                    class: req.query.id
-                }, (err, listGrade) => {
-                    if (!err) {
-                        console.log('1111')
-                            // Add grade to list Trainee before return to page
-                        listTrainees.forEach(trainee => {
-                            listGrade.forEach(gradeItem => {
-                                if (gradeItem.code == trainee.code) {
-                                    trainee.grade = gradeItem.grade;
-                                }
+            CourseClass.findById({
+                _id: req.query.id
+            }, (err, courseClass) => {
+                const TraineesCode = courseClass.trainees.map(item => item.code);
+                console.log(TraineesCode);
+                const traineesInCoureClass = courseClass.trainees;
+                // find all trainee in list of trainee code
+                Trainee.find({
+                    code: {
+                        $in: TraineesCode
+                    }
+                }, (err, listTrainees) => {
+                    Grade.find({
+                        class: req.query.id
+                    }, (err, listGrade) => {
+                        if (!err) {
+                            console.log('1111')
+                                // Add grade to list Trainee before return to page
+                            listTrainees.forEach(trainee => {
+                                listGrade.forEach(gradeItem => {
+                                    if (gradeItem.code == trainee.code) {
+                                        trainee.grade = gradeItem.grade;
+                                    }
+                                })
                             })
-                        })
-                        listTrainees.forEach(trainee => {
-                                if (trainee.grade == undefined) {
-                                    trainee.grade = 'Not Have'
-                                }
+                            listTrainees.forEach(trainee => {
+                                    if (trainee.grade == undefined) {
+                                        trainee.grade = 'Not Have'
+                                    }
+                                })
+                                // Add grade status in Trainee before return to page
+                            listTrainees.forEach(trainee => {
+                                traineesInCoureClass.forEach(traineeInCourseClass => {
+                                    if (trainee.code == traineeInCourseClass.code) {
+                                        trainee.gradeStatus = traineeInCourseClass.grade_status;
+                                    }
+                                })
                             })
-                            // Add grade status in Trainee before return to page
-                        listTrainees.forEach(trainee => {
-                            traineesInCoureClass.forEach(traineeInCourseClass => {
-                                if (trainee.code == traineeInCourseClass.code) {
-                                    trainee.gradeStatus = traineeInCourseClass.grade_status;
-                                }
+                            console.table(listTrainees);
+                            console.table(listTrainees.map(item => item._doc));
+                            res.render("trainer/viewtrainees", {
+                                class_name: courseClass.class_name,
+                                data: listTrainees,
+                                courseId: req.query.id,
+                                currentFilter: currentFilter
                             })
-                        })
-                        console.table(listTrainees);
-                        console.table(listTrainees.map(item => item._doc));
-                        res.render("trainer/viewtrainees", {
-                            class_name: courseClass.class_name,
-                            data: listTrainees,
-                            courseId: req.query.id,
-                            currentFilter: currentFilter
-                        })
-                    } else {
-                        console.log(err);
-                    };
-                });
+                        } else {
+                            console.log(err);
+                        };
+                    });
+                    console.log(err);
+                })
                 console.log(err);
-            })
-            console.log(err);
-        });
-    }
-
-    //view trainer profile 
-    viewProfile(req, res) {
-            // user session as trainer logined
-            let trainer = req.session.user;
-            // find Trainer
-            Trainer.findOne({
-                code: trainer.code
-            }).then((trainer, err) => {
-                if (!err) res.render("trainer/profile", {
-                    trainer: trainer
-                });
-                else console.log('err = ' + err)
-            })
+            });
         }
         // view trainee status
     viewTraineeStatus(req, res) {
