@@ -155,147 +155,140 @@ class TrainerController {
                 }
             }, (err, listTrainees) => {
                 Grade.find({
-                        class: req.query.id
-                    }, (err, listGrade) => {
-                        if (!err) {
-                            console.log('1111')
-                                // Add grade to list Trainee before return to page
-                            listTrainees.forEach(trainee => {
-                                listGrade.forEach(gradeItem => {
-                                    if (gradeItem.code == trainee.code) {
-                                        trainee.grade = gradeItem.grade;
-                                    }
-                                })
+                    class: req.query.id
+                }, (err, listGrade) => {
+                    if (!err) {
+                        console.log('1111')
+                            // Add grade to list Trainee before return to page
+                        listTrainees.forEach(trainee => {
+                            listGrade.forEach(gradeItem => {
+                                if (gradeItem.code == trainee.code) {
+                                    trainee.grade = gradeItem.grade;
+                                }
                             })
-                            listTrainees.forEach(trainee => {
-                                    if (trainee.grade == undefined) {
-                                        trainee.grade = 'Not Have'
-                                    }
-                                })
-                                // Add grade status in Trainee before return to page
-                            listTrainees.forEach(trainee => {
-                                traineesInCoureClass.forEach(traineeInCourseClass => {
-                                    if (trainee.code == traineeInCourseClass.code) {
-                                        trainee.gradeStatus = traineeInCourseClass.grade_status;
-                                    }
-                                })
+                        })
+                        listTrainees.forEach(trainee => {
+                                if (trainee.grade == undefined) {
+                                    trainee.grade = 'Not Have'
+                                }
                             })
-                            console.table(listTrainees);
-                            console.table(listTrainees.map(item => item._doc));
-                            res.render("trainer/viewtrainees", {
-                                class_name: courseClass.class_name,
-                                data: listTrainees,
-                                courseId: req.query.id,
-                                currentFilter: currentFilter
+                            // Add grade status in Trainee before return to page
+                        listTrainees.forEach(trainee => {
+                            traineesInCoureClass.forEach(traineeInCourseClass => {
+                                if (trainee.code == traineeInCourseClass.code) {
+                                    trainee.gradeStatus = traineeInCourseClass.grade_status;
+                                }
                             })
-                        }) console.table(listTrainees); console.table(listTrainees.map(item => item._doc)); res.render("trainer/viewtrainees", {
-                        user: req.session.user,
-                        class_name: courseClass.class_name,
-                        data: listTrainees,
-                        courseId: req.query.id,
-                        currentFilter: currentFilter
+                        })
+                        console.table(listTrainees);
+                        console.table(listTrainees.map(item => item._doc));
+                        res.render("trainer/viewtrainees", {
+                            user: req.session.user,
+                            class_name: courseClass.class_name,
+                            data: listTrainees,
+                            courseId: req.query.id,
+                            currentFilter: currentFilter
+                        })
+                    } else {
+                        console.log(err);
+                    };
+                });
+                console.log(err);
+            })
+            console.log(err);
+        });
+    }
+
+
+    // view trainee status
+    viewTraineeStatus(req, res) {
+            console.log("queryy = " + req.query);
+            res.status(200).send(req.query);
+        }
+        //update grade 
+    updateGrade(req, res) {
+        if (req.body.grade != "") {
+            // STEP1 : Update or Insert new grade into grade table
+            var gradeStatus = "Pending";
+            Grade.findOneAndUpdate({
+                code: req.body.traineeCode,
+                class: req.body.classId
+            }, {
+                grade: req.body.grade,
+                code: req.body.traineeCode,
+                class: req.body.classId
+            }, {
+                upsert: true
+            }, function(err, doc) {
+                if (err) {
+                    return res.send(500, {
+                        error: err
+                    });
+                } else {
+                    // update grade status in courseClass table
+                    if (req.body.grade > 50) {
+                        gradeStatus = "Pass";
+                        if (req.body.grade > 60) {
+                            gradeStatus = "Merit";
+                            if (req.body.grade > 80) {
+                                gradeStatus = "Distinction";
+                            }
+                        }
+                    } else {
+                        gradeStatus = "Fail";
+                    }
+                    //Update course class
+                    CourseClass.updateOne({
+                        'trainees.code': req.body.traineeCode
+                    }, {
+                        '$set': {
+                            'trainees.$.grade_status': gradeStatus
+                        }
+                    }, {}, (err, results) => {
+                        req.query.id = req.body.classId;
+                        new TrainerController().view(req, res);
                     })
                 }
-                else {
-                    console.log(err);
-                };
             });
-            console.log(err);
-        })
-        console.log(err);
-    });
-}
-
-
-// view trainee status
-viewTraineeStatus(req, res) {
-        console.log("queryy = " + req.query);
-        res.status(200).send(req.query);
-    }
-    //update grade 
-updateGrade(req, res) {
-    if (req.body.grade != "") {
-        // STEP1 : Update or Insert new grade into grade table
-        var gradeStatus = "Pending";
-        Grade.findOneAndUpdate({
-            code: req.body.traineeCode,
-            class: req.body.classId
-        }, {
-            grade: req.body.grade,
-            code: req.body.traineeCode,
-            class: req.body.classId
-        }, {
-            upsert: true
-        }, function(err, doc) {
-            if (err) {
-                return res.send(500, {
-                    error: err
-                });
-            } else {
-                // update grade status in courseClass table
-                if (req.body.grade > 50) {
-                    gradeStatus = "Pass";
-                    if (req.body.grade > 60) {
-                        gradeStatus = "Merit";
-                        if (req.body.grade > 80) {
-                            gradeStatus = "Distinction";
-                        }
-                    }
-                } else {
-                    gradeStatus = "Fail";
-                }
-                //Update course class
+        } else {
+            var gradeStatus = "Pending";
+            Grade.findOneAndDelete({
+                code: req.body.traineeCode,
+                class: req.body.classId
+            }, (err, result) => {
                 CourseClass.updateOne({
                     'trainees.code': req.body.traineeCode
                 }, {
                     '$set': {
                         'trainees.$.grade_status': gradeStatus
                     }
-                }, {}, (err, results) => {
+                }, {}, (err, isUpdated) => {
+                    if (!err) {}
                     req.query.id = req.body.classId;
                     new TrainerController().view(req, res);
                 })
-            }
-        });
-    } else {
-        var gradeStatus = "Pending";
-        Grade.findOneAndDelete({
-            code: req.body.traineeCode,
-            class: req.body.classId
-        }, (err, result) => {
-            CourseClass.updateOne({
-                'trainees.code': req.body.traineeCode
-            }, {
-                '$set': {
-                    'trainees.$.grade_status': gradeStatus
-                }
-            }, {}, (err, isUpdated) => {
-                if (!err) {}
-                req.query.id = req.body.classId;
-                new TrainerController().view(req, res);
             })
-        })
-    }
-}
-
-showAssignedCourses(req, res) {
-    // user session as trainer logined
-    let trainer = req.session.user;
-    // find courseClass based on trainer Code
-    CourseClass.find({
-        trainers: {
-            $elemMatch: {
-                code: trainer.code
-            }
         }
-    }, (err, courseClasses) => {
-        if (!err) res.render("trainer/assignedCourses", {
-            user: req.session.user,
-            data: courseClasses
+    }
+
+    showAssignedCourses(req, res) {
+        // user session as trainer logined
+        let trainer = req.session.user;
+        // find courseClass based on trainer Code
+        CourseClass.find({
+            trainers: {
+                $elemMatch: {
+                    code: trainer.code
+                }
+            }
+        }, (err, courseClasses) => {
+            if (!err) res.render("trainer/assignedCourses", {
+                user: req.session.user,
+                data: courseClasses
+            });
+            else next(err);
         });
-        else next(err);
-    });
-}
+    }
 }
 
 module.exports = new TrainerController();
