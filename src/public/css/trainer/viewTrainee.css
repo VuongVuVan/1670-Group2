@@ -10,28 +10,28 @@
 }
 
 .status-pass {
-    background-color: #73FF57;
+    background-color: #2eeb08;
     color: #000;
     padding: 5px 20px;
     border-radius: 12px;
 }
 
 .status-merit {
-    background-color: #5AE8CE;
+    background-color: #08ebc1;
     color: #000;
     padding: 5px 20px;
     border-radius: 12px;
 }
 
 .status-distinction {
-    background-color: #F5AA48;
+    background-color: #fa8e01;
     color: #000;
     padding: 5px 20px;
     border-radius: 12px;
 }
 
 .status-fail {
-    background-color: rgb(255, 43, 43);
+    background-color: rgb(250, 6, 6);
     color: #000;
     padding: 5px 20px;
     border-radius: 12px;
@@ -49,7 +49,7 @@ p {
 }
 
 .button-edit:hover {
-    background-color: aquamarine;
+    background-color: rgb(148, 86, 4);
 }
 
 .button-delete {

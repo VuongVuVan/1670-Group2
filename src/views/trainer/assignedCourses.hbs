@@ -17,7 +17,7 @@
             {{!-- <caption class="fs-5"></caption> --}}
             <thead class="table-light">
                 <tr style="font-size: 18px; text-align: center;">
-                    <th scope="col" style="width: 90px;">Position</th>
+                    <th scope="col" style="width: 90px;">No.</th>
                     <th scope="col" style="width: 100px;">Class Name</th>
                     <th scope="col" style="width: 190px;">Course Name</th>
                     <th scope="col" style="width: 120px;">Total Trainees</th>
@@ -29,7 +29,7 @@
             <tbody>
                 {{#each data}}
                 <tr>
-                    <th scope="row" style="text-align: center;">{{this.position}}</th>
+                    <th scope="row" style="text-align: center;">{{@index}}</th>
                     <td scope="col" style="text-align: center;">{{this.class_name}}</td>
                     <td scope="col" style="text-align: center;">{{this.course_name}}</td>
                     <td scope="col" style="text-align: center;">{{this.total_trainees}}</td>     

@@ -13,54 +13,54 @@ app.use(session({
 }));
 
 app.set('view engine', 'hbs');
-// set session 
-app.get('/set_session', (req, res) => {
-    //set a object to session
-    req.session.User = {
-        'userId': '61bed745fe7c9da5c8310e0c',
-        'role': 'trainer',
-        'userName': 'Thanh',
-        "code": "GCH111"
-    }
+// // set session 
+// app.get('/set_session', (req, res) => {
+//     //set a object to session
+//     req.session.User = {
+//         'userId': '61bed745fe7c9da5c8310e0c',
+//         'role': 'trainer',
+//         'userName': 'Thanh',
+//         "code": "GCH111"
+//     }
 
-    return res.status(200).json({
-        status: 'success'
-    })
-})
-app.use('/', (req, res, next) => {
-        //set a object to session
-        req.session.user = {
-            'userId': '<trainercode>',
-            'role': 'trainer',
-            'userName': 'Thanh',
-            'code': 'GCH111'
-        }
-        next()
-    })
-    // get session 
-app.use('/get_session', (req, res) => {
-        //check session
-        if (req.session.User) {
-            return res.status(200).json({
-                status: 'success',
-                session: req.session.User
-            })
-        }
-        return res.status(200).json({
-            status: 'error',
-            session: 'No session'
-        })
-    })
-    // //destroy session
-app.use('/destroy_session', (req, res) => {
-    //destroy session
-    req.session.destroy(function(err) {
-        return res.status(200).json({
-            status: 'success',
-            session: 'cannot access session here'
-        })
-    })
-})
+//     return res.status(200).json({
+//         status: 'success'
+//     })
+// })
+// app.use('/', (req, res, next) => {
+//         //set a object to session
+//         req.session.user = {
+//             'userId': '<trainercode>',
+//             'role': 'trainer',
+//             'userName': 'Thanh',
+//             'code': 'GCH111'
+//         }
+//         next()
+//     })
+//     // get session 
+// app.use('/get_session', (req, res) => {
+//         //check session
+//         if (req.session.User) {
+//             return res.status(200).json({
+//                 status: 'success',
+//                 session: req.session.User
+//             })
+//         }
+//         return res.status(200).json({
+//             status: 'error',
+//             session: 'No session'
+//         })
+//     })
+//     // //destroy session
+// app.use('/destroy_session', (req, res) => {
+//     //destroy session
+//     req.session.destroy(function(err) {
+//         return res.status(200).json({
+//             status: 'success',
+//             session: 'cannot access session here'
+//         })
+//     })
+// })
 
 
 
