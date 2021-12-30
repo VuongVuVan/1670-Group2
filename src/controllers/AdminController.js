@@ -178,8 +178,28 @@ class AdminController {
         });
     }
 
-    test(req, res) {
-        res.render("admin/test");
+    sortAdminByIdAsc(req, res, next) {
+        Admin.find({}, (err, admins) => {
+            if (!err) {
+                res.render("admin/admin-accounts", {
+                    admins,
+                    user: req.session.user,
+                    total: admins.length,
+                });
+            } else next(err);
+        });
+    }
+
+    sortAdminByIdDesc(req, res, next) {
+        Admin.find({}, (err, admins) => {
+            if (!err) {
+                res.render("admin/admin-accounts", {
+                    admins: admins.reverse(),
+                    user: req.session.user,
+                    total: admins.length,
+                });
+            } else next(err);
+        });
     }
 
     // =================================================================== //
@@ -336,6 +356,30 @@ class AdminController {
                     user: req.session.user,
                     total: staffs.length,
                     q: req.query.q
+                });
+            } else next(err);
+        });
+    }
+
+    sortStaffByIdAsc(req, res, next) {
+        Staff.find({}, (err, staffs) => {
+            if (!err) {
+                res.render("admin/staff-accounts", {
+                    staffs,
+                    user: req.session.user,
+                    total: staffs.length,
+                });
+            } else next(err);
+        });
+    }
+
+    sortStaffByIdDesc(req, res, next) {
+        Staff.find({}, (err, staffs) => {
+            if (!err) {
+                res.render("admin/staff-accounts", {
+                    staffs: staffs.reverse(),
+                    user: req.session.user,
+                    total: staffs.length,
                 });
             } else next(err);
         });
@@ -512,6 +556,30 @@ class AdminController {
                     user: req.session.user,
                     total: trainers.length,
                     q: req.query.q
+                });
+            } else next(err);
+        });
+    }
+
+    sortTrainerByIdAsc(req, res, next) {
+        Trainer.find({}, (err, trainers) => {
+            if (!err) {
+                res.render("admin/trainer-accounts", {
+                    trainers,
+                    user: req.session.user,
+                    total: trainers.length,
+                });
+            } else next(err);
+        });
+    }
+
+    sortTrainerByIdDesc(req, res, next) {
+        Trainer.find({}, (err, trainers) => {
+            if (!err) {
+                res.render("admin/trainer-accounts", {
+                    trainers: trainers.reverse(),
+                    user: req.session.user,
+                    total: trainers.length,
                 });
             } else next(err);
         });

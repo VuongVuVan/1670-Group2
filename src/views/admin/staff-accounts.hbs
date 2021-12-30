@@ -27,12 +27,18 @@
             </div>
         {{/if}}
         {{#if staffs}}
-            <h2 class="text-center mt-4 text-primary">List of Staff Accounts</h2>
+            <h2 class="text-center mt-4">
+                <a href="/admin/staff-accounts" class="text-decoration-none text-primary">List of Staff Accounts</a>
+            </h2>
             <table class="table table-bordered caption-top mt-4" style="width: 100%;">
                 {{!-- <caption class="fs-5"></caption> --}}
                 <thead class="">
                     <tr style="font-size: 18px; text-align: center;">
-                        <th scope="col">#</th>
+                        <th scope="col">
+                            #
+                            <a href="/admin/staff-accounts/descending" class="arrow-link"><i class="bi bi-arrow-down"></i></a>
+                            <a href="/admin/staff-accounts/ascending" class="arrow-link"><i class="bi bi-arrow-up"></i></a>
+                        </th>
                         <th scope="col" style="min-width: 190px;">Avatar</th>
                         <th scope="col">Email</th>
                         <th scope="col">Full Name</th>
@@ -74,7 +80,7 @@
             </table>
         {{else}}
             <div class="text-center fs-3" style="margin-top: 140px; color: #198754;">
-                <span>No results found for query "{{q}}"</span>
+                <span>No results found for query "{{q}}".</span>
             </div>
         {{/if}}
     </main>

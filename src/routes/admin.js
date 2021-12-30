@@ -9,6 +9,8 @@ const destination2 = path.join(__dirname, "../public/uploads/staffs");
 const destination3 = path.join(__dirname, "../public/uploads/trainers");
 const width = height = 170;
 
+router.get("/trainer-accounts/ascending", isAdmin, adminController.sortTrainerByIdAsc);
+router.get("/trainer-accounts/descending", isAdmin, adminController.sortTrainerByIdDesc);
 router.get("/trainer-account/:slug", isAdmin, adminController.trainerDetailAction);
 router.get("/trainer-accounts/search", isAdmin, adminController.searchTrainerAccounts);
 router.get("/trainer-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassTer);
@@ -18,6 +20,8 @@ router.post("/trainer-accounts/store", isAdmin, img.upload(destination3), img.re
 router.get("/trainer-accounts/delete", isAdmin, adminController.deleteTrainerAccount);
 router.get("/trainer-accounts", isAdmin, adminController.showTrainerAccounts);
 
+router.get("/staff-accounts/ascending", isAdmin, adminController.sortStaffByIdAsc);
+router.get("/staff-accounts/descending", isAdmin, adminController.sortStaffByIdDesc);
 router.get("/staff-account/:slug", isAdmin, adminController.staffDetailAction);
 router.get("/staff-accounts/search", isAdmin, adminController.searchStaffAccounts);
 router.get("/staff-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassS);
@@ -27,7 +31,8 @@ router.post("/staff-accounts/store", isAdmin, img.upload(destination2), img.resi
 router.get("/staff-accounts/delete", isAdmin, adminController.deleteStaffAccount);
 router.get("/staff-accounts", isAdmin, adminController.showStaffAccounts);
 
-// router.get("/test", adminController.testAction);
+router.get("/admin-accounts/ascending", isAdmin, adminController.sortAdminByIdAsc);
+router.get("/admin-accounts/descending", isAdmin, adminController.sortAdminByIdDesc);
 router.get("/admin-accounts/search", isAdmin, adminController.searchAdminAccounts);
 router.get("/admin-account/:slug", isAdmin, adminController.adminDetailAction);
 router.get("/admin-accounts/passwords/set_default", isAdmin, adminController.setDefaultPassA);
