@@ -282,6 +282,7 @@ class TrainerController {
                         }
                     }, {}, (err, results) => {
                         req.query.id = req.body.classId;
+                        console.log(req.body);
                         new TrainerController().view(req, res);
                     })
                 }
