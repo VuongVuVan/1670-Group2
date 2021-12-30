@@ -8,6 +8,7 @@ const Account = require("../models/Account");
 const Traineecourse = require("../models/Course");
 const Traineegrade = require("../models/Grade");
 const Curriculum = require("../models/Seeall");
+const CourseClass = require("../models/CourseClass");
 
 
 // const fs = require("fs");
@@ -81,11 +82,13 @@ class TraineeController {
             else next(err);
         });
     }
+
     storedesignatedcourse(req, res, next) {
         const obj = {
             code: req.body.code,
             name: req.body.name,
             trainer: req.body.trainer,
+            class: req.body.class,
             createAt: date.convertDateAsString(req.body.createAt),
             updateAt: date.convertDateAsString(req.body.updateAt),
             total: req.body.total,
@@ -110,6 +113,7 @@ class TraineeController {
             code: req.body.code,
             name: req.body.name,
             trainer: req.body.trainer,
+            class: req.body.class,
             createAt: date.convertDateAsString(req.body.createAt),
             updateAt: date.convertDateAsString(req.body.updateAt),
             total: req.body.total,
@@ -162,6 +166,10 @@ class TraineeController {
             if (!err) res.redirect("/trainee/view-grade");
             else next(err);
         });
+    }
+
+    jointhecourse(req,res,next){
+
     }
 
     updatetraineegrade(req, res, next) {
@@ -272,6 +280,22 @@ class TraineeController {
         });
     }
 
+    join(req, res, next){
+        Curriculum.findOne({code: req.query.code}, )
+    }
+
+    ///---------------------------
+    async testAction(req, res, next){       
+        const courseClass = await CourseClass.find({class: "GCH0805"});
+        const code = [];
+        for(let i = 0; i< courseClass[0].trainees.length; i++){
+            code[i] = courseClass[0].trainees[i].code;
+        }
+        const trainees = await Trainee.find({code: {$in : code}});
+        console.log(trainees);
+        res.redirect("/trainee/view-alltrainee")
+    }
 }
+
 
 module.exports = new TraineeController();

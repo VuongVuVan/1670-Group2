@@ -5,7 +5,7 @@
     {{> traineeLayout}}
 
     <main class="content-detail" id="">
-        <h3 class="fs-4 mt-5">Courses (~ 20 records)</h3>
+        <h2 class="text-center text-primary text-capitalize">List all course</h2>
         <div class="content-detail-header mt-4">
         <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Course</button>
            <form action="/trainee/curriculum/search" class="content-detail-header-search" method="GET">
@@ -19,7 +19,6 @@
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="col">#</th>
                     <th scope="col">Code</th>
-                    {{!-- <th scope="col">Course Category</th> --}}
                     <th scope="col">Name</th>
                     <th scope="col">Trainer</th>
                     <th scope="col">createAt</th>
@@ -33,7 +32,6 @@
                 <tr style="font-size: 18px; text-align: center;">
                     <th scope="row">{{@index}}</th>
                     <td>{{this.code}}</td>
-                    {{!-- <td>{{this.coursecategory}}</td> --}}
                     <td>{{this.name}}</td>
                     <td>{{this.trainer}}</td>
                     <td>{{this.createAt}}</td>
@@ -41,15 +39,15 @@
                     <td>{{this.total}}</td>
                     <td>
                         <div class="btn-group" style="z-index: 0;" role="group" aria-label="Basic mixed styles example">
-                            <a href="/seeall/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
-                                <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
+                            <a href="/trainee/curriculum/join?id={{this._id}}" class="btn btn-danger" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
+                                <i class="bi bi-cloud-plus-fill"></i><span class=" fs-6" style="margin-left: 5px;">Join</span>
                             </a>
-                            <a href="/seeall/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
+                            {{!-- <a href="/seeall/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
                                 <i class="bi bi-x-lg"></i><span class=" fs-6" style="margin-left: 5px;">Delete</span>
                             </a>
                             <a href="/seeall/view?id={{this._id}}" class="btn btn-warning" style="border-radius: unset;">
                                 <i class="bi bi-binoculars"></i><span class=" fs-6" style="margin-left: 5px;">View</span>
-                            </a>
+                            </a>  --}}
                         </div>    
                     </td>
                 </tr>

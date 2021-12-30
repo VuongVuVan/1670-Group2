@@ -9,7 +9,7 @@
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
         </a>
         <div class="content-detail-header mt-4">
-            <form action="/trainer/assignedCourse/viewclass?id={{courseId}}" method="POST" id="search"
+            <form action="https://fptedu.herokuapp.com/trainer/assignedCourse/viewclass?id={{courseId}}" method="POST" id="search"
                 class="content-detail-header-search">
                 <input type="search" name="keyword" class="form-control" placeholder="Search by name..." id="keyword">
                 <button class="btn btn-primary btn-search" value="submit"><i class="bi bi-search"></i></button>
@@ -45,7 +45,7 @@
                         </thead>
                         <tbody>
                             {{#each data}}
-                            <tr id={{@index}}>
+                            <tr class="tr-trainer" id={{@index}}>
                                 <th scope="row">
                                     <p>{{@index}}</p>
                                 </th>
@@ -107,12 +107,12 @@
                         </div>
                         <span class="cross-line"></span>
                         <div class="form-edit-grade">
-                            <form action="/trainer/updateGrade" method="POST" id="update_grade" class="form-update">
+                            <form action="https://fptedu.herokuapp.com/trainer/updateGrade" method="POST" id="update_grade" class="form-update">
                                 <input type="text" name="traineeCode" id="trainee-code-popup" style="display: none;">
                                 <div class="course">
                                     <h6 for="course-label">Class:</h6>
                                     <h6 id="course-name-popup" class="course-name"></h6>
-                                    <input type="text" name="classId" id="class-id-popup" style="display: none;">
+                                    <input type="text" value="asdsasd" name="classId" id="class-id-popup" style="display: none;">
                                 </div>
                                 <div class="grade">
                                     <label for="grade-label">Grade:</label>
@@ -167,7 +167,7 @@
             var gradeStatus = $('#grade_status_' + index).html();
             var className = $('#class_name').html();
             var traineName = $('#traine_name_' + index).html();
-            $.get("http://localhost:5000/trainer/viewTraineeStatus",
+            $.get("https://fptedu.herokuapp.com/trainer/viewTraineeStatus",
                 {
                     traineeCode: traineeCode,
                     courseId: courseId,
@@ -195,7 +195,7 @@
             var courseId = $('#course_id').html();
             var form = $('<form></form>');
             form.attr("method", "POST");
-            form.attr("action", "/trainer/assignedCourse/viewclass?id=" + courseId);
+            form.attr("action", "https://fptedu.herokuapp.com/trainer/assignedCourse/viewclass?id=" + courseId);
             var field = $('<input></input>');
             field.attr("type", "hidden");
             field.attr("name", "grade_status");
