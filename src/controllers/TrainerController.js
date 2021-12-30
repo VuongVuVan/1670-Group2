@@ -218,7 +218,7 @@ class TrainerController {
                         })
                         console.table(listTrainees);
                         console.table(listTrainees.map(item => item._doc));
-                        res.render("trainer/viewtrainees", {
+                        res.render("trainer/viewTrainees", {
                             user: req.session.user,
                             class_name: courseClass.class_name,
                             data: listTrainees,
