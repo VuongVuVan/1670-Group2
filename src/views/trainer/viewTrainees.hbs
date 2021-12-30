@@ -112,7 +112,7 @@
                                 <div class="course">
                                     <h6 for="course-label">Class:</h6>
                                     <h6 id="course-name-popup" class="course-name"></h6>
-                                    <input type="text" name="classId" id="class-id-popup" style="display: none;">
+                                    <input type="text" value="asdsasd" name="classId" id="class-id-popup" style="display: none;">
                                 </div>
                                 <div class="grade">
                                     <label for="grade-label">Grade:</label>
@@ -167,7 +167,7 @@
             var gradeStatus = $('#grade_status_' + index).html();
             var className = $('#class_name').html();
             var traineName = $('#traine_name_' + index).html();
-            $.get("http://fptedu.herokuapp.com/trainer/viewTraineeStatus",
+            $.get("https://fptedu.herokuapp.com/trainer/viewTraineeStatus",
                 {
                     traineeCode: traineeCode,
                     courseId: courseId,
