@@ -94,7 +94,7 @@ class TrainerController {
                                     }
                                 })
                             })
-                            res.render("trainer/viewtrainees", {
+                            res.render("trainer/viewTrainees", {
                                 user: req.session.user,
                                 class_name: courseClass.class_name,
                                 data: listTrainees,
