@@ -7,11 +7,11 @@
     font-family: 'Rubik', sans-serif;
 }
 
-p {
+.tr-trainer p {
     margin: 0;
 }
 
-th {
+.tr-trainer th {
     vertical-align: middle;
 }
 

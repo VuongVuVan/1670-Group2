@@ -195,7 +195,7 @@
             var courseId = $('#course_id').html();
             var form = $('<form></form>');
             form.attr("method", "POST");
-            form.attr("action", "/trainer/assignedCourse/viewclass?id=" + courseId);
+            form.attr("action", "https://fptedu.herokuapp.com/trainer/assignedCourse/viewclass?id=" + courseId);
             var field = $('<input></input>');
             field.attr("type", "hidden");
             field.attr("name", "grade_status");
