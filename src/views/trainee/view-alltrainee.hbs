@@ -8,9 +8,9 @@
         <a href="/trainee/designatedcourse" type="button" class="btn btn-link fs-5">
             <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
         </a>
-        <h3 class="fs-4 mt-5">Profile (~ 20 records)</h3>
+        {{!-- <h3 class="fs-4 mt-5">Profile (~ 20 records)</h3> --}}
         <div class="content-detail-header mt-4">
-            <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Trainee</button>
+            {{!-- <button type="button" class="btn btn-primary fs-5 js-add-info" style="font-weight: 500;">New Trainee</button> --}}
             <form action="" class="content-detail-header-search">
                 <input type="search" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
@@ -30,7 +30,7 @@
                     <th scope="col">Address</th>
                     <th scope="col">Education</th>
                     <th scope="col">
-                        <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span>
+                        {{!-- <i class="bi bi-tools fs-5"></i><span style="margin-left: 12px;">Action</span> --}}
                     </th>
                 </tr>
             </thead>
@@ -39,7 +39,7 @@
                 <tr>
                     <th scope="row" style="text-align: center;">{{@index}}</th>
                     <th scope="col">
-                        {{!-- <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt=""> --}}
+                        <img style="width: 170px; height: 170px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="">
                     </th>
                     <th scope="col">{{this.email}}</th>
                     <th scope="col" style="text-align: center;">{{this.name}}</th>
@@ -49,12 +49,12 @@
                     <th scope="col" style="text-align: center;">{{this.education}}</th>
                     <td style="text-align: center;">
                         <div class="btn-group" style="z-index: 0; height: 40px;" role="group" aria-label="Basic mixed styles example">
-                            <a href="/seeall/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
+                            {{!-- <a href="/seeall/edit?id={{this._id}}" class="btn btn-success js-edit-info" style="border-bottom-right-radius: unset; border-top-right-radius: unset;">
                                 <i class="bi bi-pencil-square"></i><span class=" fs-6" style="margin-left: 5px;">Edit</span>
                             </a>
                             <a href="/seeall/view/delete?id={{this._id}}" class="btn btn-danger" style="border-radius: unset;">
                                 <i class="bi bi-x-lg"></i><span class=" fs-6" style="margin-left: 5px;">Delete</span>
-                            </a>
+                            </a> --}}
                         </div>
                     </td>
                 </tr>
