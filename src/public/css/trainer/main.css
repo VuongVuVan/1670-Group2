@@ -7,10 +7,10 @@
     font-family: 'Rubik', sans-serif;
 }
 
-p {
+.trainer-p {
     margin: 0;
 }
 
-th {
+.trainer-th {
     vertical-align: middle;
 }
