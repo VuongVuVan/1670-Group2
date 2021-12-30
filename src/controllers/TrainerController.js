@@ -3,15 +3,51 @@ const fs = require("fs");
 const path = require("path");
 const avatarPath = path.join(__dirname, "../public/uploads/trainer");
 const CourseClass = require("../models/CourseClass")
-const Trainaee = require("../models/Trainee");
+const Trainee = require("../models/Trainee");
 const Grade = require("../models/Grade");
 
 class TrainerController {
     index(req, res) {
+        console.log(req.session.user);
         res.render("trainer", {
             user: req.session.user
         });
     }
+
+    // View course with search keyword or status
+    showAssignedCoursesWithSearch(req, res) {
+        let keyword = req.body.keyword;
+        let courseId = req.query.id;
+        if (keyword) {
+            // user session as trainer logined
+            let trainer = {
+                email: 'trainer@fpt.edu.vn',
+                name: 'Do Cong Thanh',
+                image: { data: [Object], contentType: 'image/png', name: '' },
+                role: 'trainer',
+                code: 'GTH120222'
+            };
+            console.log(trainer);
+            // find courseClass based on trainer Code
+            CourseClass.find({
+                trainers: {
+                    $elemMatch: {
+                        code: trainer.code
+                    }
+                },
+                class_name: { $regex: keyword }
+
+            }, (err, courseClasses) => {
+                console.log(courseClasses)
+                if (!err) res.render("trainer/assignedCourses", {
+                    user: req.session.user,
+                    data: courseClasses
+                });
+                else next(err);
+            });
+        }
+    }
+
 
 
     // View trainees with search keyword or status
@@ -273,7 +309,14 @@ class TrainerController {
 
     showAssignedCourses(req, res) {
         // user session as trainer logined
-        let trainer = req.session.user;
+        let trainer = {
+            email: 'trainer@fpt.edu.vn',
+            name: 'Do Cong Thanh',
+            image: { data: [Object], contentType: 'image/png', name: '' },
+            role: 'trainer',
+            code: 'GTH120222'
+        };
+        console.log(trainer);
         // find courseClass based on trainer Code
         CourseClass.find({
             trainers: {
@@ -282,6 +325,7 @@ class TrainerController {
                 }
             }
         }, (err, courseClasses) => {
+            console.log(courseClasses)
             if (!err) res.render("trainer/assignedCourses", {
                 user: req.session.user,
                 data: courseClasses

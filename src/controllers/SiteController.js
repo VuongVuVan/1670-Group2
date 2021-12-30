@@ -38,6 +38,10 @@ class SiteController {
                 image: anUser.image,
                 role: anAccount.role
             }
+            if (anAccount.role == "trainer") {
+                req.session["user"].code = anUser.code;
+            }
+
             req.session["flashMsgs"] = {
                 success: "",
                 error: "",
